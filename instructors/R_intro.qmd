@@ -1,0 +1,129 @@
+---
+title: "R workshop: Introduction"
+author: "Suzanne Scott"
+format: revealjs
+editor: visual
+---
+
+## Why code?
+
+::: columns
+::: {.column width="50%"}
+GUI-based analysis ![Easy but not reproducible or customizable](images/prism.png)
+:::
+
+::: {.column width="50%"}
+R script ![Harder but reproducible and customizable](images/empty_script.png)
+:::
+:::
+
+::: notes
+Prism promo on the right:
+
+-   need to type into cells - laborious
+-   need to click on things to do analysis - not documented / reproducible
+
+Use code for two reasons:
+
+-   reproducible analysis - can easily be re-run, shared, extended
+-   do things that you can't in GUI-based software
+
+It's hard because
+
+-   learning curve
+:::
+
+## Why code?
+
+::: {layout="[[-1], [1], [-1]]"}
+![](images/excel_alert.png){fig-align="center"}
+:::
+
+::: notes
+Because sometimes excel fails you
+
+When I tried to load data that I processed in R into excel, I got this message
+:::
+
+## Why R?
+
+::: columns
+::: {.column width="50%"}
+R code
+
+``` R
+# create a vector with the numbers 1 through 20
+my_vector <- seq(20)
+
+# get the length of the vector
+vector_length <- length(my_vector)
+
+# print the length of the vector
+print(vector_length)
+```
+:::
+
+::: {.column width="50%"}
+C code
+
+``` c
+int main(void) 
+{
+  // create array of ints (length 20)
+  int my_vector[20];
+  
+  // populate array
+  for (int i = 0; i <20; i++)
+  {
+    my_vector[i] = i+1;
+  }
+  
+  // calculate length of array
+  size_t vector_length = sizeof(my_vector) / sizeof(my_vector[0]);
+
+  // print length of array
+  printf("%f\n", vector_length);
+}
+```
+:::
+:::
+
+::: notes
+Here we create a vector containing the numbers 1 through 20, then print the length of the vector.
+
+In R the steps are: - use the seq function to create the vector - use the length function to get its length - use the print function to print the answer - run the script using Rscript
+
+R is zero based - a bit weird - interpreted: don't need to compiled
+
+In C the steps are: - int main void: magic/convention necessary for C, need to have main function - create array with space for 20 ints.\
+- we can't store any other data types in there.\
+- it's not easy to change the length after it's created - loop over numbers 1 through 20 and assign them to each element of the array - verbose loop structure - arrays don't store their own length, so we need to divide the total size of the array by one element of the array to get the number of elements.\
+- this variable is of type size_t - use verbose printf function to print the length - compile the script - run the script (only on the same kind of architecture on which it was compiled)
+
+-   zero-based
+-   statically typed: need to specify types of variables
+-   compiled
+
+But C is faster
+:::
+
+## Why R and not python?
+
+::: r-stack
+![](images/logo_bioconductor.gif){.fragment}
+
+![](images/tidyverse-package-workflow.png){.fragment}
+:::
+
+::: aside
+[bioconductor](https://www.bioconductor.org/) \| [tidyverse image](https://teachdatascience.com/tidyverse/) \| [tidyverse](https://www.tidyverse.org/)
+:::
+
+::: notes
+Because the tidyverse: it's awesome! And bioconductor for genomics
+
+-   Lots of relevant packages available
+-   Large community: help is available
+
+Python is also a common choice for data science. It's a good choice for some tasks (like ML) but I think the learning curve is less steep for working with tabular data in R (pandas is harder than the tidyverse).
+:::
