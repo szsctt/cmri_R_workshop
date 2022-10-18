@@ -11,9 +11,9 @@ Useful links:
  - [One-page summary of R commands](https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view)
  - [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
 
-Workshop for introductory R analysis for people at CMRI - TVRU, GTRU?
+Workshop for introductory R analysis for people at CMRI - TVRU, GTRU
 
-Ideally one day's worth of material - two sessions, could be spread over one day.
+Ideally one day's worth of material - two sessions
 
 Consider covering:
 
