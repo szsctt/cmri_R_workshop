@@ -42,7 +42,7 @@ Please install:
  - [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)
 
 
-MacOS usually comes with `git` already installed: you can verify this by opening a terminal and typing:
+MacOS usually comes with `git` already installed; you can verify this by opening a terminal and typing:
 
 ```bash
 git --version
@@ -50,14 +50,6 @@ git --version
 
 :::::::::::::::::::::::::
 
-
-:::::::::::::::: solution
-
-### Linux
-
-Use Terminal
-
-:::::::::::::::::::::::::
 
 ### Packages
 
