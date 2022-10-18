@@ -1,8 +1,9 @@
 ## R workshop @ CMRI
 
-[Docs for sandpaper]: https://carpentries.github.io/sandpaper-docs/
+
 
 Useful links:
+ - [Docs for sandpaper](https://carpentries.github.io/sandpaper-docs/)
  - [Data analysis and visuzliation in R for Ecologists](https://datacarpentry.org/R-ecology-lesson/index.html)
  - [R for genomics](https://datacarpentry.org/genomics-r-intro/)
  - [R for reproducilbe scientific analysis](https://swcarpentry.github.io/r-novice-gapminder/)
