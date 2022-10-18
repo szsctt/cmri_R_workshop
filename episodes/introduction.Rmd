@@ -4,6 +4,8 @@ teaching: 10
 exercises: 2
 ---
 
+Test test test
+
 :::::::::::::::::::::::::::::::::::::: questions 
 
 - How do you write a lesson using R Markdown and `{sandpaper}`?
