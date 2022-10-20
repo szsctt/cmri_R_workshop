@@ -10,15 +10,16 @@ exercises: 10
 
 - How do I use the RStudio IDE?
 - What are the basics of R?
-- How do I install packages?
+- What are the best practices for writing R code?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand the panes of the RStudio IDE
+
 - Understand how to interact with the RStudio IDE
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Demonstrate some R basics: operators, comments, functions, assignment, vectors and types
+- Be aware of some good habits for writing R code
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -32,6 +33,8 @@ The `R` language is one of the most commonly used languages in bioinformatics, a
  - [Open source](https://en.wikipedia.org/wiki/Open_source): So it's free!
  - Community:  `R` is a popular choice for data science, so there are many resources available for [learning](https://swcarpentry.github.io/r-novice-gapminder/) and [debugging](https://stackoverflow.com/questions/tagged/r)
  - Packages:  Since the community is large, many people have written helpful packages that can help you do tasks more easily than if you'd had to start from scratch
+ 
+
 
 ## Introduction to RStudio
 
@@ -40,7 +43,7 @@ The `R` language is one of the most commonly used languages in bioinformatics, a
 When you open it, you'll see something like this:
 
 
-![](episodes/fig/rstudio1.png)
+![](episodes/fig/rstudio1.png){alt='Four panes of RStudio, showing the editor, console, environment and plots panel'}
 
 The four main panes are:
 
@@ -58,17 +61,17 @@ Use the editor to write scripts and `Rmarkdown` documents.  Although you can als
 
 The editor also helps you identify issues with your code by placing a cross where it doesn't understand something.
 
-![](episodes/fig/rstudio2.png)
+![](episodes/fig/rstudio2.png){alt='A cross in the margins where a line of code is syntatically incorrect'}
 
 Hover over the cross to get more information
 
-![](episodes/fig/rstudio3.png)
+![](episodes/fig/rstudio3.png){alt='Mousing over the cross reveals the message "expected , after expression" and "unmatched opening bracket ('}
 
 
  
 ### Using the console
 
-The console is where you can type in `R` commands and see their output. You can type R commands directly in here, or press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to 'send' them from the editor to the console
+The console is where you can type in `R` commands and see their output. You can type R commands directly in here, or press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to 'send' them from the editor to the console.
 
 
 #### As a calculator
@@ -104,14 +107,14 @@ The order of operations is as you would expect:
 
 ::::::::::::::::::::::::::::::::::::: challenge 
 
-## Challenge 1: Operators
+#### Challenge 1: Operators
 
 
 How would you use R to compute $\frac{9}{3 + 6}$?
 
 :::::::::::::::::::::::: solution 
 
-## Show me the solution
+#### Show me the solution
  
 ```{r}
 3 / (3 + 6)
@@ -122,9 +125,16 @@ How would you use R to compute $\frac{9}{3 + 6}$?
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
+## Writing R code
+
+Next, we'll look at some of the building blocks of `R` code.  You can use these to write scripts, or type them directly into the console.  
+
+When performing data analysis, it's best to record the steps you took by writing a script, which can be re-run if you need to reproduce or update your work.
+
 ### Comments
 
-Anything that comes after a `#` character will be ignored by `R`: use this to annotate your code.  
+The first building block is actually lines that are ignored by `R`: comments.
+Anything that comes after a `#` character won't be executed. Use this to annotate your code.  
 
 ```{r}
 # this is a comment
@@ -135,20 +145,84 @@ Anything that comes after a `#` character will be ignored by `R`: use this to an
 ```
 
 
-This is very important!!!  A key part of reproducibility is knowing what code does.  Make it easier for others and your future self by adding lots of comments to your code.
+Comments is very important!!!  A key part of reproducibility is knowing what code does.  Make it easier for others and your future self by adding lots of comments to your code.
+
+:::::::::::::::::::::::::::::::::::::::: callout
+
+#### Debugging by comment
+
+You can also use comments when testing and debugging your code, by stopping `R` from running particular lines of your script.  RStudio provides a shortcut for commenting/uncommenting lines: <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd>.
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+### Assignment
+
+If you want R to remember something, you can assign it to a variable:
+
+```{r}
+my_var <- 1+1
+print(my_var)
+```
+
+
+:::::::::::::::::::::::::::::::::::::::: callout
+
+#### Multiple operators
+
+There are actually two assignment operators in `R`: `<-` and `=`.  They differ a little in their behaviour(you don't need to know all of the details of how they differ); in general you should use `<-` for assignment.
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+#### Challenge 2: Assignment
+
+
+What would be the output of the following code?  Try to think about what the answer would be without using `R`.
+
+```r
+a <- 3
+b <- 2
+c <- (a * b) / b + 1
+print(c)
+```
+
+:::::::::::::::::::::::: solution 
+
+#### Show me the solution
+ 
+```{r}
+a <- 3
+b <- 2
+c <- (a * b) / b + 1
+print(c)
+```
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ### Functions
 
-A function is just something that takes zero or more inputs, does something with it, and gives you back an output.  `R` comes with many functions that someone else wrote.
+A function is just something that takes zero or more inputs, does something with it, and gives you back zero or more outputs.  
 
-For example, the `getwd` function takes no inputs, and returns the current working directory. When working in RStudio, this should be the path to your project root.
+
+![A black box function](episodes/fig/functions.png){alt='A function takes as input (x,y), does some stuff, and outputs z' width='50%'}
+
+
+
+`R` comes with many useful functions that you can use in your code.  A function is always called with parentheses `()`.
+
+For example, the `getwd()` function takes no inputs, and returns the current working directory.
 
 ```r
 # a function that takes no inputs
 getwd()
 ```
 
-R also has many mathematical functions:
+Base `R` also has many mathematical and statistical functions:
 
 ```{r}
 # natural logarithm
@@ -163,7 +237,7 @@ t.test(c(1, 2.5, 8, 1), c(1000, 1001, 3000, 5000))
 
 You don't need to memorize all these functions: Google is your friend.
 
-Rstudio can also help you with function usage. If you know what the name of a function is but can't remember how to use it, you can type `?` before the function name in the console to get help on that function.
+RStudio can also help you with function usage. If you know what the name of a function is but can't remember how to use it, you can type `?` before the function name in the console to get help on that function.
 
 ```r
 ?sin
@@ -175,8 +249,41 @@ If you don't know what the name of a function is, you can type `??` before a key
 ??trig
 ```
 
+:::::::::::::::::::::::::::::::::::::::: callout
 
-You can even write your own functions:
+#### Named arguments
+
+Function arguments can be named *implicitly* or *explicitly*.  When calling a function, explicitly named arguments are matched first, then any other arguments are matched in order.
+
+For example, the documentation for the `round` function gives it's signature: `round(x, digits = 0)`.
+
+The following function calls are all equivalent:
+
+```r
+round(1/3, 3)
+round(1/3, digits=3)
+round(x=1/3, digits=3)
+round(digits=3, x=1/3)
+```
+
+However, the last is not best practice: reversing the order of the arguments will likely be confusing for someone else reading your code.
+
+In general, try to match the documentation when you call a function.
+
+Which of the calls above matches the documentation for `round()`?
+
+:::::::::::::::::::::::: instructor
+
+The second one
+
+:::::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
+You can also write your own functions:
 
 ```{r}
 # function to add two numbers
@@ -188,14 +295,14 @@ my_add(1,1)
 
 ::::::::::::::::::::::::::::::::::::: challenge 
 
-## Challenge 2: Functions
+#### Challenge 3: Functions
 
 
-Use the R console to get help on the `rnorm` function
+Use the R console to get help on the `rnorm()` function
 
 :::::::::::::::::::::::: solution 
 
-## Show me the solution
+#### Show me the solution
  
 ```r
 ?rnorm
@@ -207,7 +314,7 @@ Use the `rnorm` function to generate 5 numbers from a normal distribution with a
 
 :::::::::::::::::::::::: solution 
 
-## Show me the solution
+#### Show me the solution
  
 ```{r}
 rnorm(5, mean=1, sd=2)
@@ -218,16 +325,98 @@ rnorm(5, mean=1, sd=2)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: callout
+### Vectors
 
-Function arguments can be *named* or *unnamed*.
+One of the most common data structures `R` is the *vector*.  These are collections of elements (technically called 'atomic vectors') like numbers, which are arranged in a particular order.
+
+Vectors are often created with the concatenation function `c()`:
+
+```{r}
+# create a vector of three numbers
+a_vector <- c(1,2,3)
+
+# order matters!
+a_different_vector <- c(2,1,3)
+```
+
+In `R`, vectors contain data of only one type.  Some of the types you might see are:
+
+ - Double: real numbers which can take on any value (like 1.13, 6, -1004.29)
+ - Integer: whole real numbers (like 1, 2, -1)
+ - Character: strings of characters, enclosed in either single or double quotes
+ - Logical: booleans, either `TRUE` or `FALSE`
+ 
+```{r}
+# we can use the seq function to create vectors with numbers in them
+double_vec <- seq(1, 10)
+
+# add 'L' to the end of a number to tell R that it's an integer
+integer_vec <- seq(1L, 10L)
+
+# strings can be enclosed in single or double quotes
+character_vec <- c("this", 'is', "a", 'vector')
+
+# logicals are either TRUE or FALSE
+logical_vec <- c(TRUE, FALSE)
+```
+
+
+:::::::::::::::::::::::: callout
+
+#### Declaring types
+ 
+In some programming languages, like `C` and `java`, the programmer must declare the type of a variable when it's created.  In these [statically typed](https://developer.mozilla.org/en-US/docs/Glossary/Static_typing#:~:text=A%20statically%2Dtyped%20language%20is,not%20indicate%20their%20variable%20types.) languages, a variable declared as an integer can't store any other types of data.  As a dynamically typed language, `R` takes a looser approach to variable types.
+
+:::::::::::::::::::::::::::::::::
+
+If you try to create a vector that contains more than one type of element, all the elements will be transformed into the 'lowest common denominator' type.  For example, concatenating an integer and double  will result in a double vector.
+
+
+```{r}
+# concatenting a double and an integer
+numeric_vec <- c(5.8, 10L)
+
+# the typeof function tells you the type of a variable
+typeof(numeric_vec)
+```
+
+One way to think about this is that elements are always coerced into the type that results in the least amount of information loss.  The integers are a subset of all real numbers, so we can easily represent an integer `10L` as the numeric `10`.  But if we tried to convert the real number `5.8` to an integer, how do we deal with the `.8` part?
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+#### Challenge 4: Types
+
+
+What do you think will be the type of the following vector?
+
+```r
+unknown_type <- c(1L, 1, "one")
+```
+
+
+:::::::::::::::::::::::: solution 
+
+#### Show me the solution
+ 
+
+```{r}
+unknown_type <- c(1L, 1, "one")
+print(unknown_type)
+print(typeof(unknown_type))
+```
+
+It's  a character vector.  
+
+Character vectors can be used to represent numbers, but numbers can't easily be used to represent characters.
+
+
+:::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Best practices
 
 Now you know the basics of `R`, there are a few best practices that you should follow on your journey.  These aren't hard and fast rules, but principles that you should aim to follow to make your code better and more reproducible.
-
 
 
 ### Formatting and readability matters
@@ -330,17 +519,29 @@ my_great_project
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Use RStudio for writing and executing R code
+- 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 [r-markdown]: https://rmarkdown.rstudio.com/
 
+## Cheat sheets
+
+As you begin your journey with `R`, you might find it helpful to refer to one-page summaries (or 'cheat sheets') that other people have compiled.  For example, there are cheat sheets for :
+
+
+- [Commonly used functions](https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view)
+- [RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf)
+
 ## Acknowledgments
 
 This lesson is inspired by and draws on material from [Software Carpentries introduction to R](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html), [Intro to R and Rstudio for Genomics](https://datacarpentry.org/genomics-r-intro/00-introduction/index.html).
 
+## Further reading
+
+We didn't cover a lot of basic programming concepts like control flow (loops, if/else statements), and other data structures like lists, factors, matrices and data frames.  You will probably come across these in your journey with `R`.  I'd recommend the following resources:
+
+ - The first part, 'foundations', of [advanced R by Hadley Wickham](https://adv-r.hadley.nz/index.html) (don't be put off by the title, )
+ 
 
