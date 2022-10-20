@@ -21,13 +21,13 @@ exercises: 2
 
 ## Tidy data
 
-
+When recording observations, we don't often give that much thought to how we record the data.
 
 ::::::::::::::::::::::::::::::::::::: discussion
 
 Open the excel file `readr/untidy_data.xlsx`.  Do you think this dataset is in a tidy format?  Why/why not?
 
-List ways that it could be improved
+List ways that it could be improved.
 
 :::::::::: instructor
 
