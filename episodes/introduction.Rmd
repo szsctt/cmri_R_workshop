@@ -156,7 +156,7 @@ Comments is very important!!!  A key part of reproducibility is knowing what cod
 
 #### Debugging by comment
 
-You can also use comments when testing and debugging your code, by stopping `R` from running particular lines of your script.  RStudio provides a shortcut for commenting/uncommenting lines: <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd>.
+You can also use comments when testing and debugging your code, by preventing `R` from running particular lines of your script.  RStudio provides a shortcut for commenting/uncommenting lines: <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd>.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
