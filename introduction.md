@@ -34,7 +34,9 @@ The `R` language is one of the most commonly used languages in bioinformatics, a
  - Community:  `R` is a popular choice for data science, so there are many resources available for [learning](https://swcarpentry.github.io/r-novice-gapminder/) and [debugging](https://stackoverflow.com/questions/tagged/r)
  - Packages:  Since the community is large, many people have written helpful packages that can help you do tasks more easily than if you'd had to start from scratch
  
+The other language most commonly used  for data science is `python`.  Some people might even consider it a better choice than `R`, because it doesn't have some of the strange quirks that `R` does, and also has a large community of users (and all of the benefits that come with it).  
 
+I use both `R` and `python`, and most (but not all) people who do a lot of data science know how to use both. But today we're learning `R` because I think it usually what I turn to when someone in the lab asks me for help analysing their data, and I think everyone can learn to use it for those same tasks too.
 
 ## Introduction to RStudio
 
@@ -51,6 +53,7 @@ The four main panes are:
  - Bottom left: console.  For running code
  - Top right: environment. Information about objects you create will appear here
  - Bottom right: plots (amongst other things). Some output (like plots) from the console appears here.  Also helpful for browsing files and getting help
+
 
 
  
@@ -135,6 +138,8 @@ How would you use R to compute $\frac{9}{3 + 6}$?
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
+
+
 ## Writing R code
 
 Next, we'll look at some of the building blocks of `R` code.  You can use these to write scripts, or type them directly into the console.  
@@ -175,7 +180,7 @@ You can also use comments when testing and debugging your code, by stopping `R` 
 
 ### Assignment
 
-If you want R to remember something, you can assign it to a variable:
+If you want `R` to remember something, you can assign it to a variable:
 
 
 ```r
@@ -190,9 +195,9 @@ print(my_var)
 
 :::::::::::::::::::::::::::::::::::::::: callout
 
-#### Multiple operators
+#### Hello, operator?
 
-There are actually two assignment operators in `R`: `<-` and `=`.  They differ a little in their behaviour(you don't need to know all of the details of how they differ); in general you should use `<-` for assignment.
+There are actually two assignment operators in `R`: `<-` and `=`.  They differ a little in their behaviour (you don't need to know all of the details of how they differ); in general you should use `<-` for assignment.
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -309,7 +314,7 @@ If you don't know what the name of a function is, you can type `??` before a key
 
 Function arguments can be named *implicitly* or *explicitly*.  When calling a function, explicitly named arguments are matched first, then any other arguments are matched in order.
 
-For example, the documentation for the `round` function gives it's signature: `round(x, digits = 0)`.
+For example, the documentation for the `round` function gives its signature: `round(x, digits = 0)`.
 
 The following function calls are all equivalent:
 
@@ -381,7 +386,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1] -1.694608 -1.094072  1.960354  1.034757  2.050837
+[1] -0.2776969  3.8874455  0.7995902  0.9529463  2.4369954
 ```
 
 :::::::::::::::::::::::::::::::::
@@ -402,6 +407,20 @@ a_vector <- c(1,2,3)
 
 # order matters!
 a_different_vector <- c(2,1,3)
+```
+
+
+You can get at the individual elements of a vector using brackets (`[`):
+
+```r
+# first element of double_vec
+double_vec[1]
+
+# third to fifth elements of integer_vec
+integer_vec[3:5]
+
+#first and fourth elements of character_vec
+character_vec[c(1,4)]
 ```
 
 In `R`, vectors contain data of only one type.  Some of the types you might see are:
@@ -425,7 +444,6 @@ character_vec <- c("this", 'is', "a", 'vector')
 # logicals are either TRUE or FALSE
 logical_vec <- c(TRUE, FALSE)
 ```
-
 
 :::::::::::::::::::::::: callout
 
@@ -492,6 +510,56 @@ It's  a character vector.
 
 Character vectors can be used to represent numbers, but numbers can't easily be used to represent characters.
 
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+`R` also has a way of representing missing data: there's a special value in every type called `NA` (not available).
+
+
+```r
+vec <- c(1, 3, NA)
+```
+
+Having `NA` values can change the way that functions interact with your data.  For example, how would you take the mean of three values: 1, 2, and NA?
+
+
+```r
+mean(c(1, 2, NA))
+```
+
+```{.output}
+[1] NA
+```
+
+`R` doesn't know how to do this, so it just returns `NA`.
+
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+#### Challenge 5: Removing NA
+
+
+Check the documentation of the `mean` function to find out how to ignore `NA` values when computing the mean of a vector.
+
+
+:::::::::::::::::::::::: solution 
+
+#### Show me the solution
+ 
+
+
+```r
+mean(C(1,2, NA), na.rm=TRUE)
+```
+
+```{.error}
+Error in C(1, 2, NA): object not interpretable as a factor
+```
+
+Use the additional named argument `na.rm=TRUE`
 
 :::::::::::::::::::::::::::::::::
 
@@ -602,8 +670,12 @@ my_great_project
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use RStudio for writing and executing R code
-- 
+- Use RStudio for writing and executing `R` code
+- Add comments to your code by starting a line wtih `#`
+- Assign values to variables using the assignment operator `<-`
+- Functions covert inputs to outputs
+- Vectors are a collection of values of the same type
+- Following best practices will help the with the correctness and readabilty of your `R` code
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -619,12 +691,5 @@ As you begin your journey with `R`, you might find it helpful to refer to one-pa
 
 ## Acknowledgments
 
-This lesson is inspired by and draws on material from [Software Carpentries introduction to R](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html), [Intro to R and Rstudio for Genomics](https://datacarpentry.org/genomics-r-intro/00-introduction/index.html).
-
-## Further reading
-
-We didn't cover a lot of basic programming concepts like control flow (loops, if/else statements), and other data structures like lists, factors, matrices and data frames.  You will probably come across these in your journey with `R`.  I'd recommend the following resources:
-
- - The first part, 'foundations', of [advanced R by Hadley Wickham](https://adv-r.hadley.nz/index.html) (don't be put off by the title, )
- 
+This lesson is inspired by and draws on some material from [Software Carpentries introduction to R](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html), [Intro to R and Rstudio for Genomics](https://datacarpentry.org/genomics-r-intro/00-introduction/index.html).
 
