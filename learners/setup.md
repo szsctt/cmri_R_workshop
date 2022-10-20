@@ -56,6 +56,6 @@ git --version
 Once you have `R` and `Rstudio` installed, please also install the necessary packages by opening `Rstudio` and typing:
 
 ```R
-install.packages("")
+install.packages("tidyverse")
 ```
 
