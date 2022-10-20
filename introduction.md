@@ -173,7 +173,7 @@ Comments is very important!!!  A key part of reproducibility is knowing what cod
 
 #### Debugging by comment
 
-You can also use comments when testing and debugging your code, by stopping `R` from running particular lines of your script.  RStudio provides a shortcut for commenting/uncommenting lines: <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd>.
+You can also use comments when testing and debugging your code, by preventing `R` from running particular lines of your script.  RStudio provides a shortcut for commenting/uncommenting lines: <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>c</kbd>.
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -386,7 +386,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1] -0.2776969  3.8874455  0.7995902  0.9529463  2.4369954
+[1]  0.9241985  1.0946351  0.8778931  3.8240085 -0.4327135
 ```
 
 :::::::::::::::::::::::::::::::::
