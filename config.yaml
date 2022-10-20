@@ -58,21 +58,20 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes:
+episodes: 
 - introduction.Rmd
+- reading-in-data-readr-and-readxl.Rmd
 
 # Information for Learners
-learners:
+learners: 
 - setup.md
 
-
 # Information for Instructors
-instructors:
+instructors: 
 - instructor-notes.md
-#- R_intro.qmd
 
 # Learner Profiles
-profiles:
+profiles: 
 
 # Customisation ---------------------------------------------
 #
