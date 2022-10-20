@@ -28,9 +28,9 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.49450749"
-     inkscape:cx="465.10924"
+     inkscape:cx="468.14256"
      inkscape:cy="192.11034"
-     inkscape:window-width="1487"
+     inkscape:window-width="1440"
      inkscape:window-height="662"
      inkscape:window-x="0"
      inkscape:window-y="25"
@@ -117,34 +117,14 @@
       <text
          xml:space="preserve"
          style="font-size:12.7px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';text-align:start;text-anchor:start;fill:#a8cbfe;stroke-width:0.529167"
-         x="60.917988"
-         y="42.800381"
+         x="78.574448"
+         y="74.90303"
          id="text402"><tspan
            sodipodi:role="line"
-           x="60.917988"
-           y="42.800381"
+           x="78.574448"
+           y="74.90303"
            style="text-align:start;text-anchor:start;fill:#a8cbfe;stroke-width:0.529167"
-           id="tspan557">my_func &lt;- function(x, y) {</tspan><tspan
-           sodipodi:role="line"
-           x="60.917988"
-           y="58.675381"
-           style="text-align:start;text-anchor:start;fill:#a8cbfe;stroke-width:0.529167"
-           id="tspan561"> ...</tspan><tspan
-           sodipodi:role="line"
-           x="60.917988"
-           y="74.550377"
-           style="text-align:start;text-anchor:start;fill:#a8cbfe;stroke-width:0.529167"
-           id="tspan565"> ...</tspan><tspan
-           sodipodi:role="line"
-           x="60.917988"
-           y="90.425377"
-           style="text-align:start;text-anchor:start;fill:#a8cbfe;stroke-width:0.529167"
-           id="tspan567"> return(z)</tspan><tspan
-           sodipodi:role="line"
-           x="60.917988"
-           y="106.30038"
-           style="text-align:start;text-anchor:start;fill:#a8cbfe;stroke-width:0.529167"
-           id="tspan563">}</tspan></text>
+           id="tspan563">do something useful</tspan></text>
     </g>
     <path
        style="fill:#250657;stroke:#281845;stroke-width:0.729;stroke-dasharray:none;marker-end:url(#Arrow1)"

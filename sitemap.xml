@@ -52,6 +52,9 @@
     <loc>https://carpentries.github.io/workbench-template-rmd/instructor/profiles.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/reading-in-data-readr-and-readxl.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/workbench-template-rmd/instructor-notes.html</loc>
   </url>
   <url>
@@ -65,5 +68,8 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/workbench-template-rmd/profiles.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/workbench-template-rmd/reading-in-data-readr-and-readxl.html</loc>
   </url>
 </urlset>
