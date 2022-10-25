@@ -19,97 +19,7 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-```{r setup, include=FALSE}
-library(tidyverse)
-table1 <- tibble(
-  library = c(rep("lib1", 6), rep("lib2", 6)),
-  barcode = rep(paste0("b", 1:6), 2),
-  count = sample(c(rbinom(4, size = 1000, prob = 0.8), rbinom(4, size = 1000, prob = 0.4), rbinom(4, size = 1000, prob = 0.1)), size=12)
-)
 
-table1a <- table1 %>% 
-  pivot_wider(names_from=barcode, values_from=count)
-
-table1b <- table1 %>% 
-  pivot_wider(names_from=library, values_from=count)
-
-table1c <- table1 %>% 
-  pivot_wider(names_from=count, values_from=barcode)
-
-```
-
-
-## Tidy data
-
-When recording observations, we don't often give that much thought to how we record the data.  Usually we enter data into an excel spreadsheet and care most about entering the data in the easiest way.  However, this often results in 'messy' data that requires a little bit of massaging before analysis.  
-
-There are many possible ways to structure a dataset.  For example, if we conducted an experiment where we made two sequencing libraries, in which we have counted the instances of six different barcodes, we could structure the data like this:
-
-```{r echo=FALSE}
-table1a
-```
-
-In this table, the counts for each barcode are stored in a separate column.  The 'library' column tells us which library the counts on each row are from.
-
-
-Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:
-
-```{r echo=FALSE}
-table1b
-```
-
-
-We could even structure the table like this:
-
-```{r echo=FALSE}
-table1c
-```
-
-This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.
-
-These are all examples of messy ways to structure the data.  There are usually very many ways to make the data messy, but only one  ['Tidy' format](https://vita.had.co.nz/papers/tidy-data.pdf).  Being tidy means a dataset has:
-
-1. Each variable forms a column.
-2. Each observation forms a row.
-3. Each type of observational unit forms a table.
-
-Here, variables record all the values that measure the same attribute (for example library, sample, count), and an observation contains all the measurements on a single unit (like a sequencing run, or a single experiment).  Each observational unit (like independent experiments with different variables) should get its own table. This just means that if we ran another experiment with different variables, it should go in a different table.
-
-In our this case, the tidy version looks like this:
-
-```{r}
-table1
-```
-
-This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.
-
-
-
-::::::::::::::::::::::::::::::::::::: discussion
-
-Open the excel file `readr/untidy_data.xlsx`.  Do you think this dataset is in a tidy format?  Why/why not?
-
-List ways that it could be improved.
-
-:::::::::: instructor
-
-Issues with this dataset:
-
- - Doesn't start in cell A1
- - Column names don't describe contents - information is missing.  What do the numbers represent?  Better column name would be 'count' or similar
- - Used a mixture of words and numbers in a column
- 
-To make it tidy:
-
- - Columns should be 'batch' and 'count' (or whatever is being measured)
- - Start at cell A1
- - How to deal with missing values?  As a separate table?
- - Or we could have batch 1 and batch 2 as two separate tables
-
- 
-::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 
@@ -123,6 +33,7 @@ If you've entered data into a digital format, chances are that you've used sprea
 
  - [Tidy data vignette](https://cloud.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
  - [Tidy data paper](https://vita.had.co.nz/papers/tidy-data.pdf)
+ - [Data import cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
