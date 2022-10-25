@@ -33,7 +33,7 @@ source: 'https://github.com/carpentries/workbench-template-rmd'
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'team@carpentries.org'
+contact: 'sscott@cmri.org.au'
 
 # Navigation ------------------------------------------------
 #
@@ -58,20 +58,20 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 - introduction.Rmd
 - reading-in-data-readr-and-readxl.Rmd
 
 # Information for Learners
-learners: 
+learners:
 - setup.md
 
 # Information for Instructors
-instructors: 
+instructors:
 - instructor-notes.md
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
