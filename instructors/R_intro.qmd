@@ -7,6 +7,20 @@ editor: visual
 
 ## Why code?
 
+```{css}
+/* file: style.css */
+.white-text {
+  color:white;
+  font-size: small;
+}
+
+.small-white-text {
+  color:white;
+  font-size: xx-small;
+  line-height=10%;
+}
+```
+
 ::: columns
 ::: {.column width="50%"}
 GUI-based analysis ![Easy but not reproducible or customizable](images/prism.png)
@@ -51,7 +65,7 @@ When I tried to load data that I processed in R into excel, I got this message
 ::: {.column width="50%"}
 R code
 
-``` R
+``` r
 # create a vector with the numbers 1 through 20
 my_vector <- seq(20)
 
@@ -127,3 +141,316 @@ Because the tidyverse: it's awesome! And bioconductor for genomics
 
 Python is also a common choice for data science. It's a good choice for some tasks (like ML) but I think the learning curve is less steep for working with tabular data in R (pandas is harder than the tidyverse).
 :::
+
+## RStudio
+
+::: {layout-valign="center"}
+![The RStudio IDE](../episodes/fig/rstudio1.png){width="80%"}
+:::
+
+::: notes
+This is RStudio - using it helps make that empty prompt a bit more approachable. We'll be using it for this course
+:::
+
+## R basics
+
+::: columns
+::: {.column width="50%"}
+What we will cover:
+
+-   Arithmetic operators
+-   Assignment operators
+-   Comments
+-   Functions
+-   Vectors
+-   Types
+:::
+
+::: {.column width="50%"}
+What we won't cover:
+
+-   Control flow
+-   Other data structures: lists, matrices, data frames
+-   Regular expressions
+-   Base R plotting
+-   Objects
+-   Machine learning / AI
+-   Shiny
+-   Writing packages
+-   ...
+:::
+:::
+
+::: notes
+We will move quickly and leave a lot of things out. The goal is to give you just enough knowledge to get started
+:::
+
+## Using R
+
+<br>
+
+R can compute things for you:
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+
+``` r
+(1 + 2 + 3 + 4 + 5 + 6) / 6
+```
+
+::: {.small-white-text}
+
+This is for spacing.
+
+:::
+
+```{r include=TRUE}
+(1 + 2 + 3 + 4 + 5 + 6) / 6
+```
+
+::: {.white-text}
+
+This is for spacing
+
+This is also for spacing
+
+This too is for spacing
+
+:::
+
+``` r
+3 > 5
+```
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+```{r include=TRUE}
+3 > 5
+```
+
+## Assignment
+
+<br>
+
+Assign things to variables to remember them:
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+``` r
+sample_mean <- (1 + 2 + 3 + 4 + 5 + 6) / 6
+sample_mean
+```
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+```{r include=TRUE}
+sample_mean <- (1 + 2 + 3 + 4 + 5 + 6) / 6
+sample_mean
+```
+
+## Comments
+
+<br>
+
+Use comments to annotate your code:
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+``` r
+# create a variable to store the mean
+sample_mean <- (1 + 2 + 3 + 4  + 5 + 6) / 6
+
+# what is the value of sample_mean?
+sample_mean
+```
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+```{r include=TRUE}
+# create a variable to store the mean
+sample_mean <- (1 + 2 + 3 + 4  + 5 + 6) / 6
+
+# what is the value of sample_mean?
+sample_mean
+```
+
+## Fuctions
+
+![](../episodes/fig/functions.png)
+
+## Functions
+
+<br>
+
+``` r
+# generate the numbers 1 to 6
+my_nums <- seq(6)
+
+# use a function to compute the mean instead
+sample_mean <- mean(my_nums)
+
+# use a function to print the result
+print(sample_mean)
+```
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+```{r include=TRUE}
+# generate the numbers 1 to 6
+my_nums <- seq(6)
+
+# use a function to compute the mean instead
+sample_mean <- mean(my_nums)
+
+# use a function to print the result
+print(sample_mean)
+```
+
+
+## Vectors
+
+<br>
+An ordered collection of numbers:
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+
+
+``` r
+# use the concatenation function to create vectors
+my_vector <- c(1, 2, 3, 4, 5, 6)
+
+# print the vector
+print(my_vector)
+
+# print the elements that are greater than 4
+print(my_vector[my_vector > 4])
+```
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+```{r}
+print(c(1, 2, 3, 4, 5, 6))
+print(c(1, 2, 3, 4, 5, 6)[5:6])
+```
+
+
+
+## Types
+
+<br>
+The type of your data determines what you can do with it:
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+``` r
+string <- "The mean is: "
+integer <- c(1L, 2L, 3L, 4L, 5L, 6L)
+double <- mean(integer)
+logical <- double > 3
+
+print(paste0(string, double))
+print(paste0("Is the mean greater than 3? ", logical))
+```
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+```{r include=TRUE}
+string <- "The mean is: "
+integer <- c(1L, 2L, 3L, 4L, 5L, 6L)
+double <- mean(integer)
+logical <- double > 3
+
+print(paste0(string, double))
+print(paste0("Is the mean greater than 3? ", logical))
+```
+
+::: {.white-text}
+
+This is for spacing
+
+This is also for spacing
+
+This, too, is for spacing
+
+:::
+
+
+## Types
+
+<br>
+The type of your data determines what you can do with it:
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+
+```r
+string <- "The mean is: "
+
+print(mean(string))
+```
+
+
+::: {.white-text}
+
+This is for spacing
+
+:::
+
+<code style="color:red;font-size:x-large;">
+Warning: argument is not numeric or logical: returning NA
+</code>
+
+```{r}
+# "Warning: argument is not numeric or logical: returning NA"
+print(mean(string))
+```
+
+
+
