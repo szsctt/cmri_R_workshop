@@ -38,6 +38,8 @@ The other language most commonly used  for data science is `python`.  Some peopl
 
 I use both `R` and `python`, and most (but not all) people who do a lot of data science know how to use both. But today we're learning `R` because I think it usually what I turn to when someone in the lab asks me for help analysing their data, and I think everyone can learn to use it for those same tasks too.
 
+I made all of the material for this course (including the website and slides) in `Rstudio` using `R`.  A little bit can take you a long way!
+
 ## Introduction to RStudio
 
 `RStudio` is an [integrated development environment](https://en.wikipedia.org/wiki/Integrated_development_environment) that makes it much easier to work with the `R` language.  It's free, cross-platform and provides many benefits such as project management and version control integration.
@@ -386,7 +388,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1]  0.9241985  1.0946351  0.8778931  3.8240085 -0.4327135
+[1] 2.115752 2.347277 1.562905 1.582298 1.145930
 ```
 
 :::::::::::::::::::::::::::::::::
