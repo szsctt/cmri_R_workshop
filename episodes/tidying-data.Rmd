@@ -1,5 +1,5 @@
 ---
-title: 'tidying_data'
+title: 'Working with tabular data'
 teaching: 10
 exercises: 2
 ---
@@ -84,6 +84,9 @@ This is tidy because each column represents a variable (library, barcode and cou
 
 
 
+
+
+
 ::::::::::::::::::::::::::::::::::::: discussion
 
 Open the excel file `readr/untidy_data.xlsx`.  Do you think this dataset is in a tidy format?  Why/why not?
@@ -112,7 +115,10 @@ To make it tidy:
 
 
 
+## Resources
 
+ - [Tidy data vignette](https://cloud.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
+ - [Tidy data paper](https://vita.had.co.nz/papers/tidy-data.pdf)
 
 
 
