@@ -40,6 +40,146 @@ I use both `R` and `python`, and most (but not all) people who do a lot of data 
 
 I made all of the material for this course (including the website and slides) in `Rstudio` using `R`.  A little bit can take you a long way!
 
+### There's more than one way to skin a cat
+
+This course will teach a particular 'dialect' of `R` called the tidyverse.  This is a collection of packages mostly written by Hadley Wickham, that focus on the concept of 'tidy' data.
+
+You'll soon discover that when coding, there are many ways of getting to the same output.  Some of them are more efficient than others, and some of them are just easier to code than others.  The tidyverse packages are hugely popular in the R community, and when I started I found them easy to work with. 
+
+However, if you stick with `R` long enough, you'll probably end up needing to learn some additional base R (particularly if you use packages from outside the tidyverse).  If you want to get a head start, I'll include some links to resources at the end of this lesson.
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+This lesson teaches the very basics.  If you can predict what will happen after every section of the following script (and you known what a comment is), you can skip this lesson.
+
+
+```r
+# section 1
+100 ** 1
+
+# section 2
+a <- 4
+b <- 3
+a + b
+
+# section 3
+round(3.1415, digits=2)
+
+# section 4
+library(stats)
+
+# section 5
+stringr::str_length("what is the output?")
+
+# section 6
+as.integer(c(1.96,2.09,3.12))
+
+# section 6
+as.numeric(c("one", "two", "three"))
+
+```
+
+
+::::::::::: solution
+
+
+
+
+```r
+# section 1
+100 ** 1
+```
+
+```{.output}
+[1] 100
+```
+
+100 to the power of 1 is 100
+
+
+```r
+# section 2
+
+# assign the value 4 to variable a
+a <- 4
+# assign the value 3 to variable b
+b <- 3
+# add the values of a and b
+a + b
+```
+
+```{.output}
+[1] 7
+```
+
+4 + 3 is 7
+
+
+```r
+# section 3
+round(pi, digits=2)
+```
+
+```{.output}
+[1] 3.14
+```
+
+Using the `round()` function to round  $\pi$ to two decimal places gives the result 3.14
+
+
+```r
+# section 4
+library(stats)
+```
+
+No output, just loading the `stats` library.
+
+
+```r
+# section 5
+stringr::str_length("what is the output?")
+```
+
+```{.output}
+[1] 19
+```
+
+You might need the help function for this one - there are 19 characters in the string.
+
+
+```r
+# section 6
+as.integer(c(1.96,2.09,3.12))
+```
+
+```{.output}
+[1] 1 2 3
+```
+
+Coercing a vector of type double to integers truncates numbers to give integers.
+
+
+```r
+# section 7
+as.numeric(c("one", "two", "three"))
+```
+
+```{.warning}
+Warning: NAs introduced by coercion
+```
+
+```{.output}
+[1] NA NA NA
+```
+
+This one is tricky!  Coercing
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
 ## Introduction to RStudio
 
 `RStudio` is an [integrated development environment](https://en.wikipedia.org/wiki/Integrated_development_environment) that makes it much easier to work with the `R` language.  It's free, cross-platform and provides many benefits such as project management and version control integration.
@@ -388,13 +528,188 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1] -4.2462499  1.0786417 -0.6222225  2.8577272  0.8284949
+[1] -1.2968199  1.2344145 -0.2454489  1.2992513  2.1199057
 ```
 
 :::::::::::::::::::::::::::::::::
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+### Using libraries
+
+One of the great things about `R` is that a lot of other people use it, so often somebody has worked out an efficient way of doing things that you can use.  This way, you don't have to build your code from the ground up; instead you can use functions that other people have written.
+
+When you use other peoples' functions, they will be packaged in to *libraries* (also called *packages*) that you can import.  In order to use library, it first must be installed.  R provides the function `install.packages()` which you can use to install libraries from `CRAN` (an online repository of libraries).
+
+```r
+install.packages("library_name")
+```
+
+Note the use of quotation marks around the library name - this tells `R` that this is a string, rather than a variable (more on strings in the next section).
+
+::::::::::::::::::::: challenge
+
+#### Challenge 4: Installing a library
+
+What code would you use to install the `tidyverse` library?  Try it out!
+
+::::::::::::: solution 
+
+#### Show me the solution
+
+```r
+install.packages("tidyverse")
+```
+::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::: callout
+
+#### Package-ception
+
+Most of the packages that you'll use will come from `CRAN`, but you might come across other sources of packages that are also useful.  These are usually installed by packages that you can get from `CRAN`.  
+
+For example, the [`Bioconductor`](https://www.bioconductor.org/) suite consists of packages that are useful for bioinformatics. To install any `Bioconductor` libraries, you'll first need to install the `BiocManager` package from `CRAN`, and then use functions from this library to install `Bioconductor` packages.
+
+```r
+# install BiocManager package
+install.packages("BiocManager")
+
+# use the install function from BiocManager to install the GenomicFeatures and karyoploteR libraries
+BiocManager::install(c("GenomicFeatures", "karyoploteR"))
+```
+
+Another place you might install packages from is [`github`](https://github.com/). Many developers host their code for their package on `github`, and then release it to `CRAN` when they think it's ready.  
+
+If you want to use the development version of a package (for example if you want to use a feature that hasn't been released yet), you can get it directly from `github` using the `devtools` package. Be careful when you do this - you'll get all the shiny newest features, but you might also run into new bugs that haven't been fixed yet!
+
+For example, if you want to install the [development version of `readr` from `github`](https://github.com/tidyverse/readr):
+
+```r
+# install the devtools package
+install.packages("devtools")
+
+# use the install function from devtools to install readr
+devtools::install_github("tidyverse/readr")
+```
+
+:::::::::::::::::::::::::::::
+
+
+By default, the only functions that when you start up `R` are the _base R_ functions.  If you want to use any functions from libraries that you've installed, you'll need to tell `R` which library they come from.
+
+One way to do this is is to use the `::` syntax: `packagename::functionname()`.  For example, we can use the `str_length()` function from the `stringr` package as follows
+
+
+```r
+stringr::str_length("testing")
+```
+
+```{.output}
+[1] 7
+```
+
+
+::::::::::::::::::::: challenge
+
+#### Challenge 5: Using a library
+
+What do you think will happen if we omit the `packagename::` part?
+
+::::::::::::: solution 
+
+#### Show me the solution
+
+
+```r
+str_length("testing")
+```
+
+```{.error}
+Error in str_length("testing"): could not find function "str_length"
+```
+
+We get an error because `R` doesn't know what the `str_length()` function is by default.
+
+::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::
+
+
+The other way to use functions from a library is to import all the functions in the library using the `library()` function.  It's best practice to put all the `library()` calls together at the top of your code, rather than sprinking them throughout.
+
+
+
+```r
+# import whole library
+library(stringr)
+
+# use the str_length function without ::
+str_length("testing")
+```
+
+```{.output}
+[1] 7
+```
+
+You can still use the `packagename::functionname()` syntax even if you've loaded the library. This makes it clear which library the function comes from, and some style guides recommend that you do this for every function you use.
+
+::::::::::::::::::::::::: callout
+
+#### Function conflicts
+
+The order you load your packages is important. If two functions from two different packages you've loaded have the same name, the one you loaded last will be used.  Sometimes packages will warn you about this - for example, when you load the `tidyverse` package (which is actually a collection of packages), you'll see something like this.
+
+
+```r
+library(tidyverse)
+```
+
+```{.output}
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ forcats 0.5.2 
+✔ readr   2.1.3      
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+```
+
+This tells us that the `filter()` function from `dplyr` has overwritten (or 'masked') the `filter()` function from the `stats` package, and there is a similar conflict for `lag()`.  
+
+You can still use `stats::filter()` in your code, but you must explicitly specify that you want to use the`stats` package by prefixing it with `stats::`.  If you just use `filter()`, you'll get the version from `dplyr`.  
+
+Not all packages warn you about conflicts, so be careful you're using the function that you think you're using!  This can be a source of strange errors, so try adding `packagename::` in front of your function calls if you this this might be happening.
+
+:::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::: challenge
+
+#### Challenge 6: Best practices
+
+
+In which situations do you think it's best to use the `packagename::functionname()` syntax, and when should you use `library()`?
+
+
+:::::::::: solution 
+
+There's no wrong or right answers here, but you might come across people that have (strong) opinions in this area.
+
+Usually, if I'm only using one or two functions from a library, I won't import the whole library, but just use the `packagename::functionname()` syntax.   If I'm going to be using a lot of functions from a library, I'll use `library()`.
+
+Some people consider it best practice to always use `packagename::functionname()`, since then it's clear which packages are being used and where.  This also helps avoid conflicts between functions with the same name in different packages.  
+
+However, this style is quite verbose (and a little distracting), and some people might say that this makes code written this way less readable.  In practice, I haven't come across much code that always uses explicit package names.
+
+:::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::
 
 ### Vectors
 
@@ -475,7 +790,7 @@ One way to think about this is that elements are always coerced into the type th
 
 ::::::::::::::::::::::::::::::::::::: challenge 
 
-#### Challenge 4: Types
+#### Challenge 7: Types
 
 
 What do you think will be the type of the following vector?
@@ -541,7 +856,7 @@ mean(c(1, 2, NA))
 
 ::::::::::::::::::::::::::::::::::::: challenge 
 
-#### Challenge 5: Removing NA
+#### Challenge 8: Removing NA
 
 
 Check the documentation of the `mean` function to find out how to ignore `NA` values when computing the mean of a vector.
@@ -683,13 +998,22 @@ my_great_project
 
 [r-markdown]: https://rmarkdown.rstudio.com/
 
-## Cheat sheets
+## Resources
+
+### Cheat sheets
 
 As you begin your journey with `R`, you might find it helpful to refer to one-page summaries (or 'cheat sheets') that other people have compiled.  For example, there are cheat sheets for :
 
 
 - [Commonly used functions](https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view)
 - [RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf)
+
+### Links
+
+ - [R for data science](https://r4ds.had.co.nz/index.html)
+ - [fasteR, a course teaching (mainly) base R](https://github.com/matloff/fasteR)
+ - [Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
+ - [More information about installing R packages](https://www.datacamp.com/tutorial/r-packages-guide)
 
 ## Acknowledgments
 
