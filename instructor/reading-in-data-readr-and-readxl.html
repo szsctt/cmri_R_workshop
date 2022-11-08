@@ -163,7 +163,8 @@
         
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#reading-in-data-from-excel-readxl">Reading in data from excel: readxl</a></li>
+        <ul><li><a href="#reading-in-data">Reading in data</a></li>
+<li><a href="#reading-in-data-from-excel-readxl">Reading in data from Excel: readxl</a></li>
 <li><a href="#reading-in-data-from-text-files-readr">Reading in data from text files: readr</a></li>
 <li><a href="#resources">Resources</a></li>
         </ul></div><!--/div.accordion-body-->
@@ -175,7 +176,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="tidying-data.html">3. tidying_data</a>
+        <a href="tidying-data.html">3. Working with tabular data</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -228,7 +229,7 @@
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="../instructor/introduction.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous: Introduction to R</a>
-        <a class="chapter-link float-end" href="../instructor/tidying-data.html" rel="next">Next: tidying_data... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/tidying-data.html" rel="next">Next: Working with tabular... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reading in data: readr and readxl</h1>
@@ -253,8 +254,7 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>What is tidy data?</li>
-<li>How can we get data into <code>R</code>?</li>
+<ul><li>How can we get data into <code>R</code>?</li>
 </ul></div>
 </div>
 </div>
@@ -270,16 +270,43 @@
 </div>
 </div>
 </div>
-<section id="reading-in-data-from-excel-readxl"><h2 class="section-heading">Reading in data from excel: readxl<a class="anchor" aria-label="anchor" href="#reading-in-data-from-excel-readxl"></a>
+<section id="reading-in-data"><h2 class="section-heading">Reading in data<a class="anchor" aria-label="anchor" href="#reading-in-data"></a>
 </h2>
-<hr class="half-width"><p>If you’ve entered data into a digital format, chances are that you’ve used spreadsheet software like Microsoft Excel.</p>
+<hr class="half-width"><p>So you want to make some awesome plots using <code>R</code>. The first step you’ll need to take is to import your data.</p>
+<p>When I first learnt <code>R</code> in a first-year statistics course, the way we did this was:</p>
+<ol style="list-style-type: decimal"><li>Open an Excel spreadsheet with the data</li>
+<li>Select the data to be imported</li>
+<li>Copy to the clipboard (<kbd>Cmd</kbd> + <kbd>c</kbd>)</li>
+<li>Open an R terminal</li>
+<li>Enter the command <code>read.table(pipe("pbpaste"), header = TRUE)</code>
+</li>
+</ol><p>This is a pretty convoluted way to do things! This weird process was part of the reason that, after I finished the course, I didn’t touch <code>R</code> again for almost ten years.</p>
+<p>Luckily, in the meantime people worked out better ways of doing things. This lesson will cover two awesome packages which can help you import your data: <code>readxl</code> for Excel files, and <code>readr</code> for text files.</p>
+</section><section id="reading-in-data-from-excel-readxl"><h2 class="section-heading">Reading in data from Excel: readxl<a class="anchor" aria-label="anchor" href="#reading-in-data-from-excel-readxl"></a>
+</h2>
+<hr class="half-width"><p>If you’ve entered data into a digital format, chances are that you’ve used spreadsheet software like Microsoft Excel. Excel makes data entry easy because it takes care of all of the formatting for you. But at some point, you’ll probably want to get your data out of Excel and into <code>R</code>. That’s where the <code>readxl</code> package comes in!</p>
+<p>The workhorse of this package is the <code>read_excel()</code> function. It takes as input a path to the file you want to read:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># define path to excel file to read</span></span>
+<span><span class="va">my_excel_sheet</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">"learners"</span>, <span class="st">"data"</span>, <span class="st">"readxl_example_1.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read in data </span></span>
+<span><span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_excel</span><span class="op">(</span><span class="va">my_excel_sheet</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/learners/data/readxl_example_1.xlsx'</code></pre>
+</div>
+<p>This creates a <code>tibble</code> object, which is a convenient way of storing rectangular data.</p>
 </section><section id="reading-in-data-from-text-files-readr"><h2 class="section-heading">Reading in data from text files: readr<a class="anchor" aria-label="anchor" href="#reading-in-data-from-text-files-readr"></a>
 </h2>
 <hr class="half-width"></section><section id="resources"><h2 class="section-heading">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
-<hr class="half-width"><ul><li><a href="https://cloud.r-project.org/web/packages/tidyr/vignettes/tidy-data.html" class="external-link">Tidy data vignette</a></li>
-<li><a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">Tidy data paper</a></li>
-<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf" class="external-link">Data import cheat sheet</a></li>
+<hr class="half-width"><ul><li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf" class="external-link">Data import cheat sheet</a></li>
 </ul><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -306,7 +333,7 @@ any links that you are not going to use.
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="../instructor/introduction.html" rel="prev"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous: Introduction to R</a>
-        <a class="chapter-link float-end" href="../instructor/tidying-data.html" rel="next">Next: tidying_data... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/tidying-data.html" rel="next">Next: Working with tabular... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav></div> <!-- / div.primary-content.col-xs-12 -->
 <!-- END:   inst/pkgdown/templates/content-instructor.html-->
@@ -351,7 +378,7 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/instructor/reading-in-data-readr-and-readxl.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/instructor/reading-in-data-readr-and-readxl.html",
-  "dateCreated": "2022-10-25",
+  "dateCreated": "2022-11-08",
   "dateModified": "2022-11-08",
   "datePublished": "2022-11-08"
 }
