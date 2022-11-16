@@ -76,7 +76,7 @@ stringr::str_length("what is the output?")
 # section 6
 as.integer(c(1.96,2.09,3.12))
 
-# section 6
+# section 7
 as.numeric(c("one", "two", "three"))
 
 ```
@@ -139,7 +139,7 @@ Coercing a vector of type double to integers truncates numbers to give integers.
 as.numeric(c("one", "two", "three"))
 ```
 
-This one is tricky!  Coercing
+This one is tricky!  Trying to coerce a string that isn't only digits just results in NA values.
 
 ::::::::::::::::::
 
