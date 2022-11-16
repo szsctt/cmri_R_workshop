@@ -19,8 +19,6 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-
-
 ## Reading in data
 
 So you want to make some awesome plots using `R`.  The first step you'll need to take is to import your data.
@@ -49,13 +47,97 @@ The workhorse of this package is the `read_excel()` function.  It takes as input
 my_excel_sheet <- here::here("learners", "data", "readxl_example_1.xlsx")
 
 # read in data 
-readxl::read_excel(my_excel_sheet)
+my_excel_data <- readxl::read_excel(my_excel_sheet)
+my_excel_data
 ```
 
-This creates a `tibble` object, which is a convenient way of storing rectangular data.
+### File paths with `here::here()`
 
+Note that I use a funtion called `here` to create the file path to the excel file.  You can read more about this function [here](https://cran.r-project.org/web/packages/here/vignettes/here.html).   
+
+Using this function helps with cross-platform compatbility (so it works on Windows as well as MacOX and Linux).  This is because directories on Windows are usually separated with a backslash `\`, whereas on Unix-based distributions (like MacOS and Linux) directories are separated by a slash `/`.
+
+You can check what the file path looks like on your platform by printing out the variable we defined with the file path:
+
+```{r}
+my_excel_sheet
+```
+
+
+Using `here::here()` always generates paths relative to the project root (the file created by RStudio when you make a new project, which has the file extension `.Rproj`).  If you move the project around on your filesystem (or send it to someone else), the import will still work.  This wouldn't be the case if you manually specified the absolute path to the file.
+
+### Tibbles
+
+Coming back to the output of the call to `readxl::read_excel()`: calls to this function return a `tibble` object with the data contained in the excel spreadsheet.
+
+The `tibble` object is a convenient way of storing rectangular data, where column has a type, (which is shown when you print the table).  Ideally, in a tibble each column should contain data from one variable, and each row consists of observations of each varaiables - this is known as 'tidy data' (more on this in the next lesson).
+
+If you don't specify the types (like character, integer, double) of each column, `readxl` will try to [guess them based on the types in the excel spreadhsheet](https://readxl.tidyverse.org/articles/cell-and-column-types.html).  This can lead to unexpected behaviour, especially if you mix numbers and strings in the same column.
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+#### Challenge 1: Column types
+
+
+Open the file `readxl_example_2.xlsx` in Excel.  What do you think the types will be when you import this file?
+
+:::::::::::::::::::::::: solution 
+
+#### Show me the solution
+ 
+
+```{r}
+# read in data 
+data <- readxl::read_excel(here::here("learners", "data", "readxl_example_2.xlsx"))
+head(data)
+```
+
+Note that:
+
+ - The 'replicate' column has a type of `dbl` even though it contains only integers.
+ - The 'drug concentration' column is of type `chr` because R doesn't know that 'uM' is a unit.
+ - Mixing numbers and charaters in the 'assay 2' column results in a column of characters (why do you think this is?)
+ 
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+The type of the columns is important to be aware of because some fucntions in R expect that you feed them columns of a particular type.  For example, we can extract the 'drug concentration' column from the second file we imported using the `$` operator.
+
+```{r}
+conc <- data$`drug concentration`
+conc
+```
+
+We can then extract the first two characters of each string in this column using `stringr::str_sub()`:
+
+```{r}
+nums <- stringr::str_sub(conc, 1, 2)
+```
+
+But we can't add one to this column:
+
+```{r}
+conc + 1
+```
+
+
+### Specifying column types
+
+
+Since the guessing of types can result in unexpected behaviour, it's best to always specify the types of data when you import it.  You can do this in a verbose way:
+
+```{r}
+data <- readxl::read_excel(here::here("learners", "data", "readxl_example_2.xlsx"),
+                           col_types = c("numeric", "text", "text", "text", "numeric"))
+data
+```
+
+Note that the last column ('assay 3') contains boolean (TRUE/FALSE) values, but we cooerced it to a numeric type when we imported it.  `R` prints a warning to let us know.
 
 ## Reading in data from text files: readr
+
+Alternatively, you might have tabular data in a text file.  In these kinds of files, each row of the file is a row of the table, and usually either tabs or commas separate the values in each column.  If you have comma-separated data (like a `.csv` file) the `readr::read_csv()` function will be most convenient, and if your data is tab-separated (like a `.tsv` file), you'll want `readr::read_tsv()`.  If you have a different delimiter, you can use `readr::read_delim(file, delim=delimiter)`, where `delmiter` is a string containing your delimiter.
 
 ## Resources
 
