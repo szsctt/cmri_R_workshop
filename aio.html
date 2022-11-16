@@ -265,7 +265,7 @@
         
 <section id="aio-introduction"><p>Content from <a href="introduction.html">Introduction to R and Rstudio</a></p>
 <hr>
-<p> Last updated on 2022-11-15 | 
+<p> Last updated on 2022-11-16 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -355,7 +355,7 @@
 <span><span class="co"># section 6</span></span>
 <span><span class="fu">as.integer</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="fl">1.96</span>,<span class="fl">2.09</span>,<span class="fl">3.12</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># section 6</span></span>
+<span><span class="co"># section 7</span></span>
 <span><span class="fu">as.numeric</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 </div>
@@ -466,7 +466,7 @@
 </h3>
 <pre class="output" tabindex="0"><code>[1] NA NA NA</code></pre>
 </div>
-<p>This one is tricky! Coercing</p>
+<p>This one is tricky! Trying to coerce a string that isn’t only digits just results in NA values.</p>
 </div>
 </div>
 </div>
@@ -874,7 +874,7 @@ mean of x mean of y
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  1.702982 -0.953679  3.294194 -1.154356  1.856474</code></pre>
+<pre class="output" tabindex="0"><code>[1]  0.7716332 -0.4400949  0.7519042  2.0720300  0.5870140</code></pre>
 </div>
 </div>
 </div>
@@ -1433,7 +1433,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-reading-in-data-readr-and-readxl"><p>Content from <a href="reading-in-data-readr-and-readxl.html">Reading in data: readr and readxl</a></p>
 <hr>
-<p> Last updated on 2022-11-15 | 
+<p> Last updated on 2022-11-16 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/reading-in-data-readr-and-readxl.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1494,17 +1494,374 @@ any links that you are not going to use.
 <span><span class="va">my_excel_sheet</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">"learners"</span>, <span class="st">"data"</span>, <span class="st">"readxl_example_1.xlsx"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># read in data </span></span>
-<span><span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_excel</span><span class="op">(</span><span class="va">my_excel_sheet</span><span class="op">)</span></span></code></pre>
+<span><span class="va">my_excel_data</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_excel</span><span class="op">(</span><span class="va">my_excel_sheet</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="error" tabindex="0"><code>Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/learners/data/readxl_example_1.xlsx'</code></pre>
 </div>
-<p>This creates a <code>tibble</code> object, which is a convenient way of storing rectangular data.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_excel_data</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'my_excel_data' not found</code></pre>
+</div>
+<div class="section level3">
+<h3 id="file-paths-with-herehere">File paths with <code>here::here()</code>
+<a class="anchor" aria-label="anchor" href="#file-paths-with-herehere"></a>
+</h3>
+<p>Note that I use a funtion called <code>here</code> to create the file path to the excel file. You can read more about this function <a href="https://cran.r-project.org/web/packages/here/vignettes/here.html" class="external-link">here</a>.</p>
+<p>Using this function helps with cross-platform compatbility (so it works on Windows as well as MacOX and Linux). This is because directories on Windows are usually separated with a backslash <code>\</code>, whereas on Unix-based distributions (like MacOS and Linux) directories are separated by a slash <code>/</code>.</p>
+<p>You can check what the file path looks like on your platform by printing out the variable we defined with the file path:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_excel_sheet</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/learners/data/readxl_example_1.xlsx"</code></pre>
+</div>
+<p>Using <code>here::here()</code> always generates paths relative to the project root (the file created by RStudio when you make a new project, which has the file extension <code>.Rproj</code>). If you move the project around on your filesystem (or send it to someone else), the import will still work. This wouldn’t be the case if you manually specified the absolute path to the file.</p>
+</div>
+<div class="section level3">
+<h3 id="tibbles">Tibbles<a class="anchor" aria-label="anchor" href="#tibbles"></a>
+</h3>
+<p>Coming back to the output of the call to <code>readxl::read_excel()</code>: calls to this function return a <code>tibble</code> object with the data contained in the excel spreadsheet.</p>
+<p>The <code>tibble</code> object is a convenient way of storing rectangular data, where column has a type, (which is shown when you print the table). Ideally, in a tibble each column should contain data from one variable, and each row consists of observations of each varaiables - this is known as ‘tidy data’ (more on this in the next lesson).</p>
+<p>If you don’t specify the types (like character, integer, double) of each column, <code>readxl</code> will try to <a href="https://readxl.tidyverse.org/articles/cell-and-column-types.html" class="external-link">guess them based on the types in the excel spreadhsheet</a>. This can lead to unexpected behaviour, especially if you mix numbers and strings in the same column.</p>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="challenge-1-column-types" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Column types<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>Open the file <code>readxl_example_2.xlsx</code> in Excel. What do you think the types will be when you import this file?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># read in data </span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_excel</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">"learners"</span>, <span class="st">"data"</span>, <span class="st">"readxl_example_2.xlsx"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/learners/data/readxl_example_2.xlsx'</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">head</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>                                                                            
+1 function (..., list = character(), package = NULL, lib.loc = NULL,        
+2     verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) 
+3 {                                                                         
+4     fileExt &lt;- function(x) {                                              
+5         db &lt;- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)                     
+6         ans &lt;- sub(".*\\\\.", "", x)                                      </code></pre>
+</div>
+<p>Note that:</p>
+<ul>
+<li>The ‘replicate’ column has a type of <code>dbl</code> even though it contains only integers.</li>
+<li>The ‘drug concentration’ column is of type <code>chr</code> because R doesn’t know that ‘uM’ is a unit.</li>
+<li>Mixing numbers and charaters in the ‘assay 2’ column results in a column of characters (why do you think this is?)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<p>The type of the columns is important to be aware of because some fucntions in R expect that you feed them columns of a particular type. For example, we can extract the ‘drug concentration’ column from the second file we imported using the <code>$</code> operator.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">conc</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">`drug concentration`</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in data$`drug concentration`: object of type 'closure' is not subsettable</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">conc</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'conc' not found</code></pre>
+</div>
+<p>We can then extract the first two characters of each string in this column using <code>stringr::str_sub()</code>:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nums</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_sub</span><span class="op">(</span><span class="va">conc</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in stri_sub(string, from = start, to = end): object 'conc' not found</code></pre>
+</div>
+<p>But we can’t add one to this column:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">conc</span> <span class="op">+</span> <span class="fl">1</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'conc' not found</code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="specifying-column-types">Specifying column types<a class="anchor" aria-label="anchor" href="#specifying-column-types"></a>
+</h3>
+<p>Since the guessing of types can result in unexpected behaviour, it’s best to always specify the types of data when you import it. You can do this in a verbose way:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu">read_excel</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">"learners"</span>, <span class="st">"data"</span>, <span class="st">"readxl_example_2.xlsx"</span><span class="op">)</span>,</span>
+<span>                           col_types <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"numeric"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"text"</span>, <span class="st">"numeric"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/learners/data/readxl_example_2.xlsx'</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>function (..., list = character(), package = NULL, lib.loc = NULL, 
+    verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) 
+{
+    fileExt &lt;- function(x) {
+        db &lt;- grepl("\\.[^.]+\\.(gz|bz2|xz)$", x)
+        ans &lt;- sub(".*\\.", "", x)
+        ans[db] &lt;- sub(".*\\.([^.]+\\.)(gz|bz2|xz)$", "\\1\\2", 
+            x[db])
+        ans
+    }
+    my_read_table &lt;- function(...) {
+        lcc &lt;- Sys.getlocale("LC_COLLATE")
+        on.exit(Sys.setlocale("LC_COLLATE", lcc))
+        Sys.setlocale("LC_COLLATE", "C")
+        read.table(...)
+    }
+    stopifnot(is.character(list))
+    names &lt;- c(as.character(substitute(list(...))[-1L]), list)
+    if (!is.null(package)) {
+        if (!is.character(package)) 
+            stop("'package' must be a character vector or NULL")
+    }
+    paths &lt;- find.package(package, lib.loc, verbose = verbose)
+    if (is.null(lib.loc)) 
+        paths &lt;- c(path.package(package, TRUE), if (!length(package)) getwd(), 
+            paths)
+    paths &lt;- unique(normalizePath(paths[file.exists(paths)]))
+    paths &lt;- paths[dir.exists(file.path(paths, "data"))]
+    dataExts &lt;- tools:::.make_file_exts("data")
+    if (length(names) == 0L) {
+        db &lt;- matrix(character(), nrow = 0L, ncol = 4L)
+        for (path in paths) {
+            entries &lt;- NULL
+            packageName &lt;- if (file_test("-f", file.path(path, 
+                "DESCRIPTION"))) 
+                basename(path)
+            else "."
+            if (file_test("-f", INDEX &lt;- file.path(path, "Meta", 
+                "data.rds"))) {
+                entries &lt;- readRDS(INDEX)
+            }
+            else {
+                dataDir &lt;- file.path(path, "data")
+                entries &lt;- tools::list_files_with_type(dataDir, 
+                  "data")
+                if (length(entries)) {
+                  entries &lt;- unique(tools::file_path_sans_ext(basename(entries)))
+                  entries &lt;- cbind(entries, "")
+                }
+            }
+            if (NROW(entries)) {
+                if (is.matrix(entries) &amp;&amp; ncol(entries) == 2L) 
+                  db &lt;- rbind(db, cbind(packageName, dirname(path), 
+                    entries))
+                else warning(gettextf("data index for package %s is invalid and will be ignored", 
+                  sQuote(packageName)), domain = NA, call. = FALSE)
+            }
+        }
+        colnames(db) &lt;- c("Package", "LibPath", "Item", "Title")
+        footer &lt;- if (missing(package)) 
+            paste0("Use ", sQuote(paste("data(package =", ".packages(all.available = TRUE))")), 
+                "\n", "to list the data sets in all *available* packages.")
+        else NULL
+        y &lt;- list(title = "Data sets", header = NULL, results = db, 
+            footer = footer)
+        class(y) &lt;- "packageIQR"
+        return(y)
+    }
+    paths &lt;- file.path(paths, "data")
+    for (name in names) {
+        found &lt;- FALSE
+        for (p in paths) {
+            tmp_env &lt;- if (overwrite) 
+                envir
+            else new.env()
+            if (file_test("-f", file.path(p, "Rdata.rds"))) {
+                rds &lt;- readRDS(file.path(p, "Rdata.rds"))
+                if (name %in% names(rds)) {
+                  found &lt;- TRUE
+                  if (verbose) 
+                    message(sprintf("name=%s:\t found in Rdata.rds", 
+                      name), domain = NA)
+                  thispkg &lt;- sub(".*/([^/]*)/data$", "\\1", p)
+                  thispkg &lt;- sub("_.*$", "", thispkg)
+                  thispkg &lt;- paste0("package:", thispkg)
+                  objs &lt;- rds[[name]]
+                  lazyLoad(file.path(p, "Rdata"), envir = tmp_env, 
+                    filter = function(x) x %in% objs)
+                  break
+                }
+                else if (verbose) 
+                  message(sprintf("name=%s:\t NOT found in names() of Rdata.rds, i.e.,\n\t%s\n", 
+                    name, paste(names(rds), collapse = ",")), 
+                    domain = NA)
+            }
+            if (file_test("-f", file.path(p, "Rdata.zip"))) {
+                warning("zipped data found for package ", sQuote(basename(dirname(p))), 
+                  ".\nThat is defunct, so please re-install the package.", 
+                  domain = NA)
+                if (file_test("-f", fp &lt;- file.path(p, "filelist"))) 
+                  files &lt;- file.path(p, scan(fp, what = "", quiet = TRUE))
+                else {
+                  warning(gettextf("file 'filelist' is missing for directory %s", 
+                    sQuote(p)), domain = NA)
+                  next
+                }
+            }
+            else {
+                files &lt;- list.files(p, full.names = TRUE)
+            }
+            files &lt;- files[grep(name, files, fixed = TRUE)]
+            if (length(files) &gt; 1L) {
+                o &lt;- match(fileExt(files), dataExts, nomatch = 100L)
+                paths0 &lt;- dirname(files)
+                paths0 &lt;- factor(paths0, levels = unique(paths0))
+                files &lt;- files[order(paths0, o)]
+            }
+            if (length(files)) {
+                for (file in files) {
+                  if (verbose) 
+                    message("name=", name, ":\t file= ...", .Platform$file.sep, 
+                      basename(file), "::\t", appendLF = FALSE, 
+                      domain = NA)
+                  ext &lt;- fileExt(file)
+                  if (basename(file) != paste0(name, ".", ext)) 
+                    found &lt;- FALSE
+                  else {
+                    found &lt;- TRUE
+                    zfile &lt;- file
+                    zipname &lt;- file.path(dirname(file), "Rdata.zip")
+                    if (file.exists(zipname)) {
+                      Rdatadir &lt;- tempfile("Rdata")
+                      dir.create(Rdatadir, showWarnings = FALSE)
+                      topic &lt;- basename(file)
+                      rc &lt;- .External(C_unzip, zipname, topic, 
+                        Rdatadir, FALSE, TRUE, FALSE, FALSE)
+                      if (rc == 0L) 
+                        zfile &lt;- file.path(Rdatadir, topic)
+                    }
+                    if (zfile != file) 
+                      on.exit(unlink(zfile))
+                    switch(ext, R = , r = {
+                      library("utils")
+                      sys.source(zfile, chdir = TRUE, envir = tmp_env)
+                    }, RData = , rdata = , rda = load(zfile, 
+                      envir = tmp_env), TXT = , txt = , tab = , 
+                      tab.gz = , tab.bz2 = , tab.xz = , txt.gz = , 
+                      txt.bz2 = , txt.xz = assign(name, my_read_table(zfile, 
+                        header = TRUE, as.is = FALSE), envir = tmp_env), 
+                      CSV = , csv = , csv.gz = , csv.bz2 = , 
+                      csv.xz = assign(name, my_read_table(zfile, 
+                        header = TRUE, sep = ";", as.is = FALSE), 
+                        envir = tmp_env), found &lt;- FALSE)
+                  }
+                  if (found) 
+                    break
+                }
+                if (verbose) 
+                  message(if (!found) 
+                    "*NOT* ", "found", domain = NA)
+            }
+            if (found) 
+                break
+        }
+        if (!found) {
+            warning(gettextf("data set %s not found", sQuote(name)), 
+                domain = NA)
+        }
+        else if (!overwrite) {
+            for (o in ls(envir = tmp_env, all.names = TRUE)) {
+                if (exists(o, envir = envir, inherits = FALSE)) 
+                  warning(gettextf("an object named %s already exists and will not be overwritten", 
+                    sQuote(o)))
+                else assign(o, get(o, envir = tmp_env, inherits = FALSE), 
+                  envir = envir)
+            }
+            rm(tmp_env)
+        }
+    }
+    invisible(names)
+}
+&lt;bytecode: 0x55ce8cf170c8&gt;
+&lt;environment: namespace:utils&gt;</code></pre>
+</div>
+<p>Note that the last column (‘assay 3’) contains boolean (TRUE/FALSE) values, but we cooerced it to a numeric type when we imported it. <code>R</code> prints a warning to let us know.</p>
+</div>
 </section><section id="reading-in-data-from-text-files-readr"><h2 class="section-heading">Reading in data from text files: readr<a class="anchor" aria-label="anchor" href="#reading-in-data-from-text-files-readr"></a>
 </h2>
-<hr class="half-width"></section><section id="resources"><h2 class="section-heading">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
+<hr class="half-width">
+<p>Alternatively, you might have tabular data in a text file. In these kinds of files, each row of the file is a row of the table, and usually either tabs or commas separate the values in each column. If you have comma-separated data (like a <code>.csv</code> file) the <code>readr::read_csv()</code> function will be most convenient, and if your data is tab-separated (like a <code>.tsv</code> file), you’ll want <code>readr::read_tsv()</code>. If you have a different delimiter, you can use <code>readr::read_delim(file, delim=delimiter)</code>, where <code>delmiter</code> is a string containing your delimiter.</p>
+</section><section id="resources"><h2 class="section-heading">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
 <hr class="half-width">
 <ul>
@@ -1532,7 +1889,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-tidying-data"><p>Content from <a href="tidying-data.html">Working with tabular data</a></p>
 <hr>
-<p> Last updated on 2022-11-15 | 
+<p> Last updated on 2022-11-16 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/tidying-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1575,8 +1932,8 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1      394    95   394   818   800   105
-2 lib2       89    85   406   399   819   793</code></pre>
+1 lib1      103   104   407   787    73   397
+2 lib2      793   815   113   396   806   393</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -1586,23 +1943,23 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        394    89
-2 b2         95    85
-3 b3        394   406
-4 b4        818   399
-5 b5        800   819
-6 b6        105   793</code></pre>
+1 b1        103   793
+2 b2        104   815
+3 b3        407   113
+4 b4        787   396
+5 b5         73   806
+6 b6        397   393</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code># A tibble: 2 × 12
-  library `394`  `95`   `818`  `800`  `105`  `89`   `85`   `406`  `399`  `819` 
-  &lt;chr&gt;   &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt; &lt;list&gt;
-1 lib1    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;NULL&gt; &lt;NULL&gt; &lt;NULL&gt; &lt;NULL&gt; &lt;NULL&gt;
-2 lib2    &lt;NULL&gt; &lt;NULL&gt; &lt;NULL&gt; &lt;NULL&gt; &lt;NULL&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; 
-# … with 1 more variable: `793` &lt;list&gt;</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 13
+  library `103` `104` `407` `787` `73`  `397` `793` `815` `113` `396` `806`
+  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
+# … with 1 more variable: `393` &lt;chr&gt;</code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -1625,18 +1982,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        394
- 2 lib1    b2         95
- 3 lib1    b3        394
- 4 lib1    b4        818
- 5 lib1    b5        800
- 6 lib1    b6        105
- 7 lib2    b1         89
- 8 lib2    b2         85
- 9 lib2    b3        406
-10 lib2    b4        399
-11 lib2    b5        819
-12 lib2    b6        793</code></pre>
+ 1 lib1    b1        103
+ 2 lib1    b2        104
+ 3 lib1    b3        407
+ 4 lib1    b4        787
+ 5 lib1    b5         73
+ 6 lib1    b6        397
+ 7 lib2    b1        793
+ 8 lib2    b2        815
+ 9 lib2    b3        113
+10 lib2    b4        396
+11 lib2    b5        806
+12 lib2    b6        393</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -1730,9 +2087,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/aio.html",
-  "dateCreated": "2022-11-08",
-  "dateModified": "2022-11-15",
-  "datePublished": "2022-11-15"
+  "dateCreated": "2022-11-16",
+  "dateModified": "2022-11-16",
+  "datePublished": "2022-11-16"
 }
 
   </script><script>
