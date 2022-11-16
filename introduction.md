@@ -76,7 +76,7 @@ stringr::str_length("what is the output?")
 # section 6
 as.integer(c(1.96,2.09,3.12))
 
-# section 6
+# section 7
 as.numeric(c("one", "two", "three"))
 
 ```
@@ -174,7 +174,7 @@ Warning: NAs introduced by coercion
 [1] NA NA NA
 ```
 
-This one is tricky!  Coercing
+This one is tricky!  Trying to coerce a string that isn't only digits just results in NA values.
 
 ::::::::::::::::::
 
@@ -528,7 +528,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1]  1.702982 -0.953679  3.294194 -1.154356  1.856474
+[1]  0.7716332 -0.4400949  0.7519042  2.0720300  0.5870140
 ```
 
 :::::::::::::::::::::::::::::::::

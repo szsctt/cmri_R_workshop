@@ -32,8 +32,8 @@ There are many possible ways to structure a dataset.  For example, if we conduct
 # A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   <chr>   <int> <int> <int> <int> <int> <int>
-1 lib1      394    95   394   818   800   105
-2 lib2       89    85   406   399   819   793
+1 lib1      103   104   407   787    73   397
+2 lib2      793   815   113   396   806   393
 ```
 
 In this table, the counts for each barcode are stored in a separate column.  The 'library' column tells us which library the counts on each row are from.
@@ -46,12 +46,12 @@ Conversely, we could keep the counts for each library in a separate column, and 
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1        394    89
-2 b2         95    85
-3 b3        394   406
-4 b4        818   399
-5 b5        800   819
-6 b6        105   793
+1 b1        103   793
+2 b2        104   815
+3 b3        407   113
+4 b4        787   396
+5 b5         73   806
+6 b6        397   393
 ```
 
 
@@ -59,12 +59,12 @@ We could even structure the table like this:
 
 
 ```{.output}
-# A tibble: 2 × 12
-  library `394`  `95`   `818`  `800`  `105`  `89`   `85`   `406`  `399`  `819` 
-  <chr>   <list> <list> <list> <list> <list> <list> <list> <list> <list> <list>
-1 lib1    <chr>  <chr>  <chr>  <chr>  <chr>  <NULL> <NULL> <NULL> <NULL> <NULL>
-2 lib2    <NULL> <NULL> <NULL> <NULL> <NULL> <chr>  <chr>  <chr>  <chr>  <chr> 
-# … with 1 more variable: `793` <list>
+# A tibble: 2 × 13
+  library `103` `104` `407` `787` `73`  `397` `793` `815` `113` `396` `806`
+  <chr>   <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
+1 lib1    b1    b2    b3    b4    b5    b6    <NA>  <NA>  <NA>  <NA>  <NA> 
+2 lib2    <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  b1    b2    b3    b4    b5   
+# … with 1 more variable: `393` <chr>
 ```
 
 This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.
@@ -88,18 +88,18 @@ table1
 # A tibble: 12 × 3
    library barcode count
    <chr>   <chr>   <int>
- 1 lib1    b1        394
- 2 lib1    b2         95
- 3 lib1    b3        394
- 4 lib1    b4        818
- 5 lib1    b5        800
- 6 lib1    b6        105
- 7 lib2    b1         89
- 8 lib2    b2         85
- 9 lib2    b3        406
-10 lib2    b4        399
-11 lib2    b5        819
-12 lib2    b6        793
+ 1 lib1    b1        103
+ 2 lib1    b2        104
+ 3 lib1    b3        407
+ 4 lib1    b4        787
+ 5 lib1    b5         73
+ 6 lib1    b6        397
+ 7 lib2    b1        793
+ 8 lib2    b2        815
+ 9 lib2    b3        113
+10 lib2    b4        396
+11 lib2    b5        806
+12 lib2    b6        393
 ```
 
 This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.
