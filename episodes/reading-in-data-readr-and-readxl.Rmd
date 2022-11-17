@@ -1,6 +1,6 @@
 ---
 title: 'Reading in data: readr and readxl'
-teaching: 10
+teaching: 20
 exercises: 2
 ---
 
@@ -21,6 +21,11 @@ exercises: 2
 
 ## Reading in data
 
+```{r setup, include=FALSE}
+#knitr::opts_knit$set(root.dir = here::here("episodes"))
+```
+
+
 So you want to make some awesome plots using `R`.  The first step you'll need to take is to import your data.
 
 When I first learnt `R` in a first-year statistics course, the way we did this was:
@@ -40,20 +45,20 @@ Luckily, in the meantime people worked out better ways of doing things.  This le
 
 If you've entered data into a digital format, chances are that you've used spreadsheet software like Microsoft Excel.  Excel makes data entry easy because it takes care of all of the formatting for you.  But at some point, you'll probably want to get your data out of Excel and into `R`. That's where the `readxl` package comes in!
 
-The workhorse of this package is the `read_excel()` function.  It takes as input a path to the file you want to read:
+The workhorse of this package is the `read_xlsx()` function (or `read_xls` for older excel files).  It takes as input a path to the file you want to read.
 
 ```{r}
 # define path to excel file to read
-my_excel_sheet <- here::here("learners", "data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("..", "episodes",  "data", "readxl_example_1.xlsx")
 
 # read in data 
-my_excel_data <- readxl::read_excel(my_excel_sheet)
+my_excel_data <- readxl::read_xlsx(my_excel_sheet)
 my_excel_data
 ```
 
 ### File paths with `here::here()`
 
-Note that I use a funtion called `here` to create the file path to the excel file.  You can read more about this function [here](https://cran.r-project.org/web/packages/here/vignettes/here.html).   
+Note that I use a function called `here` to create the file path to the excel file.  You can read more about this function [here](https://cran.r-project.org/web/packages/here/vignettes/here.html).   
 
 Using this function helps with cross-platform compatbility (so it works on Windows as well as MacOX and Linux).  This is because directories on Windows are usually separated with a backslash `\`, whereas on Unix-based distributions (like MacOS and Linux) directories are separated by a slash `/`.
 
@@ -66,9 +71,16 @@ my_excel_sheet
 
 Using `here::here()` always generates paths relative to the project root (the file created by RStudio when you make a new project, which has the file extension `.Rproj`).  If you move the project around on your filesystem (or send it to someone else), the import will still work.  This wouldn't be the case if you manually specified the absolute path to the file.
 
+Note that this example file path is a little convoluted, because of the way the lessons are created.  Yours should be more straightforward and look more like this:
+
+```{r}
+my_excel_sheet <- here::here("data", "readxl_example_1.xlsx")
+```
+
+
 ### Tibbles
 
-Coming back to the output of the call to `readxl::read_excel()`: calls to this function return a `tibble` object with the data contained in the excel spreadsheet.
+Coming back to the output of the call to `readxl::read_xlsx()` - calls to this function return a `tibble` object with the data contained in the excel spreadsheet.
 
 The `tibble` object is a convenient way of storing rectangular data, where column has a type, (which is shown when you print the table).  Ideally, in a tibble each column should contain data from one variable, and each row consists of observations of each varaiables - this is known as 'tidy data' (more on this in the next lesson).
 
@@ -88,7 +100,7 @@ Open the file `readxl_example_2.xlsx` in Excel.  What do you think the types wil
 
 ```{r}
 # read in data 
-data <- readxl::read_excel(here::here("learners", "data", "readxl_example_2.xlsx"))
+data <- readxl::read_xlsx(here::here("..", "episodes", "data", "readxl_example_2.xlsx"))
 head(data)
 ```
 
@@ -121,36 +133,101 @@ But we can't add one to this column:
 conc + 1
 ```
 
-
 ### Specifying column types
 
 
 Since the guessing of types can result in unexpected behaviour, it's best to always specify the types of data when you import it.  You can do this in a verbose way:
 
 ```{r}
-data <- readxl::read_excel(here::here("learners", "data", "readxl_example_2.xlsx"),
+data <- readxl::read_xlsx(here::here("..", "episodes", "data", "readxl_example_2.xlsx"),
                            col_types = c("numeric", "text", "text", "text", "numeric"))
 data
 ```
 
-Note that the last column ('assay 3') contains boolean (TRUE/FALSE) values, but we cooerced it to a numeric type when we imported it.  `R` prints a warning to let us know.
+Note that the last column ('assay 3') contains boolean (TRUE/FALSE) values, but we coerced it to a numeric type when we imported it.  `R` prints a warning to let us know.
+
+### Other options
+
+`readxl::read_xlsx()` also has lots of other options to deal with other aspects of data imports - for example, you can:
+
+ - Use the `sheet` and `range` named arguments to specifiy which parts of the sheet to import 
+ - Skip a number of header rows using the `skip` option, 
+ - Provide a vector of your own column names using the `col_names` argument
+ - Pass `col_names=FALSE` to avoid using the first line of the file as your column names if your data doesn't have column names
+ 
+:::::::::::::: challenge
+
+#### Challenge 2: readxl
+
+Open the file `human_codon_table.xlsx` in Excel.  The columns of this table contain codons, frequencies of observations of each codon, and counts of each codon. 
+
+How do you think it should be imported?
+
+Import this data, including the `col_names`, `skip`, `col_types`, `sheet` and `range` named arguments.
+
+:::::: solution
+
+
+#### Show me the solution
+
+```{r}
+readxl::read_xlsx(here::here("..", "episodes", "data", "human_codon_table.xlsx"),
+                  col_names = c("codon", "frequency", "count"),
+                  skip=0,
+                  col_types = c('text', 'numeric', 'numeric'),
+                  sheet = 'human_codon_table',
+                  range = 'A2:C65' )
+```
+
+:::::::::::::::
+
+::::::::::::::::::::::::
 
 ## Reading in data from text files: readr
 
-Alternatively, you might have tabular data in a text file.  In these kinds of files, each row of the file is a row of the table, and usually either tabs or commas separate the values in each column.  If you have comma-separated data (like a `.csv` file) the `readr::read_csv()` function will be most convenient, and if your data is tab-separated (like a `.tsv` file), you'll want `readr::read_tsv()`.  If you have a different delimiter, you can use `readr::read_delim(file, delim=delimiter)`, where `delmiter` is a string containing your delimiter.
+Alternatively, you might have tabular data in a text file.  In these kinds of files, each row of the file is a row of the table, and usually either tabs or commas separate the values in each column.  
+
+If you have comma-separated data (like a `.csv` file) the `readr::read_csv()` function will be most convenient, and if your data is tab-separated (like a `.tsv` file), you'll want `readr::read_tsv()`.  If you have a different delimiter, you can use `readr::read_delim(file, delim=delimiter)`, where `delimiter` is a string containing your delimiter.
+
+The syntax is very similar to `read_xlsx()`, and you should specify the column types here as well.  Here I use the short form of the column specification - '`c`' for character and '`i`' for integer.
+
+```{r}
+data <- readr::read_csv(here::here("..", "episodes", "data", "readr_example_1.tsv"),
+                           col_types = c("cci"))
+data
+```
+
+You can read more about the column specification for `readr` functions [here](https://r4ds.had.co.nz/data-import.html).
+
+The other options for `read_csv()` are also similar to those for `read_xslx`, including `col_names` and `skip`.
+
+
+### Reading multiple files 
+
+If you have multiple files with the same columns and column types, you can pass a vector of file paths rather than an atomic vector.  To add an extra column with the file name (so you know which rows came from which files), use the `id` parameter.
+
+```{r}
+files <- c(here::here("episodes", "data", "sim_0_counts.txt"),
+           here::here("episodes", "data", "sim_1_counts.txt"))
+
+data <- readr::read_tsv(files, col_types = 'cci', id="file")
+
+head(data)
+```
+
+
 
 ## Resources
 
  - [Data import cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
+ - [Data import section from R for data science](https://r4ds.had.co.nz/data-import.html)
+ - [readxl documentation](https://readxl.tidyverse.org/)
+ - [readr documentation](https://readr.tidyverse.org/)
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Keeping your data tidy makes it easier to work with
-- Use `readxl::read_excel()` to import data from excel
-- Use `readr::read_delim()` to import data from delimited text files
+- Use `readxl::read_xlsx()` to import data from excel
+- Use `readr::read_tsv()`, `readr::read_csv()`, `readr::read_delim()` to import data from delimited text files
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
-
-
-
