@@ -6,16 +6,33 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How do you visualize data using `ggplot2`?
+- How can you combine individual plots?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Understand how to use aesthetics to create plots
+- Use geoms to create visualizations
+- Know how to facet to split by grouping variables
+- Modify visual elements using themes
+- Combine plots using `patchwork`
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables.  Using visualizations is essential for communicating your results, especially in large datasets.  
+
+There is lots of thinking about the best way to represent a given dataset, but one popular framework is the ['grammar of graphics' approach](http://vita.had.co.nz/papers/layered-grammar.pdf).  The idea here is to build up a graphic from multiple layers of components, including:
+
+ - data and aesthetic mappings
+ - geometric objects
+ - scales
+ - facets
+ 
+ 
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
