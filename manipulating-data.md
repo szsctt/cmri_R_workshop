@@ -1,5 +1,5 @@
 ---
-title: 'Manipulating data with `dplyr`'
+title: 'Data wrangling'
 teaching: 10
 exercises: 2
 ---
@@ -242,7 +242,7 @@ Do you prefer the long or wide form of the table?
 
 It's kind of annoying that we have the whole file names, rather than just the names of the cities.  To fix this, we can create (or overwrite) columns with `mutate()`.  
 
-![`dplyr::mutate()`](https://ab604.github.io/docs/coding-together-2019/img/dplyr-mutate-16-10-2019.png)
+![`dplyr::mutate()` [image credit](https://ab604.github.io/docs/coding-together-2019)](https://ab604.github.io/docs/coding-together-2019/img/dplyr-mutate-16-10-2019.png)
 
 For example, the `stringr::str_extract()` function extracts a matching pattern from a string:
 
@@ -347,7 +347,7 @@ Error in mutate(., across(contains("temp"), function(x) {: object 'weather' not 
 Let's say that now we want information about days that were cloudy - for example, those where there were fewer than 10 sunshine hours.  We can use `filter()` to get only those rows.
 
 
-![`dplyr::filter()`](https://ab604.github.io/docs/coding-together-2019/img/dplyr_filter.png)
+![`dplyr::filter()` [image credit](https://ab604.github.io/docs/coding-together-2019)](https://ab604.github.io/docs/coding-together-2019/img/dplyr_filter.png)
 
 
 ```r
@@ -534,7 +534,7 @@ Ooof, Brisbane was hot!  Maybe this changes your conclusion about which city is 
 
 If you want to drop or only retain columns from your table, use `select()`.
 
-![`dplyr::select()`](https://ab604.github.io/docs/coding-together-2019/img/dplyr_select.png)
+![`dplyr::select()` [image credit](https://ab604.github.io/docs/coding-together-2019)](https://ab604.github.io/docs/coding-together-2019/img/dplyr_select.png)
 
 For example, we added a `city` column to our table, so we can drop the `file` column that also contains this information.  
 
@@ -564,7 +564,7 @@ Error in select(., date, city, contains("3pm")): object 'weather' not found
 
 You can re-order the rows in a table by the values in one or more columns using `arrange()`.
 
-![`dplyr::arrange()`](https://ab604.github.io/docs/coding-together-2019/img/dplyr_arrange.png)
+![`dplyr::arrange()` [image credit](https://ab604.github.io/docs/coding-together-2019)](https://ab604.github.io/docs/coding-together-2019/img/dplyr_arrange.png)
 Here I sort for the hottest days, using `desc()` to get the maximum temperatures in descending order.
 
 
@@ -580,34 +580,138 @@ Error in arrange(., desc(max_temp_c)): object 'weather' not found
 
 
 
+::::::::::::: challenge
 
-### Joining data  
+#### Challenge 6: Using `arrange()` with `mutate()`
+
+Sometimes I use `arrange()` with `mutate()` and `row_number()` to add ranks to a table.
+
+Add a column ranking the days by minimum temperature for each city, where the coldest day for each is rank 1, the next coldest is rank 2, etc.
+
+::::::::: solution
+
+
+
+```r
+weather %>% 
+  group_by(city) %>% 
+  arrange(min_temp_c) %>% 
+  mutate(rank = row_number()) %>% 
+  # select only the relevant columns to verify that it worked
+  select(city, date, min_temp_c, rank)
+```
+
+```{.error}
+Error in group_by(., city): object 'weather' not found
+```
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
+
+### Joining data frames
+
+So far, we've only dealt with methods that work on one data frame.  Sometimes it's useful to combine information from two tables together to get a more complete picture of the data.
+
+There are several joining functions, which fall into two categories: 
+
+- [mutating joins](https://dplyr.tidyverse.org/reference/mutate-joins.html), which add extra columns to tables based on matching values
+- [filtering joins](https://dplyr.tidyverse.org/reference/filter-joins.html), which don't add extra columns but change the number of rows
+
+Here, I'll only cover the join I use the most, `left_join()`, but there are several joins of each type, which I will leave to you to explore more using the links above.
 
 ![left join](https://ab604.github.io/docs/coding-together-2019/img/left_join.png)
 
-![inner join](https://ab604.github.io/docs/coding-together-2019/img/inner_join.png)
-
-#### Filtering joins
+Let's say we have a second table which contains the forecast for each day.  Here I generate this randomly, but you could equally use `readr` or `readxl` to load this data in if you have it in a file.
 
 
+```r
+forecast <- weather %>% 
+  select(date, city) %>% 
+  mutate(forecast = sample(c("cloudy", "sunny"), size = n(), replace=TRUE))
+```
 
-![Semi join](https://ab604.github.io/docs/coding-together-2019/img/semi_join.png)
+```{.error}
+Error in select(., date, city): object 'weather' not found
+```
+
+```r
+forecast
+```
+
+```{.error}
+Error in eval(expr, envir, enclos): object 'forecast' not found
+```
+
+Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.
 
 
-![Anti join](https://ab604.github.io/docs/coding-together-2019/img/anti_join.png)
+```r
+weather %>% 
+  left_join(forecast, by=c("date", "city")) %>% 
+  select(city, date, sunshine_hours, forecast)
+```
 
-## Useful links and acknowlegements
+```{.error}
+Error in left_join(., forecast, by = c("date", "city")): object 'weather' not found
+```
 
- - 
+
+
+::::::::::::: challenge
+
+#### Challenge 7: [Blame it on the weatherman](https://www.youtube.com/watch?v=t2UFV2R3EZM)
+
+If a cloudy day is one where there are 10 or fewer hours of sunshine, on how many days was the forecast accurate?
+
+
+::::::::: solution
+
+
+
+```r
+weather %>% 
+  # join forecast information
+  left_join(forecast, by=c("date", "city")) %>% 
+  # was forecast accurate
+  mutate(forecast_accurate = case_when(
+    sunshine_hours > 10 & forecast == "sunny" ~ TRUE,
+    sunshine_hours <= 10 & forecast == "cloudy" ~ TRUE,
+    TRUE ~ FALSE
+  )) %>%
+  # count accurate and inaccurate forecasts
+  group_by(forecast_accurate) %>% 
+  summarise(count = n())
+```
+
+```{.error}
+Error in left_join(., forecast, by = c("date", "city")): object 'weather' not found
+```
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
+## Resources and acknowlegements
+
+ - [dplyr cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-transformation.pdf)
+ - [dplyr documentation](https://dplyr.tidyverse.org/)
+ - [Data transformation in R for data science](https://r4ds.had.co.nz/transform.html)
  - I've borrowed figures (and inspiration) from the excellent [coding togetheR course material](https://ab604.github.io/docs/coding-together-2019/data-wrangle-1.html)
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Use `summarise()` to summarise your data
+- Use `mutate()` to add new columns
+- Use `filter()` to filter rows by a condition
+- Use `select()` to remove or only retain certain rows
+- Use `arrange()` to re-order rows
+- Use `group_by()` to group data by the values in particular columns
+- Use joins to combine two data frames
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

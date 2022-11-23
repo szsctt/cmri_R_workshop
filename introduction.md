@@ -528,7 +528,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1]  2.3224816  0.3696889  0.7225556 -1.2790871  1.4735671
+[1]  6.6141025 -0.8653266  1.2215741  5.5043846  0.6306804
 ```
 
 :::::::::::::::::::::::::::::::::
@@ -979,11 +979,26 @@ my_great_project
     ├── 02_analyse.R
     └── 03_plot.R
 ```
+
+
+## Links and acknowledgements
+
+As you begin your journey with `R`, you might find it helpful to refer to one-page summaries (or 'cheat sheets') that other people have compiled.  For example, there are cheat sheets for:
+
+
+- [Commonly used functions](https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view)
+- [RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf)
+
+
+Here are some other useful links
+
+ - [R for data science](https://r4ds.had.co.nz/index.html)
+ - [fasteR, a course teaching (mainly) base R](https://github.com/matloff/fasteR)
+ - [Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
+ - [More information about installing R packages](https://www.datacamp.com/tutorial/r-packages-guide)
+
+This lesson is inspired by and draws on some material from [Software Carpentries introduction to R](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html), [Intro to R and Rstudio for Genomics](https://datacarpentry.org/genomics-r-intro/00-introduction/index.html).
  
-
-
-
-
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
@@ -996,26 +1011,4 @@ my_great_project
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-[r-markdown]: https://rmarkdown.rstudio.com/
-
-## Resources
-
-### Cheat sheets
-
-As you begin your journey with `R`, you might find it helpful to refer to one-page summaries (or 'cheat sheets') that other people have compiled.  For example, there are cheat sheets for :
-
-
-- [Commonly used functions](https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view)
-- [RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf)
-
-### Links
-
- - [R for data science](https://r4ds.had.co.nz/index.html)
- - [fasteR, a course teaching (mainly) base R](https://github.com/matloff/fasteR)
- - [Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
- - [More information about installing R packages](https://www.datacamp.com/tutorial/r-packages-guide)
-
-## Acknowledgments
-
-This lesson is inspired by and draws on some material from [Software Carpentries introduction to R](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/index.html), [Intro to R and Rstudio for Genomics](https://datacarpentry.org/genomics-r-intro/00-introduction/index.html).
 
