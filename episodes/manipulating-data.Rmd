@@ -1,5 +1,5 @@
 ---
-title: 'Manipulating data with `dplyr`'
+title: 'Data wrangling'
 teaching: 10
 exercises: 2
 ---
