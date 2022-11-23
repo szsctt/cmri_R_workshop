@@ -528,7 +528,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1]  6.6141025 -0.8653266  1.2215741  5.5043846  0.6306804
+[1]  2.211795 -4.185208  2.019470 -1.058806  1.367545
 ```
 
 :::::::::::::::::::::::::::::::::
@@ -727,19 +727,6 @@ a_different_vector <- c(2,1,3)
 ```
 
 
-You can get at the individual elements of a vector using brackets (`[`):
-
-```r
-# first element of double_vec
-double_vec[1]
-
-# third to fifth elements of integer_vec
-integer_vec[3:5]
-
-#first and fourth elements of character_vec
-character_vec[c(1,4)]
-```
-
 In `R`, vectors contain data of only one type.  Some of the types you might see are:
 
  - Double: real numbers which can take on any value (like 1.13, 6, -1004.29)
@@ -762,6 +749,21 @@ character_vec <- c("this", 'is', "a", 'vector')
 logical_vec <- c(TRUE, FALSE)
 ```
 
+
+You can get at the individual elements of a vector using brackets (`[`):
+
+```r
+# first element of double_vec
+double_vec[1]
+
+# third to fifth elements of integer_vec
+integer_vec[3:5]
+
+#first and fourth elements of character_vec
+character_vec[c(1,4)]
+```
+
+
 :::::::::::::::::::::::: callout
 
 #### Declaring types
@@ -770,7 +772,7 @@ In some programming languages, like `C` and `java`, the programmer must declare 
 
 :::::::::::::::::::::::::::::::::
 
-If you try to create a vector that contains more than one type of element, all the elements will be transformed into the 'lowest common denominator' type.  For example, concatenating an integer and double  will result in a double vector.
+If you try to create a vector that contains more than one type of element, all the elements will be transformed into the 'lowest common denominator' type.  For example, concatenating an integer and double will result in a double vector.
 
 
 
@@ -855,6 +857,7 @@ mean(c(1, 2, NA))
 
 
 ::::::::::::::::::::::::::::::::::::: challenge 
+
 
 #### Challenge 8: Removing NA
 
