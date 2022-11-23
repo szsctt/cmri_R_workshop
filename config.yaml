@@ -58,22 +58,23 @@ contact: 'sscott@cmri.org.au'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes:
+episodes: 
 - introduction.Rmd
 - reading-in-data-readr-and-readxl.Rmd
 - tidying-data.Rmd
 - manipulating-data.Rmd
+- visualizing-data.Rmd
 
 # Information for Learners
-learners:
+learners: 
 - setup.md
 
 # Information for Instructors
-instructors:
+instructors: 
 - instructor-notes.md
 
 # Learner Profiles
-profiles:
+profiles: 
 
 # Customisation ---------------------------------------------
 #
