@@ -262,7 +262,8 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How do you write a lesson using R Markdown and <a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<ul><li>How do you visualize data using <code>ggplot2</code>?</li>
+<li>How can you combine individual plots?</li>
 </ul></div>
 </div>
 </div>
@@ -270,14 +271,24 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Explain how to use markdown with the new lesson template</li>
-<li>Demonstrate how to include pieces of code, figures, and nested challenge blocks</li>
+<ul><li>Understand how to use aesthetics to create plots</li>
+<li>Use geoms to create visualizations</li>
+<li>Know how to facet to split by grouping variables</li>
+<li>Modify visual elements using themes</li>
+<li>Combine plots using <code>patchwork</code>
+</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<div id="keypoints1" class="callout keypoints">
+<p>After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables. Using visualizations is essential for communicating your results, especially in large datasets.</p>
+<p>There is lots of thinking about the best way to represent a given dataset, but one popular framework is the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="external-link">‘grammar of graphics’ approach</a>. The idea here is to build up a graphic from multiple layers of components, including:</p>
+<ul><li>data and aesthetic mappings</li>
+<li>geometric objects</li>
+<li>scales</li>
+<li>facets</li>
+</ul><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>

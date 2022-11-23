@@ -862,7 +862,7 @@ mean of x mean of y
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  6.6141025 -0.8653266  1.2215741  5.5043846  0.6306804</code></pre>
+<pre class="output" tabindex="0"><code>[1]  2.211795 -4.185208  2.019470 -1.058806  1.367545</code></pre>
 </div>
 </div>
 </div>
@@ -1091,27 +1091,13 @@ mean of x mean of y
 <span><span class="co"># order matters!</span></span>
 <span><span class="va">a_different_vector</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span></span></code></pre>
 </div>
-<p>You can get at the individual elements of a vector using brackets (<code>[</code>):</p>
-<div class="codewrapper sourceCode" id="cb58">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># first element of double_vec</span></span>
-<span><span class="va">double_vec</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
-<span></span>
-<span><span class="co"># third to fifth elements of integer_vec</span></span>
-<span><span class="va">integer_vec</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
-<span></span>
-<span><span class="co">#first and fourth elements of character_vec</span></span>
-<span><span class="va">character_vec</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span></span></code></pre>
-</div>
 <p>In <code>R</code>, vectors contain data of only one type. Some of the types you might see are:</p>
 <ul><li>Double: real numbers which can take on any value (like 1.13, 6, -1004.29)</li>
 <li>Integer: whole real numbers (like 1, 2, -1)</li>
 <li>Character: strings of characters, enclosed in either single or double quotes</li>
 <li>Logical: booleans, either <code>TRUE</code> or <code>FALSE</code>
 </li>
-</ul><div class="codewrapper sourceCode" id="cb59">
+</ul><div class="codewrapper sourceCode" id="cb58">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1126,6 +1112,20 @@ mean of x mean of y
 <span></span>
 <span><span class="co"># logicals are either TRUE or FALSE</span></span>
 <span><span class="va">logical_vec</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span></code></pre>
+</div>
+<p>You can get at the individual elements of a vector using brackets (<code>[</code>):</p>
+<div class="codewrapper sourceCode" id="cb59">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># first element of double_vec</span></span>
+<span><span class="va">double_vec</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># third to fifth elements of integer_vec</span></span>
+<span><span class="va">integer_vec</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co">#first and fourth elements of character_vec</span></span>
+<span><span class="va">character_vec</span><span class="op">[</span><span class="fu">c</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span></span></code></pre>
 </div>
 <div id="callout6" class="callout callout">
 <div class="callout-square">
