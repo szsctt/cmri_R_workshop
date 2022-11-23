@@ -218,19 +218,19 @@ Tidyr also has a number of other useful functions for tidying up datasets, which
  
 While useful, I tend to use these less frequently compared to the pivioting functions, so I leave these to you to explore on your own. You can get an overview of these functions on the [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), and in the [tidyr documentation](https://tidyr.tidyverse.org/).
 
-## Resources
+## Resources and acknowledgments
 
  - [Tidy data vignette](https://cloud.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
  - [Tidy data paper](https://vita.had.co.nz/papers/tidy-data.pdf)
  - [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+ - I've borrowed figures (and inspiration) from the excellent [coding togetheR course material](https://ab604.github.io/docs/coding-together-2019/data-wrangle-1.html)
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Tidy data is often easier to work with
+- Pivot long to wide with `pivot_wider()`
+- Pivot wide to long with `pivot_longer()`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
