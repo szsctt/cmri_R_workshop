@@ -23,6 +23,7 @@ exercises: 2
 
 ```{r setup, include=FALSE}
 #knitr::opts_knit$set(root.dir = here::here("episodes"))
+here::i_am("site/built/reading-in-data-readr-and-readxl.Rmd")
 ```
 
 
@@ -48,15 +49,7 @@ If you've entered data into a digital format, chances are that you've used sprea
 The workhorse of this package is the `read_xlsx()` function (or `read_xls` for older excel files).  It takes as input a path to the file you want to read.
 
 ```{r}
-getwd()
-list.files("..")
-list.files("../..")
-
-```
-
-
-```{r}
-# define path to excel file to read
+# define path to excel file to read - this will probably be different for you
 my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 
 # read in data 
