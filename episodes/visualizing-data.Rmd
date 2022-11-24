@@ -41,7 +41,7 @@ We'll again use the weather data for Brisbane and Sydney, so let's load this dat
 library(tidyverse)
 
 # data files
-data_dir <- here::here("episodes", "data") # change this for your computer
+data_dir <- here::here("..", "episodes", "data") # change this for your computer
 data_files <- file.path(data_dir, c("weather_sydney.csv", "weather_brisbane.csv"))
 
 # column types
@@ -95,7 +95,7 @@ weather %>%
 But we just get a blank graph!  We have to tell ggplot how we want the data to be plotted (lines, points, violins, density, etc).
 
  
-## Geometic objects
+## geoms
 
 We use `geom`s to tell ggplot how we want to plot the data.  In this case, we can use points:
 
@@ -239,7 +239,7 @@ Although in this case I think the comparison is clearer without the extra faceti
 
 There are a number of other customization that you can use to display your data more clearly. 
 
-## Labels
+### Labels
 
 It's important to always label your x and y axes - `ggplot` does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.
 
@@ -267,11 +267,11 @@ Note that when changing the legend, you have to match the function to the asthet
 
 If you're trying to change a legend but it doesn't seem to be working, check that you used the correct function for your data type and aesthetic!
 
-## Scales
+### Scales
 
 We used `scale_color_disrete()` to change the labels in the legend earlier, but there are a number of scale functions in `ggplot2` that can be used to change many other aspects of graphs.
 
-### Color scales
+#### Color scales
 
 If you are unhappy with the default color scale that `ggplot` provides, you can change it using an appropriate scaling function - for example, `scale_color_discrete()` for discrete color scales, `scale_fill_continuous` for continuous fill scales, etc.
 
@@ -296,7 +296,7 @@ There are a number of different ways you can specify colors to use.  One is to u
 
 Another is to use a package to generate color names for you.  For example, I tend to use [`virids`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) for continuous scales because it's colorblind-friendly.  Another favourite is [`wesanderson`](https://github.com/karthik/wesanderson), which makes palettes from Wes Anderson movies.
 
-### Axes scales
+#### Axes scales
 
 Let's say we now have exponentially distrbuted data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
 
