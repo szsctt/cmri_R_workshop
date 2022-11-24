@@ -57,5 +57,8 @@ Once you have `R` and `Rstudio` installed, please also install the necessary pac
 
 ```R
 install.packages("tidyverse")
+install.packages("patchwork")
+install.packages("wesanderson")
+
 ```
 
