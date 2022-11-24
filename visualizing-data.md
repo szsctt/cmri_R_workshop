@@ -32,7 +32,359 @@ There is lots of thinking about the best way to represent a given dataset, but o
  - scales
  - facets
  
+In this lesson we explore how to use these elements to make informative and visually appealing graphs.
+
+We'll again use the weather data for Brisbane and Sydney, so let's load this dataset.
+
+
+```r
+# load tidyverse
+library(tidyverse)
+```
+
+```{.output}
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+```
+
+```r
+# data files
+data_dir <- here::here("episodes", "data") # change this for your computer
+data_files <- file.path(data_dir, c("weather_sydney.csv", "weather_brisbane.csv"))
+
+# column types
+col_types <- list(
+  date = col_date(format="%Y-%m-%d"),
+  min_temp_c = col_double(),
+  max_temp_c = col_double(),
+  rainfall_mm = col_double(),
+  evaporation_mm = col_double(),
+  sunshine_hours = col_double(),
+  dir_max_wind_gust = col_character(),
+  speed_max_wind_gust_kph = col_double(),
+  time_max_wind_gust = col_time(),
+  temp_9am_c = col_double(),
+  rel_humid_9am_pc = col_integer(),
+  cloud_amount_9am_oktas = col_double(),
+  wind_direction_9am = col_character(),
+  wind_speed_9am_kph = col_double(),
+  MSL_pressure_9am_hPa = col_double(),
+  temp_3pm_c = col_double(),
+  rel_humid_3pm_pc = col_double(),
+  cloud_amount_3pm_oktas = col_double(),
+  wind_direction_3pm = col_character(),
+  wind_speed_3pm_kph = col_double(),
+  MSL_pressure_3pm_hPa = col_double()
+)
+
+# read in data
+weather <- readr::read_csv(data_files, skip=10, 
+                           col_types=col_types, col_names = names(col_types),
+                           id="file") %>% 
+  mutate(city = stringr::str_detct(file, "brisbane|sydney")) %>% 
+  select(-file)
+```
+
+```{.error}
+Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/weather_sydney.csv' does not exist.
+```
+
+```r
+glimpse(weather)
+```
+
+```{.error}
+Error in glimpse(weather): object 'weather' not found
+```
  
+ 
+## Data and aesthetic mappings
+
+Any graph has to start with a dataset - and in the case of `ggplot`, this has to be a data frame (or tibble).  We also start by specifying the aesthetic using `aes()`, which tells ggplot which columns should go on the x and y axes.
+
+
+Let's say that we want to plot the daily maximum temperature over the month for both cities. You can pipe the data into `ggplot()`.
+
+
+```r
+weather %>% 
+  ggplot(aes(x=date, y=max_temp_c))
+```
+
+```{.error}
+Error in ggplot(., aes(x = date, y = max_temp_c)): object 'weather' not found
+```
+
+But we just get a blank graph!  We have to tell ggplot how we want the data to be plotted (lines, points, violins, density, etc).
+
+ 
+## Geometic objects
+
+We use `geom`s to tell ggplot how we want to plot the data.  In this case, we can use points:
+
+
+```r
+weather %>% 
+  ggplot(aes(x=date, y=max_temp_c)) +
+  geom_point()
+```
+
+```{.error}
+Error in ggplot(., aes(x = date, y = max_temp_c)): object 'weather' not found
+```
+
+Note that we use a `+` to add layers to a ggplot, not the pipe (`%>%`).  The `ggplot2` package was developed before the `magrittr` packgage that contains `%>%`, so it uses the addition operator instead.
+
+`ggplot` doesn't know how to plot mising values, so it removes those rows and warns you that it's doing so. Those warnings about missing values are going to get annoying, so I use a `tidyr` function to remove rows with `NA` in any column.
+
+
+```r
+weather <- weather %>% 
+  # everything() means do this on all columns
+  drop_na(everything())
+```
+
+```{.error}
+Error in drop_na(., everything()): object 'weather' not found
+```
+
+
+There are a large number of `geoms` for diplaying data in different ways - we will explore some here, but you can find more in the [`ggplot` documentation](https://ggplot2.tidyverse.org/).
+
+### Layering geoms
+
+So our initial graph looks ok, but we might want to know which temperature belongs to which city.  Let's add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
+
+
+```r
+# plot temp over time with lines and points
+weather %>% 
+  ggplot(aes(x=date, y=max_temp_c, color=city)) +
+  geom_point() +
+  geom_line()
+```
+
+```{.error}
+Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather' not found
+```
+
+If we didn't care about the time aspect and just wanted to compare the distribution of temperatures instead, we could plot city on the x axis, temperature on the y axis.  To avoid points being on top of each other when the temperature is the same , I use `geom_jitter()` instead of `geom_point()`, which adds random jitter to each point before plotting.
+
+
+```r
+# show differences between temps in brisbane and sydney
+weather %>% 
+  ggplot(aes(x=city, y=max_temp_c, color=city)) +
+  geom_violin() +
+  geom_jitter(height=0, width=0.1)
+```
+
+```{.error}
+Error in ggplot(., aes(x = city, y = max_temp_c, color = city)): object 'weather' not found
+```
+
+
+Notice that the `geom`s can also take arguments - for example, I've used ` geom_jitter(height=0, width=0.1` to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).
+
+### Summary statistics
+
+Also notice that `ggplot` automatically calculates the density for us when it plots the violins.  There are a number of other statistical transformations that `ggplot` can calculate for us.  For example, we can plot the proportion of wind directions at 9am for each city:
+
+
+```r
+# count number of observation of each direction in each city
+weather %>% 
+  group_by(city, wind_direction_9am) %>% 
+  summarise(count = n()) %>% 
+  # make plot
+  ggplot(aes(x=city, y = count, fill=wind_direction_9am)) +
+  geom_bar(position="fill", stat="identity")
+```
+
+```{.error}
+Error in group_by(., city, wind_direction_9am): object 'weather' not found
+```
+
+Notice that although we summarized the *count* of observations of each direction (i.e. number of days), ggplot plots the *proportion* of observations.
+
+### Using multiple datasets
+
+You can also use independent data and aesthetics for different `geom`s.  For example, returning to our plot of temperature over time, we could add a horizontal line for each city to show the mean temperature.
+
+
+```r
+# get mean temp for each city
+mean_temps <- weather %>% 
+  group_by(city) %>% 
+  summarise(mean_temp = mean(max_temp_c, na.rm=TRUE))
+```
+
+```{.error}
+Error in group_by(., city): object 'weather' not found
+```
+
+```r
+# make plot
+weather %>% 
+  ggplot(aes(x=date, y=max_temp_c, color=city)) +
+  # data and asthetics are inherited from ggplot call
+  geom_point() +
+  geom_line() +
+  # add horizontal line with different data and aesthetic
+  geom_hline(data = mean_temps, mapping = aes(yintercept=mean_temp, color=city))
+```
+
+```{.error}
+Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather' not found
+```
+
+## Scales
+
+Let's say we now have exponentially distrbuted data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
+
+
+```r
+exp_data <- tibble(
+  # two groups
+  group = c(rep("a", 50), 
+            rep("b", 50)),
+  # rexp samples from exponential distribution
+  freq = c(rexp(n=50, rate=500), 
+            rexp(n=50, rate=10))
+)
+
+# compare freq between groups
+exp_data %>% 
+  ggplot(aes(x=group, y=freq)) +
+  geom_violin() +
+  geom_jitter(height = 0, width=0.1)
+```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+
+This plot isn't so nice because the two groups are on different scales.  Changing the scale on your plot to logarithmic is easy with `ggplot`.  Just add `scale_x_log10()`, `scale_y_log10()`, etc:
+
+
+```r
+# compare freq between groups on log scale
+exp_data %>% 
+  ggplot(aes(x=group, y=freq)) +
+  geom_violin() +
+  geom_jitter(height = 0, width=0.1) +
+  scale_y_log10()
+```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
+ 
+## Facets
+
+Returning to our weather data, let' say we want to compare the minimum and maximum temperatures for the two cities over time.  We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.
+
+However, currently our temperature data is spread out over two columns: `mean_temp_c` and `max_temp_c`, but in `ggplot` we need to asign the color using `color=temp_type`.  So in order to make this plot, we need to rearrange the data a little using `dplyr` functions.
+
+
+```r
+# pivot longer to facilitate plotting
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
+  ggplot(aes(x=date, y=temp, shape=city, color=temp_type)) +
+  geom_point() +
+  geom_line()
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+This works, but it's a little difficult to tell the circles and the triangles apart.  Instead, we can use facets to plot the data from each city side by side.
+
+
+```r
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(vars(city))
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+You can facet on multiple variables, for example:
+
+
+```r
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  facet_grid(cols = vars(city), rows=vars(temp_type), scales="free_y")
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+Although in this case I think the comparison is clearer without the extra faceting variable.  Don't go too crazy with your faceting, but instead think about what story you are trying to tell.
+ 
+## Customization: Labels, themes and scales
+
+There are a number of other customization that you can use to display your data more clearly.  It's important to always label your x and y axes - `ggplot` does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.
+
+Use the `labs()` function to add labels, and `scale_color_discrete()` to change the title and label for the legend.
+
+
+
+```r
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(vars(city)) +
+  labs(x="Date", y="Temperature (degrees C)", title = "Temperature in two cities") +
+  scale_color_discrete(name = "Type", labels=c("max", "min"))
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+Note that when changing the legend, you have to match the function to the asthetic.  So `scale_color_disrete()` acts on a discrete color scale, `scale_color_continuous()` acts on a continuous color scale, `scale_fill_discrete()` acts on a discrete fill scale, etc.  
+
+If you're trying to change a legend but it doesn't seem to be working, check that you used the correct function for your data type and aesthetic!
+
+
+
+For example, perhaps you decide that it's pretty clear that the date 
+
+
+
+
+
+`ggplot` also allows you to customise the apperance of the plot.  If you wanted to remove the x axis labels, for example
+
+
+The default is a grey background with white bars, but you can use 
+
+## Saving plots
+ 
+## Combining plots with `patchwork`
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
