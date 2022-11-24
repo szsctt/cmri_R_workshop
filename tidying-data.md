@@ -33,8 +33,8 @@ There are many possible ways to structure a dataset.  For example, if we conduct
 # A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   <chr>   <int> <int> <int> <int> <int> <int>
-1 lib1       93   394   799   809   789   392
-2 lib2      395   798   394    85   102   113
+1 lib1      421   789   107   778    76   378
+2 lib2      808   385   391    94    98   809
 ```
 
 In this table, the counts for each barcode are stored in a separate column.  The 'library' column tells us which library the counts on each row are from.
@@ -47,12 +47,12 @@ Conversely, we could keep the counts for each library in a separate column, and 
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1         93   395
-2 b2        394   798
-3 b3        799   394
-4 b4        809    85
-5 b5        789   102
-6 b6        392   113
+1 b1        421   808
+2 b2        789   385
+3 b3        107   391
+4 b4        778    94
+5 b5         76    98
+6 b6        378   809
 ```
 
 
@@ -60,11 +60,12 @@ We could even structure the table like this:
 
 
 ```{.output}
-# A tibble: 2 × 12
-  library `93`  `394` `799` `809` `789` `392` `395` `798` `85`  `102` `113`
+# A tibble: 2 × 13
+  library `421` `789` `107` `778` `76`  `378` `808` `385` `391` `94`  `98` 
   <chr>   <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
 1 lib1    b1    b2    b3    b4    b5    b6    <NA>  <NA>  <NA>  <NA>  <NA> 
-2 lib2    <NA>  b3    <NA>  <NA>  <NA>  <NA>  b1    b2    b4    b5    b6   
+2 lib2    <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  b1    b2    b3    b4    b5   
+# … with 1 more variable: `809` <chr>
 ```
 
 This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.
@@ -88,18 +89,18 @@ table1
 # A tibble: 12 × 3
    library barcode count
    <chr>   <chr>   <int>
- 1 lib1    b1         93
- 2 lib1    b2        394
- 3 lib1    b3        799
- 4 lib1    b4        809
- 5 lib1    b5        789
- 6 lib1    b6        392
- 7 lib2    b1        395
- 8 lib2    b2        798
- 9 lib2    b3        394
-10 lib2    b4         85
-11 lib2    b5        102
-12 lib2    b6        113
+ 1 lib1    b1        421
+ 2 lib1    b2        789
+ 3 lib1    b3        107
+ 4 lib1    b4        778
+ 5 lib1    b5         76
+ 6 lib1    b6        378
+ 7 lib2    b1        808
+ 8 lib2    b2        385
+ 9 lib2    b3        391
+10 lib2    b4         94
+11 lib2    b5         98
+12 lib2    b6        809
 ```
 
 This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.
@@ -202,12 +203,12 @@ table1b
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1         93   395
-2 b2        394   798
-3 b3        799   394
-4 b4        809    85
-5 b5        789   102
-6 b6        392   113
+1 b1        421   808
+2 b2        789   385
+3 b3        107   391
+4 b4        778    94
+5 b5         76    98
+6 b6        378   809
 ```
  
 Another way to think about tidyness is if the names of the column can reflect the data contained in them.  It's a bit misleading to call the columns `lib1` and `lib2`, they actually store counts (and not some other property of the library, such as the barcodes it contains).
@@ -228,18 +229,18 @@ table1b %>%
 # A tibble: 12 × 3
    barcode library count
    <chr>   <chr>   <int>
- 1 b1      lib1       93
- 2 b1      lib2      395
- 3 b2      lib1      394
- 4 b2      lib2      798
- 5 b3      lib1      799
- 6 b3      lib2      394
- 7 b4      lib1      809
- 8 b4      lib2       85
- 9 b5      lib1      789
-10 b5      lib2      102
-11 b6      lib1      392
-12 b6      lib2      113
+ 1 b1      lib1      421
+ 2 b1      lib2      808
+ 3 b2      lib1      789
+ 4 b2      lib2      385
+ 5 b3      lib1      107
+ 6 b3      lib2      391
+ 7 b4      lib1      778
+ 8 b4      lib2       94
+ 9 b5      lib1       76
+10 b5      lib2       98
+11 b6      lib1      378
+12 b6      lib2      809
 ```
 We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we're measuring. 
 
@@ -260,18 +261,18 @@ table1
 # A tibble: 12 × 3
    library barcode count
    <chr>   <chr>   <int>
- 1 lib1    b1         93
- 2 lib1    b2        394
- 3 lib1    b3        799
- 4 lib1    b4        809
- 5 lib1    b5        789
- 6 lib1    b6        392
- 7 lib2    b1        395
- 8 lib2    b2        798
- 9 lib2    b3        394
-10 lib2    b4         85
-11 lib2    b5        102
-12 lib2    b6        113
+ 1 lib1    b1        421
+ 2 lib1    b2        789
+ 3 lib1    b3        107
+ 4 lib1    b4        778
+ 5 lib1    b5         76
+ 6 lib1    b6        378
+ 7 lib2    b1        808
+ 8 lib2    b2        385
+ 9 lib2    b3        391
+10 lib2    b4         94
+11 lib2    b5         98
+12 lib2    b6        809
 ```
 
 ![Pivoting wider](https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png)
@@ -288,12 +289,12 @@ table1 %>%
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1         93   395
-2 b2        394   798
-3 b3        799   394
-4 b4        809    85
-5 b5        789   102
-6 b6        392   113
+1 b1        421   808
+2 b2        789   385
+3 b3        107   391
+4 b4        778    94
+5 b5         76    98
+6 b6        378   809
 ```
 
 ## Other `tidyr` functions
