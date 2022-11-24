@@ -243,49 +243,10 @@ weather %>%
 ```{.error}
 Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather' not found
 ```
-
-## Scales
-
-Let's say we now have exponentially distrbuted data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
-
-
-```r
-exp_data <- tibble(
-  # two groups
-  group = c(rep("a", 50), 
-            rep("b", 50)),
-  # rexp samples from exponential distribution
-  freq = c(rexp(n=50, rate=500), 
-            rexp(n=50, rate=10))
-)
-
-# compare freq between groups
-exp_data %>% 
-  ggplot(aes(x=group, y=freq)) +
-  geom_violin() +
-  geom_jitter(height = 0, width=0.1)
-```
-
-<img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
-
-This plot isn't so nice because the two groups are on different scales.  Changing the scale on your plot to logarithmic is easy with `ggplot`.  Just add `scale_x_log10()`, `scale_y_log10()`, etc:
-
-
-```r
-# compare freq between groups on log scale
-exp_data %>% 
-  ggplot(aes(x=group, y=freq)) +
-  geom_violin() +
-  geom_jitter(height = 0, width=0.1) +
-  scale_y_log10()
-```
-
-<img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
-
  
 ## Facets
 
-Returning to our weather data, let' say we want to compare the minimum and maximum temperatures for the two cities over time.  We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.
+Let' say we want to compare the minimum and maximum temperatures for the two cities over time.  We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.
 
 However, currently our temperature data is spread out over two columns: `mean_temp_c` and `max_temp_c`, but in `ggplot` we need to asign the color using `color=temp_type`.  So in order to make this plot, we need to rearrange the data a little using `dplyr` functions.
 
@@ -309,12 +270,15 @@ This works, but it's a little difficult to tell the circles and the triangles ap
 
 
 ```r
+# pivot longer
 weather %>% 
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
   ggplot(aes(x=date, y=temp, color=temp_type)) +
   geom_point() +
   geom_line() +
+  # facet on city
   facet_wrap(vars(city))
 ```
 
@@ -326,13 +290,16 @@ You can facet on multiple variables, for example:
 
 
 ```r
+# pivot longer
 weather %>% 
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
   ggplot(aes(x=date, y=temp, color=temp_type)) +
   geom_point() +
   geom_line() +
-  facet_grid(cols = vars(city), rows=vars(temp_type), scales="free_y")
+  # facet on city
+  facet_wrap(vars(city)) 
 ```
 
 ```{.error}
@@ -341,23 +308,32 @@ Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not fou
 
 Although in this case I think the comparison is clearer without the extra faceting variable.  Don't go too crazy with your faceting, but instead think about what story you are trying to tell.
  
-## Customization: Labels, themes and scales
+## Visual customization: Labels, themes and scales
 
-There are a number of other customization that you can use to display your data more clearly.  It's important to always label your x and y axes - `ggplot` does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.
+There are a number of other customization that you can use to display your data more clearly. 
+
+## Labels
+
+It's important to always label your x and y axes - `ggplot` does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.
 
 Use the `labs()` function to add labels, and `scale_color_discrete()` to change the title and label for the legend.
 
 
 
 ```r
+# pivot longer
 weather %>% 
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
   ggplot(aes(x=date, y=temp, color=temp_type)) +
   geom_point() +
   geom_line() +
+  # facet on city
   facet_wrap(vars(city)) +
-  labs(x="Date", y="Temperature (degrees C)", title = "Temperature in two cities") +
+  # add label
+  labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
+  # change legend
   scale_color_discrete(name = "Type", labels=c("max", "min"))
 ```
 
@@ -369,18 +345,141 @@ Note that when changing the legend, you have to match the function to the asthet
 
 If you're trying to change a legend but it doesn't seem to be working, check that you used the correct function for your data type and aesthetic!
 
+## Scales
+
+We used `scale_color_disrete()` to change the labels in the legend earlier, but there are a number of scale functions in `ggplot2` that can be used to change many other aspects of graphs.
+
+### Color scales
+
+If you are unhappy with the default color scale that `ggplot` provides, you can change it using an appropriate scaling function - for example, `scale_color_discrete()` for discrete color scales, `scale_fill_continuous` for continuous fill scales, etc.
 
 
-For example, perhaps you decide that it's pretty clear that the date 
+```r
+# pivot longer
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  # facet on city
+  facet_wrap(vars(city)) +
+  # add label
+  labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
+  # change color scale
+  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min"))
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+There are a number of different ways you can specify colors to use.  One is to use color names, as above, although this requires you to know what the allowed color names are.  I tend to use [this list of color names for R](https://r-graph-gallery.com/42-colors-names.html).
+
+Another is to use a package to generate color names for you.  For example, I tend to use [`virids`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) for continuous scales because it's colorblind-friendly.  Another favourite is [`wesanderson`](https://github.com/karthik/wesanderson), which makes palettes from Wes Anderson movies.
+
+### Axes scales
+
+Let's say we now have exponentially distrbuted data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
 
 
+```r
+exp_data <- tibble(
+  # two groups
+  group = c(rep("a", 50), 
+            rep("b", 50)),
+  # rexp samples from exponential distribution
+  freq = c(rexp(n=50, rate=500), 
+            rexp(n=50, rate=10))
+)
+
+# compare freq between groups
+exp_data %>% 
+  ggplot(aes(x=group, y=freq)) +
+  geom_violin() +
+  geom_jitter(height = 0, width=0.1)
+```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+
+This plot isn't so nice because the two groups are on different scales.  Changing the scale on your plot to logarithmic is easy with `ggplot`.  Just add `scale_x_log10()`, `scale_y_log10()`, etc:
 
 
+```r
+# compare freq between groups on log scale
+exp_data %>% 
+  ggplot(aes(x=group, y=freq)) +
+  geom_violin() +
+  geom_jitter(height = 0, width=0.1) +
+  scale_y_log10()
+```
 
-`ggplot` also allows you to customise the apperance of the plot.  If you wanted to remove the x axis labels, for example
+<img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+
+### Themes 
+
+`ggplot` also allows you to customise the apperance of the plot in other ways. Getting back to our weather example, if you wanted to remove the x axis labels because you decided that it's already clear what is on that axis, you can do that with `theme()`.
 
 
-The default is a grey background with white bars, but you can use 
+```r
+# pivot longer
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # plot lines and points
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  # facet on city
+  facet_wrap(vars(city)) +
+  # add label
+  labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
+  # change color scale
+  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
+  # remove x axis label
+  theme(axis.title.x = element_blank())
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+ 
+There are many aspects of the plot you can customize this way: check the [`ggplot2` documentation](https://ggplot2.tidyverse.org/reference/theme.html) for more information.
+
+You can also change many aspects of the plot at once with pre-configured themes, for example `theme_classic()`.
+
+
+```r
+# pivot longer
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # plot lines and points
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  # facet on city
+  facet_wrap(vars(city)) +
+  # add label
+  labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
+  # change color scale
+  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
+  # change to theme classic
+  theme_light() +
+  # remove x axis label
+  theme(axis.title.x = element_blank()) 
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+
+Note that we have to do this **before** we remove the x axis label, because in `theme_light()`, the `axis.title.x` parameter is set to something other than `element_blank()`, so this would overwrite our call to `theme()`.
+
+You can find out more about the other available themes [in the `ggplot2` documentation](https://ggplot2.tidyverse.org/reference/ggtheme.html?q=complete%20themes).
+
 
 ## Saving plots
  
