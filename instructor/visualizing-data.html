@@ -295,8 +295,9 @@
 </div>
 </div>
 </div>
-<p>After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables. Using visualizations is essential for communicating your results, especially in large datasets.</p>
-<p>There is lots of thinking about the best way to represent a given dataset, but one popular framework is the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="external-link">‘grammar of graphics’ approach</a>. The idea here is to build up a graphic from multiple layers of components, including:</p>
+<p>After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables. Using visualizations is essential for communicating your results, because <a href="https://ab604.github.io/docs/coding-together-2019/viz.html" class="external-link">summary statistics can be misleading</a>, and because large datasets don’t display well in tables.</p>
+<p>I won’t go into too much theory here about the best way of visually representing different kinds of datasets, but I’d recommend everyone take a look at <a href="https://clauswilke.com/dataviz/" class="external-link">Claus Wilke’s excellent book ‘Fundamentals of data visualization’</a>.</p>
+<p>One popular framework for greating plots is the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="external-link">‘grammar of graphics’ approach</a>. The idea here is to build up a graphic from multiple layers of components, including:</p>
 <ul><li>data and aesthetic mappings</li>
 <li>geometric objects</li>
 <li>scales</li>
@@ -359,7 +360,7 @@
 <span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="va">data_files</span>, skip<span class="op">=</span><span class="fl">10</span>, </span>
 <span>                           col_types<span class="op">=</span><span class="va">col_types</span>, col_names <span class="op">=</span> <span class="fu">names</span><span class="op">(</span><span class="va">col_types</span><span class="op">)</span>,</span>
 <span>                           id<span class="op">=</span><span class="st">"file"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>city <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_detct</span><span class="op">(</span><span class="va">file</span>, <span class="st">"brisbane|sydney"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>city <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">file</span>, <span class="st">"brisbane|sydney"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">file</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -972,7 +973,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="../LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.10.8" class="external-link">sandpaper (0.10.8)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper" class="external-link">sandpaper (0.10.8)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.9" class="external-link">varnish (0.2.9)</a>.</p>
 			</div>

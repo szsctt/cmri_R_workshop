@@ -913,7 +913,7 @@ mean of x mean of y
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] -2.983100  0.715945 -1.731324 -2.092570  1.594605</code></pre>
+<pre class="output" tabindex="0"><code>[1]  2.3453091  0.4563091 -1.6211638 -3.4640507  6.6808473</code></pre>
 </div>
 </div>
 </div>
@@ -1594,7 +1594,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1889,7 +1889,7 @@ any links that you are not going to use.
     }
     invisible(names)
 }
-&lt;bytecode: 0x563da2b2f160&gt;
+&lt;bytecode: 0x558d451a67f8&gt;
 &lt;environment: namespace:utils&gt;</code></pre>
 </div>
 <p>Note that the last column (‘assay 3’) contains boolean (TRUE/FALSE) values, but we coerced it to a numeric type when we imported it. <code>R</code> prints a warning to let us know.</p>
@@ -1925,7 +1925,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2156,7 +2156,7 @@ any links that you are not going to use.
     }
     invisible(names)
 }
-&lt;bytecode: 0x563da2b2f160&gt;
+&lt;bytecode: 0x558d451a67f8&gt;
 &lt;environment: namespace:utils&gt;</code></pre>
 </div>
 <p>You can read more about the column specification for <code>readr</code> functions <a href="https://r4ds.had.co.nz/data-import.html" class="external-link">here</a>.</p>
@@ -2272,8 +2272,8 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1       93   394   799   809   789   392
-2 lib2      395   798   394    85   102   113</code></pre>
+1 lib1      421   789   107   778    76   378
+2 lib2      808   385   391    94    98   809</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -2283,22 +2283,23 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         93   395
-2 b2        394   798
-3 b3        799   394
-4 b4        809    85
-5 b5        789   102
-6 b6        392   113</code></pre>
+1 b1        421   808
+2 b2        789   385
+3 b3        107   391
+4 b4        778    94
+5 b5         76    98
+6 b6        378   809</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code># A tibble: 2 × 12
-  library `93`  `394` `799` `809` `789` `392` `395` `798` `85`  `102` `113`
+<pre class="output" tabindex="0"><code># A tibble: 2 × 13
+  library `421` `789` `107` `778` `76`  `378` `808` `385` `391` `94`  `98` 
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
-2 lib2    &lt;NA&gt;  b3    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b4    b5    b6   </code></pre>
+2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
+# … with 1 more variable: `809` &lt;chr&gt;</code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -2321,18 +2322,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1         93
- 2 lib1    b2        394
- 3 lib1    b3        799
- 4 lib1    b4        809
- 5 lib1    b5        789
- 6 lib1    b6        392
- 7 lib2    b1        395
- 8 lib2    b2        798
- 9 lib2    b3        394
-10 lib2    b4         85
-11 lib2    b5        102
-12 lib2    b6        113</code></pre>
+ 1 lib1    b1        421
+ 2 lib1    b2        789
+ 3 lib1    b3        107
+ 4 lib1    b4        778
+ 5 lib1    b5         76
+ 6 lib1    b6        378
+ 7 lib2    b1        808
+ 8 lib2    b2        385
+ 9 lib2    b3        391
+10 lib2    b4         94
+11 lib2    b5         98
+12 lib2    b6        809</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -2353,7 +2354,7 @@ any links that you are not going to use.
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Issues with this dataset:</p>
 <ul>
@@ -2448,12 +2449,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         93   395
-2 b2        394   798
-3 b3        799   394
-4 b4        809    85
-5 b5        789   102
-6 b6        392   113</code></pre>
+1 b1        421   808
+2 b2        789   385
+3 b3        107   391
+4 b4        778    94
+5 b5         76    98
+6 b6        378   809</code></pre>
 </div>
 <p>Another way to think about tidyness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -2475,18 +2476,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1       93
- 2 b1      lib2      395
- 3 b2      lib1      394
- 4 b2      lib2      798
- 5 b3      lib1      799
- 6 b3      lib2      394
- 7 b4      lib1      809
- 8 b4      lib2       85
- 9 b5      lib1      789
-10 b5      lib2      102
-11 b6      lib1      392
-12 b6      lib2      113</code></pre>
+ 1 b1      lib1      421
+ 2 b1      lib2      808
+ 3 b2      lib1      789
+ 4 b2      lib2      385
+ 5 b3      lib1      107
+ 6 b3      lib2      391
+ 7 b4      lib1      778
+ 8 b4      lib2       94
+ 9 b5      lib1       76
+10 b5      lib2       98
+11 b6      lib1      378
+12 b6      lib2      809</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_longer_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting longer</figcaption></figure>
@@ -2509,18 +2510,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1         93
- 2 lib1    b2        394
- 3 lib1    b3        799
- 4 lib1    b4        809
- 5 lib1    b5        789
- 6 lib1    b6        392
- 7 lib2    b1        395
- 8 lib2    b2        798
- 9 lib2    b3        394
-10 lib2    b4         85
-11 lib2    b5        102
-12 lib2    b6        113</code></pre>
+ 1 lib1    b1        421
+ 2 lib1    b2        789
+ 3 lib1    b3        107
+ 4 lib1    b4        778
+ 5 lib1    b5         76
+ 6 lib1    b6        378
+ 7 lib2    b1        808
+ 8 lib2    b2        385
+ 9 lib2    b3        391
+10 lib2    b4         94
+11 lib2    b5         98
+12 lib2    b6        809</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -2536,12 +2537,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         93   395
-2 b2        394   798
-3 b3        799   394
-4 b4        809    85
-5 b5        789   102
-6 b6        392   113</code></pre>
+1 b1        421   808
+2 b2        789   385
+3 b3        107   391
+4 b4        778    94
+5 b5         76    98
+6 b6        378   809</code></pre>
 </div>
 </div>
 </div>
@@ -3495,8 +3496,9 @@ any links that you are not going to use.
 </div>
 </div>
 </div>
-<p>After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables. Using visualizations is essential for communicating your results, especially in large datasets.</p>
-<p>There is lots of thinking about the best way to represent a given dataset, but one popular framework is the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="external-link">‘grammar of graphics’ approach</a>. The idea here is to build up a graphic from multiple layers of components, including:</p>
+<p>After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables. Using visualizations is essential for communicating your results, because <a href="https://ab604.github.io/docs/coding-together-2019/viz.html" class="external-link">summary statistics can be misleading</a>, and because large datasets don’t display well in tables.</p>
+<p>I won’t go into too much theory here about the best way of visually representing different kinds of datasets, but I’d recommend everyone take a look at <a href="https://clauswilke.com/dataviz/" class="external-link">Claus Wilke’s excellent book ‘Fundamentals of data visualization’</a>.</p>
+<p>One popular framework for greating plots is the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="external-link">‘grammar of graphics’ approach</a>. The idea here is to build up a graphic from multiple layers of components, including:</p>
 <ul>
 <li>data and aesthetic mappings</li>
 <li>geometric objects</li>
@@ -3561,7 +3563,7 @@ any links that you are not going to use.
 <span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="va">data_files</span>, skip<span class="op">=</span><span class="fl">10</span>, </span>
 <span>                           col_types<span class="op">=</span><span class="va">col_types</span>, col_names <span class="op">=</span> <span class="fu">names</span><span class="op">(</span><span class="va">col_types</span><span class="op">)</span>,</span>
 <span>                           id<span class="op">=</span><span class="st">"file"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>city <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_detct</span><span class="op">(</span><span class="va">file</span>, <span class="st">"brisbane|sydney"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>city <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">file</span>, <span class="st">"brisbane|sydney"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">file</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -4190,7 +4192,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="../LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.10.8" class="external-link">sandpaper (0.10.8)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper" class="external-link">sandpaper (0.10.8)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.9" class="external-link">varnish (0.2.9)</a>.</p>
 			</div>
