@@ -89,7 +89,7 @@ col_types <- list(
 weather <- readr::read_csv(data_files, skip=10, 
                            col_types=col_types, col_names = names(col_types),
                            id="file") %>% 
-  mutate(city = stringr::str_detect(file, "brisbane|sydney")) %>% 
+  mutate(city = stringr::str_extract(file, "brisbane|sydney")) %>% 
   select(-file)
 ```
 
@@ -128,7 +128,7 @@ But we just get a blank graph!  We have to tell ggplot how we want the data to b
  
 ## geoms
 
-We use `geom`s to tell ggplot how we want to plot the data.  In this case, we can use points:
+We use `geoms` to tell ggplot how we want to plot the data.  In this case, we can use points:
 
 
 ```r
@@ -159,9 +159,34 @@ Error in drop_na(., everything()): object 'weather' not found
 
 There are a large number of `geoms` for diplaying data in different ways - we will explore some here, but you can find more in the [`ggplot` documentation](https://ggplot2.tidyverse.org/).
 
+:::::::::::::::::::::::: challenge
+
+#### Challenge 1: Wind speed
+
+Using `geom_freqpoly()`, make frequency polynomials of the speed of the maximum wind gust on each day for each city, using 10 bins (you might need to check the documentation).
+
+:::::::::::solution
+
+
+```r
+weather %>% 
+  ggplot(aes(x=speed_max_wind_gust_kph, color=city)) +
+  geom_freqpoly(bins=10)
+```
+
+```{.error}
+Error in ggplot(., aes(x = speed_max_wind_gust_kph, color = city)): object 'weather' not found
+```
+
+
+:::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+
+
 ### Layering geoms
 
-So our initial graph looks ok, but we might want to know which temperature belongs to which city.  Let's add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
+Our initial graph looks ok, but we might want to know which temperature belongs to which city.  Let's add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
 
 
 ```r
@@ -192,7 +217,35 @@ Error in ggplot(., aes(x = city, y = max_temp_c, color = city)): object 'weather
 ```
 
 
-Notice that the `geom`s can also take arguments - for example, I've used ` geom_jitter(height=0, width=0.1` to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).
+Notice that the `geoms` can also take arguments - for example, I've used ` geom_jitter(height=0, width=0.1` to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).
+
+:::::::::::::::::::::::: challenge
+
+#### Challenge 2: Density and rug
+
+Use `geom_density()` and `geom_rug()` to show the difference in maximum temperatures between Brisbane and Sydney (with different colors for the two cities).
+
+Do you prefer this representation to the violin plot above?
+
+
+:::::::::::solution
+
+
+```r
+weather %>% 
+  ggplot(aes(x = max_temp_c, color=city)) +
+  geom_density() +
+  geom_rug()
+```
+
+```{.error}
+Error in ggplot(., aes(x = max_temp_c, color = city)): object 'weather' not found
+```
+
+
+:::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
 
 ### Summary statistics
 
@@ -217,7 +270,7 @@ Notice that although we summarized the *count* of observations of each direction
 
 ### Using multiple datasets
 
-You can also use independent data and aesthetics for different `geom`s.  For example, returning to our plot of temperature over time, we could add a horizontal line for each city to show the mean temperature.
+You can also use independent data and aesthetics for different `geoms`.  For example, returning to our plot of temperature over time, we could add a horizontal line for each city to show the mean temperature.
 
 
 ```r
@@ -249,7 +302,7 @@ Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather
 
 ### Non-gglot geoms
 
-With the popularity of `ggplot2`, there are a number of other packages that provide `geom`s that you can use in your `ggplot`.
+With the popularity of `ggplot2`, there are a number of other packages that provide `geoms` that you can use in your `ggplot`.
 
 I won't go into any detail about these, but a few that I've used include `ggforce::geom_sina()`, `ggbeeswarm::geom_beeswarm()` and `ggwordcloud::geom_wordcloud()`.  If you want to make a particular kind of graph, somebody has probably made a `geom` for it.
 
@@ -308,20 +361,52 @@ weather %>%
   geom_point() +
   geom_line() +
   # facet on city
-  facet_wrap(vars(city)) 
+  facet_grid(cols=vars(city), rows=vars(temp_type), scales="free_y") 
 ```
 
 ```{.error}
 Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
 ```
 
-Although in this case I think the comparison is clearer without the extra faceting variable.  Don't go too crazy with your faceting, but instead think about what story you are trying to tell.
+The `scales="free_y"` argument allows the y-axis scales on each row to be different. 
+
+
+In this case I think the comparison is clearer without the extra faceting variable.  Don't go too crazy with your faceting, but instead think about what story you are trying to tell.
+ 
+ 
+:::::::::::::::::::::::: challenge
+
+#### Challenge 3: Facets
+
+
+Use facets to show the difference in wind speeds by direction in each city.  Facet on city, and color the density for wind speed (`speed_max_wind_gust_kph`) by direction (`dir_max_wind_gust`).  Show each city in a different row, with different y axes.
+
+
+:::::::::::solution
+
+
+```r
+weather %>% 
+  ggplot(aes(x=speed_max_wind_gust_kph, color=dir_max_wind_gust)) +
+  geom_density() +
+  facet_grid(rows = vars(city), scales="free")
+```
+
+```{.error}
+Error in ggplot(., aes(x = speed_max_wind_gust_kph, color = dir_max_wind_gust)): object 'weather' not found
+```
+
+This is not a particularly informative graphs because there are so few points for each direction.
+
+:::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
  
 ## Visual customization: Labels, themes and scales
 
 There are a number of other customization that you can use to display your data more clearly. 
 
-### Labels
+### Axes labels
 
 It's important to always label your x and y axes - `ggplot` does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.
 
@@ -388,8 +473,6 @@ There are a number of different ways you can specify colors to use.  One is to u
 
 Another is to use a package to generate color names for you.  For example, I tend to use [`virids`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) for continuous scales because it's colorblind-friendly.  Another favourite is [`wesanderson`](https://github.com/karthik/wesanderson), which makes palettes from Wes Anderson movies.
 
-#### Axes scales
-
 Let's say we now have exponentially distrbuted data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
 
 
@@ -410,7 +493,7 @@ exp_data %>%
   geom_jitter(height = 0, width=0.1)
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 This plot isn't so nice because the two groups are on different scales.  Changing the scale on your plot to logarithmic is easy with `ggplot`.  Just add `scale_x_log10()`, `scale_y_log10()`, etc:
 
@@ -424,7 +507,7 @@ exp_data %>%
   scale_y_log10()
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 ### Themes 
 
@@ -488,6 +571,50 @@ Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not fou
 Note that we have to do this **before** we remove the x axis label, because in `theme_light()`, the `axis.title.x` parameter is set to something other than `element_blank()`, so this would overwrite our call to `theme()`.
 
 You can find out more about the other available themes [in the `ggplot2` documentation](https://ggplot2.tidyverse.org/reference/ggtheme.html?q=complete%20themes).
+
+
+::::::::::::::::::::::: challenge
+
+#### Challenge 4: Themes and colors
+
+
+Make the same plot as above, but add a different theme from the `ggplot` documentation, and different colors for the minimum and maximum.
+
+
+:::::::::::solution
+
+This is open-ended, but one solution is:
+
+
+```r
+# pivot longer
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
+  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  geom_point() +
+  geom_line() +
+  # facet on city
+  facet_wrap(vars(city)) +
+  # add label
+  labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
+  # change color scale
+  scale_color_discrete(type=c("coral", "deepskyblue"), name = "Type", labels=c("max", "min")) +
+  theme_minimal() +
+  # remove x axis label
+  theme(axis.title.x = element_blank()) 
+```
+
+```{.error}
+Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
+```
+
+:::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+
+#### Axes scales
 
 ## Saving plots
  
