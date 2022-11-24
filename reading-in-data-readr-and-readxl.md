@@ -35,7 +35,7 @@ When I first learnt `R` in a first-year statistics course, the way we did this w
 5. Enter the command `read.table(pipe("pbpaste"), header = TRUE)`
 
 This is a pretty convoluted way to do things! This weird process was part of the reason that, after I finished the course, I didn't touch `R` again for almost ten years.  
-
+ 
 Luckily, in the meantime people worked out better ways of doing things.  This lesson will cover two awesome packages which can help you import your data: `readxl` for Excel files, and `readr` for text files.
 
 
@@ -47,53 +47,21 @@ The workhorse of this package is the `read_xlsx()` function (or `read_xls` for o
 
 
 ```r
-getwd()
-```
-
-```{.output}
-[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built"
-```
-
-```r
-list.files("..")
-```
-
-```{.output}
-[1] "_pkgdown.yaml" "built"         "DESCRIPTION"   "README.md"    
-```
-
-```r
-list.files("../..")
-```
-
-```{.output}
- [1] "cmri_R_workshop.Rproj" "CODE_OF_CONDUCT.md"    "config.yaml"          
- [4] "CONTRIBUTING.md"       "episodes"              "index.md"             
- [7] "instructors"           "learners"              "LICENSE.md"           
-[10] "links.md"              "profiles"              "README.md"            
-[13] "renv"                  "site"                 
-```
-
-
-
-```r
-# define path to excel file to read
+# define path to excel file to read - this will probably be different for you
 my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 
 # read in data 
 my_excel_data <- readxl::read_xlsx(my_excel_sheet)
-```
-
-```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_1.xlsx'
-```
-
-```r
 my_excel_data
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'my_excel_data' not found
+```{.output}
+# A tibble: 3 × 3
+  word           count number
+  <chr>          <chr>  <dbl>
+1 prematurely    one        4
+2 airconditioned two        5
+3 supermarket    three      6
 ```
 
 ### File paths with `here::here()`
@@ -110,7 +78,7 @@ my_excel_sheet
 ```
 
 ```{.output}
-[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_1.xlsx"
+[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/data/readxl_example_1.xlsx"
 ```
 
 
@@ -148,24 +116,16 @@ Open the file `readxl_example_2.xlsx` in Excel.  What do you think the types wil
 ```r
 # read in data 
 data <- readxl::read_xlsx(here::here("episodes", "data", "readxl_example_2.xlsx"))
-```
-
-```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_2.xlsx'
-```
-
-```r
 head(data)
 ```
 
 ```{.output}
-                                                                            
-1 function (..., list = character(), package = NULL, lib.loc = NULL,        
-2     verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) 
-3 {                                                                         
-4     fileExt <- function(x) {                                              
-5         db <- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)                     
-6         ans <- sub(".*\\\\.", "", x)                                      
+# A tibble: 3 × 5
+  replicate `drug concentration` `assay 1` `assay 2` `assay 3`
+      <dbl> <chr>                <chr>     <chr>     <lgl>    
+1         1 10 uM                ++        1         TRUE     
+2         2 20 uM                +++       medium    FALSE    
+3         2 20 uM                +         high      FALSE    
 ```
 
 Note that:
@@ -183,18 +143,11 @@ The type of the columns is important to be aware of because some fucntions in R 
 
 ```r
 conc <- data$`drug concentration`
-```
-
-```{.error}
-Error in data$`drug concentration`: object of type 'closure' is not subsettable
-```
-
-```r
 conc
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'conc' not found
+```{.output}
+[1] "10 uM" "20 uM" "20 uM"
 ```
 
 We can then extract the first two characters of each string in this column using `stringr::str_sub()`:
@@ -202,10 +155,6 @@ We can then extract the first two characters of each string in this column using
 
 ```r
 nums <- stringr::str_sub(conc, 1, 2)
-```
-
-```{.error}
-Error in stri_sub(string, from = start, to = end): object 'conc' not found
 ```
 
 But we can't add one to this column:
@@ -216,7 +165,7 @@ conc + 1
 ```
 
 ```{.error}
-Error in eval(expr, envir, enclos): object 'conc' not found
+Error in conc + 1: non-numeric argument to binary operator
 ```
 
 ### Specifying column types
@@ -230,8 +179,16 @@ data <- readxl::read_xlsx(here::here("episodes", "data", "readxl_example_2.xlsx"
                            col_types = c("numeric", "text", "text", "text", "numeric"))
 ```
 
-```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_2.xlsx'
+```{.warning}
+Warning: Coercing boolean to numeric in E2 / R2C5
+```
+
+```{.warning}
+Warning: Coercing boolean to numeric in E3 / R3C5
+```
+
+```{.warning}
+Warning: Coercing boolean to numeric in E4 / R4C5
 ```
 
 ```r
@@ -239,189 +196,12 @@ data
 ```
 
 ```{.output}
-function (..., list = character(), package = NULL, lib.loc = NULL, 
-    verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) 
-{
-    fileExt <- function(x) {
-        db <- grepl("\\.[^.]+\\.(gz|bz2|xz)$", x)
-        ans <- sub(".*\\.", "", x)
-        ans[db] <- sub(".*\\.([^.]+\\.)(gz|bz2|xz)$", "\\1\\2", 
-            x[db])
-        ans
-    }
-    my_read_table <- function(...) {
-        lcc <- Sys.getlocale("LC_COLLATE")
-        on.exit(Sys.setlocale("LC_COLLATE", lcc))
-        Sys.setlocale("LC_COLLATE", "C")
-        read.table(...)
-    }
-    stopifnot(is.character(list))
-    names <- c(as.character(substitute(list(...))[-1L]), list)
-    if (!is.null(package)) {
-        if (!is.character(package)) 
-            stop("'package' must be a character vector or NULL")
-    }
-    paths <- find.package(package, lib.loc, verbose = verbose)
-    if (is.null(lib.loc)) 
-        paths <- c(path.package(package, TRUE), if (!length(package)) getwd(), 
-            paths)
-    paths <- unique(normalizePath(paths[file.exists(paths)]))
-    paths <- paths[dir.exists(file.path(paths, "data"))]
-    dataExts <- tools:::.make_file_exts("data")
-    if (length(names) == 0L) {
-        db <- matrix(character(), nrow = 0L, ncol = 4L)
-        for (path in paths) {
-            entries <- NULL
-            packageName <- if (file_test("-f", file.path(path, 
-                "DESCRIPTION"))) 
-                basename(path)
-            else "."
-            if (file_test("-f", INDEX <- file.path(path, "Meta", 
-                "data.rds"))) {
-                entries <- readRDS(INDEX)
-            }
-            else {
-                dataDir <- file.path(path, "data")
-                entries <- tools::list_files_with_type(dataDir, 
-                  "data")
-                if (length(entries)) {
-                  entries <- unique(tools::file_path_sans_ext(basename(entries)))
-                  entries <- cbind(entries, "")
-                }
-            }
-            if (NROW(entries)) {
-                if (is.matrix(entries) && ncol(entries) == 2L) 
-                  db <- rbind(db, cbind(packageName, dirname(path), 
-                    entries))
-                else warning(gettextf("data index for package %s is invalid and will be ignored", 
-                  sQuote(packageName)), domain = NA, call. = FALSE)
-            }
-        }
-        colnames(db) <- c("Package", "LibPath", "Item", "Title")
-        footer <- if (missing(package)) 
-            paste0("Use ", sQuote(paste("data(package =", ".packages(all.available = TRUE))")), 
-                "\n", "to list the data sets in all *available* packages.")
-        else NULL
-        y <- list(title = "Data sets", header = NULL, results = db, 
-            footer = footer)
-        class(y) <- "packageIQR"
-        return(y)
-    }
-    paths <- file.path(paths, "data")
-    for (name in names) {
-        found <- FALSE
-        for (p in paths) {
-            tmp_env <- if (overwrite) 
-                envir
-            else new.env()
-            if (file_test("-f", file.path(p, "Rdata.rds"))) {
-                rds <- readRDS(file.path(p, "Rdata.rds"))
-                if (name %in% names(rds)) {
-                  found <- TRUE
-                  if (verbose) 
-                    message(sprintf("name=%s:\t found in Rdata.rds", 
-                      name), domain = NA)
-                  thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
-                  thispkg <- sub("_.*$", "", thispkg)
-                  thispkg <- paste0("package:", thispkg)
-                  objs <- rds[[name]]
-                  lazyLoad(file.path(p, "Rdata"), envir = tmp_env, 
-                    filter = function(x) x %in% objs)
-                  break
-                }
-                else if (verbose) 
-                  message(sprintf("name=%s:\t NOT found in names() of Rdata.rds, i.e.,\n\t%s\n", 
-                    name, paste(names(rds), collapse = ",")), 
-                    domain = NA)
-            }
-            if (file_test("-f", file.path(p, "Rdata.zip"))) {
-                warning("zipped data found for package ", sQuote(basename(dirname(p))), 
-                  ".\nThat is defunct, so please re-install the package.", 
-                  domain = NA)
-                if (file_test("-f", fp <- file.path(p, "filelist"))) 
-                  files <- file.path(p, scan(fp, what = "", quiet = TRUE))
-                else {
-                  warning(gettextf("file 'filelist' is missing for directory %s", 
-                    sQuote(p)), domain = NA)
-                  next
-                }
-            }
-            else {
-                files <- list.files(p, full.names = TRUE)
-            }
-            files <- files[grep(name, files, fixed = TRUE)]
-            if (length(files) > 1L) {
-                o <- match(fileExt(files), dataExts, nomatch = 100L)
-                paths0 <- dirname(files)
-                paths0 <- factor(paths0, levels = unique(paths0))
-                files <- files[order(paths0, o)]
-            }
-            if (length(files)) {
-                for (file in files) {
-                  if (verbose) 
-                    message("name=", name, ":\t file= ...", .Platform$file.sep, 
-                      basename(file), "::\t", appendLF = FALSE, 
-                      domain = NA)
-                  ext <- fileExt(file)
-                  if (basename(file) != paste0(name, ".", ext)) 
-                    found <- FALSE
-                  else {
-                    found <- TRUE
-                    zfile <- file
-                    zipname <- file.path(dirname(file), "Rdata.zip")
-                    if (file.exists(zipname)) {
-                      Rdatadir <- tempfile("Rdata")
-                      dir.create(Rdatadir, showWarnings = FALSE)
-                      topic <- basename(file)
-                      rc <- .External(C_unzip, zipname, topic, 
-                        Rdatadir, FALSE, TRUE, FALSE, FALSE)
-                      if (rc == 0L) 
-                        zfile <- file.path(Rdatadir, topic)
-                    }
-                    if (zfile != file) 
-                      on.exit(unlink(zfile))
-                    switch(ext, R = , r = {
-                      library("utils")
-                      sys.source(zfile, chdir = TRUE, envir = tmp_env)
-                    }, RData = , rdata = , rda = load(zfile, 
-                      envir = tmp_env), TXT = , txt = , tab = , 
-                      tab.gz = , tab.bz2 = , tab.xz = , txt.gz = , 
-                      txt.bz2 = , txt.xz = assign(name, my_read_table(zfile, 
-                        header = TRUE, as.is = FALSE), envir = tmp_env), 
-                      CSV = , csv = , csv.gz = , csv.bz2 = , 
-                      csv.xz = assign(name, my_read_table(zfile, 
-                        header = TRUE, sep = ";", as.is = FALSE), 
-                        envir = tmp_env), found <- FALSE)
-                  }
-                  if (found) 
-                    break
-                }
-                if (verbose) 
-                  message(if (!found) 
-                    "*NOT* ", "found", domain = NA)
-            }
-            if (found) 
-                break
-        }
-        if (!found) {
-            warning(gettextf("data set %s not found", sQuote(name)), 
-                domain = NA)
-        }
-        else if (!overwrite) {
-            for (o in ls(envir = tmp_env, all.names = TRUE)) {
-                if (exists(o, envir = envir, inherits = FALSE)) 
-                  warning(gettextf("an object named %s already exists and will not be overwritten", 
-                    sQuote(o)))
-                else assign(o, get(o, envir = tmp_env, inherits = FALSE), 
-                  envir = envir)
-            }
-            rm(tmp_env)
-        }
-    }
-    invisible(names)
-}
-<bytecode: 0x5654856330d0>
-<environment: namespace:utils>
+# A tibble: 3 × 5
+  replicate `drug concentration` `assay 1` `assay 2` `assay 3`
+      <dbl> <chr>                <chr>     <chr>         <dbl>
+1         1 10 uM                ++        1                 1
+2         2 20 uM                +++       medium            0
+3         2 20 uM                +         high              0
 ```
 
 Note that the last column ('assay 3') contains boolean (TRUE/FALSE) values, but we coerced it to a numeric type when we imported it.  `R` prints a warning to let us know.
@@ -460,8 +240,21 @@ readxl::read_xlsx(here::here("episodes", "data", "human_codon_table.xlsx"),
                   range = 'A2:C65' )
 ```
 
-```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/human_codon_table.xlsx'
+```{.output}
+# A tibble: 64 × 3
+   codon frequency  count
+   <chr>     <dbl>  <dbl>
+ 1 UCU        15.2 618711
+ 2 UAU        12.2 495699
+ 3 UGU        10.6 430311
+ 4 UUC        20.3 824692
+ 5 UCC        17.7 718892
+ 6 UAC        15.3 622407
+ 7 UGC        12.6 513028
+ 8 UUA         7.7 311881
+ 9 UCA        12.2 496448
+10 UAA         1    40285
+# … with 54 more rows
 ```
 
 :::::::::::::::
@@ -483,7 +276,7 @@ data <- readr::read_csv(here::here("episodes", "data", "readr_example_1.tsv"),
 ```
 
 ```{.error}
-Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readr_example_1.tsv' does not exist.
+Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/data/readr_example_1.tsv' does not exist.
 ```
 
 ```r
@@ -491,189 +284,12 @@ data
 ```
 
 ```{.output}
-function (..., list = character(), package = NULL, lib.loc = NULL, 
-    verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) 
-{
-    fileExt <- function(x) {
-        db <- grepl("\\.[^.]+\\.(gz|bz2|xz)$", x)
-        ans <- sub(".*\\.", "", x)
-        ans[db] <- sub(".*\\.([^.]+\\.)(gz|bz2|xz)$", "\\1\\2", 
-            x[db])
-        ans
-    }
-    my_read_table <- function(...) {
-        lcc <- Sys.getlocale("LC_COLLATE")
-        on.exit(Sys.setlocale("LC_COLLATE", lcc))
-        Sys.setlocale("LC_COLLATE", "C")
-        read.table(...)
-    }
-    stopifnot(is.character(list))
-    names <- c(as.character(substitute(list(...))[-1L]), list)
-    if (!is.null(package)) {
-        if (!is.character(package)) 
-            stop("'package' must be a character vector or NULL")
-    }
-    paths <- find.package(package, lib.loc, verbose = verbose)
-    if (is.null(lib.loc)) 
-        paths <- c(path.package(package, TRUE), if (!length(package)) getwd(), 
-            paths)
-    paths <- unique(normalizePath(paths[file.exists(paths)]))
-    paths <- paths[dir.exists(file.path(paths, "data"))]
-    dataExts <- tools:::.make_file_exts("data")
-    if (length(names) == 0L) {
-        db <- matrix(character(), nrow = 0L, ncol = 4L)
-        for (path in paths) {
-            entries <- NULL
-            packageName <- if (file_test("-f", file.path(path, 
-                "DESCRIPTION"))) 
-                basename(path)
-            else "."
-            if (file_test("-f", INDEX <- file.path(path, "Meta", 
-                "data.rds"))) {
-                entries <- readRDS(INDEX)
-            }
-            else {
-                dataDir <- file.path(path, "data")
-                entries <- tools::list_files_with_type(dataDir, 
-                  "data")
-                if (length(entries)) {
-                  entries <- unique(tools::file_path_sans_ext(basename(entries)))
-                  entries <- cbind(entries, "")
-                }
-            }
-            if (NROW(entries)) {
-                if (is.matrix(entries) && ncol(entries) == 2L) 
-                  db <- rbind(db, cbind(packageName, dirname(path), 
-                    entries))
-                else warning(gettextf("data index for package %s is invalid and will be ignored", 
-                  sQuote(packageName)), domain = NA, call. = FALSE)
-            }
-        }
-        colnames(db) <- c("Package", "LibPath", "Item", "Title")
-        footer <- if (missing(package)) 
-            paste0("Use ", sQuote(paste("data(package =", ".packages(all.available = TRUE))")), 
-                "\n", "to list the data sets in all *available* packages.")
-        else NULL
-        y <- list(title = "Data sets", header = NULL, results = db, 
-            footer = footer)
-        class(y) <- "packageIQR"
-        return(y)
-    }
-    paths <- file.path(paths, "data")
-    for (name in names) {
-        found <- FALSE
-        for (p in paths) {
-            tmp_env <- if (overwrite) 
-                envir
-            else new.env()
-            if (file_test("-f", file.path(p, "Rdata.rds"))) {
-                rds <- readRDS(file.path(p, "Rdata.rds"))
-                if (name %in% names(rds)) {
-                  found <- TRUE
-                  if (verbose) 
-                    message(sprintf("name=%s:\t found in Rdata.rds", 
-                      name), domain = NA)
-                  thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
-                  thispkg <- sub("_.*$", "", thispkg)
-                  thispkg <- paste0("package:", thispkg)
-                  objs <- rds[[name]]
-                  lazyLoad(file.path(p, "Rdata"), envir = tmp_env, 
-                    filter = function(x) x %in% objs)
-                  break
-                }
-                else if (verbose) 
-                  message(sprintf("name=%s:\t NOT found in names() of Rdata.rds, i.e.,\n\t%s\n", 
-                    name, paste(names(rds), collapse = ",")), 
-                    domain = NA)
-            }
-            if (file_test("-f", file.path(p, "Rdata.zip"))) {
-                warning("zipped data found for package ", sQuote(basename(dirname(p))), 
-                  ".\nThat is defunct, so please re-install the package.", 
-                  domain = NA)
-                if (file_test("-f", fp <- file.path(p, "filelist"))) 
-                  files <- file.path(p, scan(fp, what = "", quiet = TRUE))
-                else {
-                  warning(gettextf("file 'filelist' is missing for directory %s", 
-                    sQuote(p)), domain = NA)
-                  next
-                }
-            }
-            else {
-                files <- list.files(p, full.names = TRUE)
-            }
-            files <- files[grep(name, files, fixed = TRUE)]
-            if (length(files) > 1L) {
-                o <- match(fileExt(files), dataExts, nomatch = 100L)
-                paths0 <- dirname(files)
-                paths0 <- factor(paths0, levels = unique(paths0))
-                files <- files[order(paths0, o)]
-            }
-            if (length(files)) {
-                for (file in files) {
-                  if (verbose) 
-                    message("name=", name, ":\t file= ...", .Platform$file.sep, 
-                      basename(file), "::\t", appendLF = FALSE, 
-                      domain = NA)
-                  ext <- fileExt(file)
-                  if (basename(file) != paste0(name, ".", ext)) 
-                    found <- FALSE
-                  else {
-                    found <- TRUE
-                    zfile <- file
-                    zipname <- file.path(dirname(file), "Rdata.zip")
-                    if (file.exists(zipname)) {
-                      Rdatadir <- tempfile("Rdata")
-                      dir.create(Rdatadir, showWarnings = FALSE)
-                      topic <- basename(file)
-                      rc <- .External(C_unzip, zipname, topic, 
-                        Rdatadir, FALSE, TRUE, FALSE, FALSE)
-                      if (rc == 0L) 
-                        zfile <- file.path(Rdatadir, topic)
-                    }
-                    if (zfile != file) 
-                      on.exit(unlink(zfile))
-                    switch(ext, R = , r = {
-                      library("utils")
-                      sys.source(zfile, chdir = TRUE, envir = tmp_env)
-                    }, RData = , rdata = , rda = load(zfile, 
-                      envir = tmp_env), TXT = , txt = , tab = , 
-                      tab.gz = , tab.bz2 = , tab.xz = , txt.gz = , 
-                      txt.bz2 = , txt.xz = assign(name, my_read_table(zfile, 
-                        header = TRUE, as.is = FALSE), envir = tmp_env), 
-                      CSV = , csv = , csv.gz = , csv.bz2 = , 
-                      csv.xz = assign(name, my_read_table(zfile, 
-                        header = TRUE, sep = ";", as.is = FALSE), 
-                        envir = tmp_env), found <- FALSE)
-                  }
-                  if (found) 
-                    break
-                }
-                if (verbose) 
-                  message(if (!found) 
-                    "*NOT* ", "found", domain = NA)
-            }
-            if (found) 
-                break
-        }
-        if (!found) {
-            warning(gettextf("data set %s not found", sQuote(name)), 
-                domain = NA)
-        }
-        else if (!overwrite) {
-            for (o in ls(envir = tmp_env, all.names = TRUE)) {
-                if (exists(o, envir = envir, inherits = FALSE)) 
-                  warning(gettextf("an object named %s already exists and will not be overwritten", 
-                    sQuote(o)))
-                else assign(o, get(o, envir = tmp_env, inherits = FALSE), 
-                  envir = envir)
-            }
-            rm(tmp_env)
-        }
-    }
-    invisible(names)
-}
-<bytecode: 0x5654856330d0>
-<environment: namespace:utils>
+# A tibble: 3 × 5
+  replicate `drug concentration` `assay 1` `assay 2` `assay 3`
+      <dbl> <chr>                <chr>     <chr>         <dbl>
+1         1 10 uM                ++        1                 1
+2         2 20 uM                +++       medium            0
+3         2 20 uM                +         high              0
 ```
 
 You can read more about the column specification for `readr` functions [here](https://r4ds.had.co.nz/data-import.html).
@@ -691,24 +307,20 @@ files <- c(here::here("episodes", "data", "sim_0_counts.txt"),
            here::here("episodes", "data", "sim_1_counts.txt"))
 
 data <- readr::read_tsv(files, col_types = 'cci', id="file")
-```
 
-```{.error}
-Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/sim_0_counts.txt' does not exist.
-```
-
-```r
 head(data)
 ```
 
 ```{.output}
-                                                                            
-1 function (..., list = character(), package = NULL, lib.loc = NULL,        
-2     verbose = getOption("verbose"), envir = .GlobalEnv, overwrite = TRUE) 
-3 {                                                                         
-4     fileExt <- function(x) {                                              
-5         db <- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)                     
-6         ans <- sub(".*\\\\.", "", x)                                      
+# A tibble: 6 × 4
+  file                                                         test0 test1 count
+  <chr>                                                        <chr> <chr> <int>
+1 /home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/… test… PRR       2
+2 /home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/… test… AVSM      1
+3 /home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/… test… IGLF      1
+4 /home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/… test… no_i…  1039
+5 /home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/… test… R        82
+6 /home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/… test… DI        3
 ```
 
 
