@@ -56,8 +56,8 @@ library(tidyverse)
 ```
 
 ```r
-# data files
-data_dir <- here::here("..", "episodes", "data") # change this for your computer
+# data files - readr can also read data from the internet
+data_dir <- "https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"
 data_files <- file.path(data_dir, c("weather_sydney.csv", "weather_brisbane.csv"))
 
 # column types
@@ -91,18 +91,35 @@ weather <- readr::read_csv(data_files, skip=10,
                            id="file") %>% 
   mutate(city = stringr::str_extract(file, "brisbane|sydney")) %>% 
   select(-file)
-```
 
-```{.error}
-Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/weather_sydney.csv' does not exist.
-```
-
-```r
 glimpse(weather)
 ```
 
-```{.error}
-Error in glimpse(weather): object 'weather' not found
+```{.output}
+Rows: 43
+Columns: 22
+$ date                    <date> 2022-11-01, 2022-11-02, 2022-11-03, 2022-11-0…
+$ min_temp_c              <dbl> 18.2, 11.1, 11.1, 13.4, 13.4, 13.3, 15.4, 16.0…
+$ max_temp_c              <dbl> 24.0, 20.5, 22.0, 23.1, 23.6, 24.0, 24.2, 24.2…
+$ rainfall_mm             <dbl> 0.2, 0.6, 0.0, 1.0, 0.2, 0.0, 0.0, 1.2, 0.2, 0…
+$ evaporation_mm          <dbl> 4.6, 13.0, 7.8, 6.0, 4.4, 4.0, 9.8, 8.0, 8.0, …
+$ sunshine_hours          <dbl> 9.5, 12.8, 8.9, 5.7, 11.8, 12.1, 12.3, 11.0, 1…
+$ dir_max_wind_gust       <chr> "WNW", "W", "W", "SSE", "ENE", "ENE", "NE", "E…
+$ speed_max_wind_gust_kph <dbl> 69, 67, 56, 26, 37, 39, 41, 35, 33, 43, 39, 26…
+$ time_max_wind_gust      <time> 06:50:00, 12:54:00, 07:41:00, 23:24:00, 15:20…
+$ temp_9am_c              <dbl> 19.2, 14.0, 15.9, 15.8, 17.7, 19.0, 20.4, 21.1…
+$ rel_humid_9am_pc        <int> 45, 44, 50, 82, 76, 75, 80, 67, 77, 76, 60, 77…
+$ cloud_amount_9am_oktas  <dbl> 2, 1, 1, 6, 3, 1, 5, 4, 7, 7, 4, 1, 8, 1, 2, 2…
+$ wind_direction_9am      <chr> "WNW", "W", "WSW", "E", "WSW", "ESE", "E", "EN…
+$ wind_speed_9am_kph      <dbl> 35, 31, 31, 6, 4, 6, 15, 15, 6, 7, 7, 4, 2, 11…
+$ MSL_pressure_9am_hPa    <dbl> 992.9, 1003.2, 1014.7, 1026.9, 1029.7, 1026.6,…
+$ temp_3pm_c              <dbl> 23.1, 19.7, 20.0, 22.8, 22.2, 23.1, 23.4, 24.0…
+$ rel_humid_3pm_pc        <dbl> 30, 29, 42, 55, 60, 59, 58, 59, 46, 55, 56, 51…
+$ cloud_amount_3pm_oktas  <dbl> 2, 1, 7, 5, 2, 1, 2, 2, 1, 1, 7, 3, 7, 2, 7, 7…
+$ wind_direction_3pm      <chr> "WNW", "SW", "SE", "ENE", "ENE", "E", "ENE", "…
+$ wind_speed_3pm_kph      <dbl> 31, 22, 20, 17, 24, 26, 24, 24, 26, 24, 17, 19…
+$ MSL_pressure_3pm_hPa    <dbl> 992.0, 1005.9, 1016.6, 1026.8, 1026.9, 1023.3,…
+$ city                    <chr> "sydney", "sydney", "sydney", "sydney", "sydne…
 ```
  
  
@@ -119,9 +136,7 @@ weather %>%
   ggplot(aes(x=date, y=max_temp_c))
 ```
 
-```{.error}
-Error in ggplot(., aes(x = date, y = max_temp_c)): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 But we just get a blank graph!  We have to tell ggplot how we want the data to be plotted (lines, points, violins, density, etc).
 
@@ -137,9 +152,11 @@ weather %>%
   geom_point()
 ```
 
-```{.error}
-Error in ggplot(., aes(x = date, y = max_temp_c)): object 'weather' not found
+```{.warning}
+Warning: Removed 2 rows containing missing values (`geom_point()`).
 ```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 Note that we use a `+` to add layers to a ggplot, not the pipe (`%>%`).  The `ggplot2` package was developed before the `magrittr` packgage that contains `%>%`, so it uses the addition operator instead.
 
@@ -150,10 +167,6 @@ Note that we use a `+` to add layers to a ggplot, not the pipe (`%>%`).  The `gg
 weather <- weather %>% 
   # everything() means do this on all columns
   drop_na(everything())
-```
-
-```{.error}
-Error in drop_na(., everything()): object 'weather' not found
 ```
 
 
@@ -174,9 +187,7 @@ weather %>%
   geom_freqpoly(bins=10)
 ```
 
-```{.error}
-Error in ggplot(., aes(x = speed_max_wind_gust_kph, color = city)): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::
@@ -197,9 +208,7 @@ weather %>%
   geom_line()
 ```
 
-```{.error}
-Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 If we didn't care about the time aspect and just wanted to compare the distribution of temperatures instead, we could plot city on the x axis, temperature on the y axis.  To avoid points being on top of each other when the temperature is the same , I use `geom_jitter()` instead of `geom_point()`, which adds random jitter to each point before plotting.
 
@@ -212,9 +221,7 @@ weather %>%
   geom_jitter(height=0, width=0.1)
 ```
 
-```{.error}
-Error in ggplot(., aes(x = city, y = max_temp_c, color = city)): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 
 Notice that the `geoms` can also take arguments - for example, I've used ` geom_jitter(height=0, width=0.1` to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).
@@ -238,9 +245,7 @@ weather %>%
   geom_rug()
 ```
 
-```{.error}
-Error in ggplot(., aes(x = max_temp_c, color = city)): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::
@@ -262,9 +267,12 @@ weather %>%
   geom_bar(position="fill", stat="identity")
 ```
 
-```{.error}
-Error in group_by(., city, wind_direction_9am): object 'weather' not found
+```{.output}
+`summarise()` has grouped output by 'city'. You can override using the
+`.groups` argument.
 ```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 Notice that although we summarized the *count* of observations of each direction (i.e. number of days), ggplot plots the *proportion* of observations.
 
@@ -278,13 +286,7 @@ You can also use independent data and aesthetics for different `geoms`.  For exa
 mean_temps <- weather %>% 
   group_by(city) %>% 
   summarise(mean_temp = mean(max_temp_c, na.rm=TRUE))
-```
 
-```{.error}
-Error in group_by(., city): object 'weather' not found
-```
-
-```r
 # make plot
 weather %>% 
   ggplot(aes(x=date, y=max_temp_c, color=city)) +
@@ -295,9 +297,7 @@ weather %>%
   geom_hline(data = mean_temps, mapping = aes(yintercept=mean_temp, color=city))
 ```
 
-```{.error}
-Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
  
 
 ### Non-gglot geoms
@@ -324,9 +324,7 @@ weather %>%
   geom_line()
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 This works, but it's a little difficult to tell the circles and the triangles apart.  Instead, we can use facets to plot the data from each city side by side.
 
@@ -344,9 +342,7 @@ weather %>%
   facet_wrap(vars(city))
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 You can facet on multiple variables, for example:
 
@@ -364,9 +360,7 @@ weather %>%
   facet_grid(cols=vars(city), rows=vars(temp_type), scales="free_y") 
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 The `scales="free_y"` argument allows the y-axis scales on each row to be different. 
 
@@ -392,9 +386,48 @@ weather %>%
   facet_grid(rows = vars(city), scales="free")
 ```
 
-```{.error}
-Error in ggplot(., aes(x = speed_max_wind_gust_kph, color = dir_max_wind_gust)): object 'weather' not found
+```{.warning}
+Warning: Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
 ```
+
+```{.warning}
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 This is not a particularly informative graphs because there are so few points for each direction.
 
@@ -431,9 +464,7 @@ weather %>%
   scale_color_discrete(name = "Type", labels=c("max", "min"))
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 Note that when changing the legend, you have to match the function to the asthetic.  So `scale_color_disrete()` acts on a discrete color scale, `scale_color_continuous()` acts on a continuous color scale, `scale_fill_discrete()` acts on a discrete fill scale, etc.  
 
@@ -465,9 +496,7 @@ weather %>%
   scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min"))
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 There are a number of different ways you can specify colors to use.  One is to use color names, as above, although this requires you to know what the allowed color names are.  I tend to use [this list of color names for R](https://r-graph-gallery.com/42-colors-names.html).
 
@@ -533,9 +562,7 @@ weather %>%
   theme(axis.title.x = element_blank())
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
  
 There are many aspects of the plot you can customize this way: check the [`ggplot2` documentation](https://ggplot2.tidyverse.org/reference/theme.html) for more information.
 
@@ -563,9 +590,7 @@ weather %>%
   theme(axis.title.x = element_blank()) 
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 
 Note that we have to do this **before** we remove the x axis label, because in `theme_light()`, the `axis.title.x` parameter is set to something other than `element_blank()`, so this would overwrite our call to `theme()`.
@@ -606,9 +631,7 @@ weather %>%
   theme(axis.title.x = element_blank()) 
 ```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::
 
@@ -644,18 +667,8 @@ It works with a variety of formats - I usually use `.pdf` as a vector format (e.
   theme_light() +
   # remove x axis label
   theme(axis.title.x = element_blank()) 
-```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
-
-```r
 ggsave(here::here("my_great_plot.png"), plot=p, height=10, width=17, units="cm")
-```
-
-```{.error}
-Error in plot_theme(plot): object 'p' not found
 ```
 
 ## Combining plots with `patchwork`
@@ -685,13 +698,7 @@ p1 <- weather %>%
   labs(x="Date", y="Temperature (°C)") +
   # change color scale
   scale_color_discrete(name = "Type", labels=c("max", "min"))
-```
 
-```{.error}
-Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found
-```
-
-```r
 # plot wind directions
 p2 <- weather %>% 
   # count number of observation of each direction in each city
@@ -704,13 +711,7 @@ p2 <- weather %>%
   theme(legend.position = "bottom") +
   # axis labels
   labs(x = "City", y="Proportion")
-```
 
-```{.error}
-Error in group_by(., city, wind_direction_9am): object 'weather' not found
-```
-
-```r
 # plot temperatures
 p3 <- weather %>% 
   #  compare max temps between cities
@@ -721,27 +722,12 @@ p3 <- weather %>%
   scale_color_discrete(type=wesanderson::wes_palette("GrandBudapest1", n=2)) +
   # axis labels
   labs(x = "City", y="Max. temperature (°C)")
-```
 
-```{.error}
-Error in ggplot(., aes(x = city, y = max_temp_c, color = city)): object 'weather' not found
-```
-
-```r
 combined_plot <- p1 / (p2 + p3)
-```
-
-```{.error}
-Error in eval(expr, envir, enclos): object 'p1' not found
-```
-
-```r
 combined_plot
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'combined_plot' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
 
 Patchwork also [allows you to add annotation](https://patchwork.data-imaginist.com/articles/guides/annotation.html) to your combined plot, for example labels 'A', 'B', 'C'.
 
@@ -751,9 +737,7 @@ combined_plot +
   plot_annotation(tag_levels = 'A')
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'combined_plot' not found
-```
+<img src="fig/visualizing-data-rendered-unnamed-chunk-24-1.png" style="display: block; margin: auto;" />
 
 There are many more features of `patchwork` which I will leave you to explore - the documentation is linked in the resources section.  For example, `patchwork` will combine things other than `ggplot`s if you can convert them to a form that it understands using `ggplotify::as_ggplot()`.
 
