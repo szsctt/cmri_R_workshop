@@ -33,8 +33,10 @@ First, we load both files using `readr`:
 library(tidyverse)
 
 # data files
-data_dir <- here::here("..", "episodes", "data") # change this for your computer
+# data files - readr can also read data from the internet
+data_dir <- "https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"
 data_files <- file.path(data_dir, c("weather_sydney.csv", "weather_brisbane.csv"))
+
 
 # column types
 col_types <- list(
