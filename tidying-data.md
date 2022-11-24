@@ -33,8 +33,8 @@ There are many possible ways to structure a dataset.  For example, if we conduct
 # A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   <chr>   <int> <int> <int> <int> <int> <int>
-1 lib1       91   811   115   123   389   790
-2 lib2      404   395   805   796   397   100
+1 lib1      374   800    96   403   391   807
+2 lib2      100    99   761   798   394   100
 ```
 
 In this table, the counts for each barcode are stored in a separate column.  The 'library' column tells us which library the counts on each row are from.
@@ -47,12 +47,12 @@ Conversely, we could keep the counts for each library in a separate column, and 
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1         91   404
-2 b2        811   395
-3 b3        115   805
-4 b4        123   796
-5 b5        389   397
-6 b6        790   100
+1 b1        374   100
+2 b2        800    99
+3 b3         96   761
+4 b4        403   798
+5 b5        391   394
+6 b6        807   100
 ```
 
 
@@ -60,12 +60,12 @@ We could even structure the table like this:
 
 
 ```{.output}
-# A tibble: 2 × 13
-  library `91`  `811` `115` `123` `389` `790` `404` `395` `805` `796` `397`
-  <chr>   <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr> <chr>
-1 lib1    b1    b2    b3    b4    b5    b6    <NA>  <NA>  <NA>  <NA>  <NA> 
-2 lib2    <NA>  <NA>  <NA>  <NA>  <NA>  <NA>  b1    b2    b3    b4    b5   
-# … with 1 more variable: `100` <chr>
+# A tibble: 2 × 12
+  library `374`  `800`  `96`   `403`  `391`  `807`  `100`  `99`   `761`  `798` 
+  <chr>   <list> <list> <list> <list> <list> <list> <list> <list> <list> <list>
+1 lib1    <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <NULL> <NULL> <NULL> <NULL>
+2 lib2    <NULL> <NULL> <NULL> <NULL> <NULL> <NULL> <chr>  <chr>  <chr>  <chr> 
+# … with 1 more variable: `394` <list>
 ```
 
 This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.
@@ -89,17 +89,17 @@ table1
 # A tibble: 12 × 3
    library barcode count
    <chr>   <chr>   <int>
- 1 lib1    b1         91
- 2 lib1    b2        811
- 3 lib1    b3        115
- 4 lib1    b4        123
- 5 lib1    b5        389
- 6 lib1    b6        790
- 7 lib2    b1        404
- 8 lib2    b2        395
- 9 lib2    b3        805
-10 lib2    b4        796
-11 lib2    b5        397
+ 1 lib1    b1        374
+ 2 lib1    b2        800
+ 3 lib1    b3         96
+ 4 lib1    b4        403
+ 5 lib1    b5        391
+ 6 lib1    b6        807
+ 7 lib2    b1        100
+ 8 lib2    b2         99
+ 9 lib2    b3        761
+10 lib2    b4        798
+11 lib2    b5        394
 12 lib2    b6        100
 ```
 
@@ -203,15 +203,15 @@ table1b
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1         91   404
-2 b2        811   395
-3 b3        115   805
-4 b4        123   796
-5 b5        389   397
-6 b6        790   100
+1 b1        374   100
+2 b2        800    99
+3 b3         96   761
+4 b4        403   798
+5 b5        391   394
+6 b6        807   100
 ```
  
-Another way to think about tidyness is if the names of the column can reflect the data contained in them.  It's a bit misleading to call the columns `lib1` and `lib2`, they actually store counts (and not some other property of the library, such as the barcodes it contains).
+Another way to think about tidiness is if the names of the column can reflect the data contained in them.  It's a bit misleading to call the columns `lib1` and `lib2`, they actually store counts (and not some other property of the library, such as the barcodes it contains).
 
 We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.
 
@@ -229,17 +229,17 @@ table1b %>%
 # A tibble: 12 × 3
    barcode library count
    <chr>   <chr>   <int>
- 1 b1      lib1       91
- 2 b1      lib2      404
- 3 b2      lib1      811
- 4 b2      lib2      395
- 5 b3      lib1      115
- 6 b3      lib2      805
- 7 b4      lib1      123
- 8 b4      lib2      796
- 9 b5      lib1      389
-10 b5      lib2      397
-11 b6      lib1      790
+ 1 b1      lib1      374
+ 2 b1      lib2      100
+ 3 b2      lib1      800
+ 4 b2      lib2       99
+ 5 b3      lib1       96
+ 6 b3      lib2      761
+ 7 b4      lib1      403
+ 8 b4      lib2      798
+ 9 b5      lib1      391
+10 b5      lib2      394
+11 b6      lib1      807
 12 b6      lib2      100
 ```
 We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we're measuring. 
@@ -250,7 +250,7 @@ We can tell that this data is tidy because the column names accurately reflect t
 
 We can also do the reverse operation using `pivot_wider()` (this was how I generated the untidy versions of the tables). But haven't we just been saying that we should always aspire to keep our data tidy?  So why would we ever want to do this?
 
-When working with data in `R`, the long format does tend to be the most useful, because this is the format that most functions expect data to be in.  However, if you want to display the data for a person (rather than for a function in code), the wide format can sometimes be useful for making comparisions.  For example, we can easily compare the counts for each barcode in the two libraries in `table1b`, but the comparison is easy for a person to make when the table is in a long form.
+When working with data in `R`, the long format does tend to be the most useful, because this is the format that most functions expect data to be in.  However, if you want to display the data for a person (rather than for a function in code), the wide format can sometimes be useful for making comparisons.  For example, we can easily compare the counts for each barcode in the two libraries in `table1b`, but the comparison is easy for a person to make when the table is in a long form.
 
 
 ```r
@@ -261,17 +261,17 @@ table1
 # A tibble: 12 × 3
    library barcode count
    <chr>   <chr>   <int>
- 1 lib1    b1         91
- 2 lib1    b2        811
- 3 lib1    b3        115
- 4 lib1    b4        123
- 5 lib1    b5        389
- 6 lib1    b6        790
- 7 lib2    b1        404
- 8 lib2    b2        395
- 9 lib2    b3        805
-10 lib2    b4        796
-11 lib2    b5        397
+ 1 lib1    b1        374
+ 2 lib1    b2        800
+ 3 lib1    b3         96
+ 4 lib1    b4        403
+ 5 lib1    b5        391
+ 6 lib1    b6        807
+ 7 lib2    b1        100
+ 8 lib2    b2         99
+ 9 lib2    b3        761
+10 lib2    b4        798
+11 lib2    b5        394
 12 lib2    b6        100
 ```
 
@@ -289,23 +289,23 @@ table1 %>%
 # A tibble: 6 × 3
   barcode  lib1  lib2
   <chr>   <int> <int>
-1 b1         91   404
-2 b2        811   395
-3 b3        115   805
-4 b4        123   796
-5 b5        389   397
-6 b6        790   100
+1 b1        374   100
+2 b2        800    99
+3 b3         96   761
+4 b4        403   798
+5 b5        391   394
+6 b6        807   100
 ```
 
 ## Other `tidyr` functions
 
 Tidyr also has a number of other useful functions for tidying up datasets, which include:
- - Combining columns where multiples pieces of information are spread out (`unite()`), or spreading out columns which contain data that should be in seperate column (`separate()`)
+ - Combining columns where multiples pieces of information are spread out (`unite()`), or spreading out columns which contain data that should be in separate column (`separate()`)
  - Adding extra rows to create all possible combinations of the values in multiple columns (`expand()` and `complete`)
  - Handling missing values, for example replacing `NA` values with something else (`replace_na()`) or dropping rows that contain `NA` (`drop_na()`)
- - Nesting data within list-columns (`nest()`), and unnesting such colunns (`unnest()`)
+ - Nesting data within list-columns (`nest()`), and unnesting such columns (`unnest()`)
  
-While useful, I tend to use these less frequently compared to the pivioting functions, so I leave these to you to explore on your own. You can get an overview of these functions on the [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), and in the [tidyr documentation](https://tidyr.tidyverse.org/).
+While useful, I tend to use these less frequently compared to the pivoting functions, so I leave these to you to explore on your own. You can get an overview of these functions on the [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf), and in the [tidyr documentation](https://tidyr.tidyverse.org/).
 
 ## Resources and acknowledgments
 

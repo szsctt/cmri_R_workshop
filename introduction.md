@@ -194,7 +194,7 @@ The four main panes are:
  - Top left: editor. For editing scripts and other source code
  - Bottom left: console.  For running code
  - Top right: environment. Information about objects you create will appear here
- - Bottom right: plots (amongst other things). Some output (like plots) from the console appears here.  Also helpful for browsing files and getting help
+ - Bottom right: plots (among other things). Some output (like plots) from the console appears here.  Also helpful for browsing files and getting help
 
 
 
@@ -528,7 +528,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1] -1.388284  2.392665  1.395339  1.416670  3.653175
+[1]  5.6591631  5.9437451 -1.0027187  0.2215469  1.3200950
 ```
 
 :::::::::::::::::::::::::::::::::
@@ -640,7 +640,7 @@ We get an error because `R` doesn't know what the `str_length()` function is by 
 ::::::::::::::::::::::::::::::
 
 
-The other way to use functions from a library is to import all the functions in the library using the `library()` function.  It's best practice to put all the `library()` calls together at the top of your code, rather than sprinking them throughout.
+The other way to use functions from a library is to import all the functions in the library using the `library()` function.  It's best practice to put all the `library()` calls together at the top of your code, rather than sprinkling them throughout.
 
 
 
@@ -777,7 +777,7 @@ If you try to create a vector that contains more than one type of element, all t
 
 
 ```r
-# concatenting a double and an integer
+# concatenating a double and an integer
 numeric_vec <- c(5.8, 10L)
 
 # the typeof function tells you the type of a variable
@@ -902,7 +902,7 @@ This covers things like:
  - Each script should start with a description of what it does or what it's for
  - When you have to name something, use a name that makes sense.  You're more likely to understand what is contained in variable `my_peptide` than you are if it was called `p` or `x` or `owobljldfibllkmb`
  - Syntax and spacing: use spaces and newlines to make your code more readable, not less
- - Line length: try to make horizontal scrolling unnecssary, which usually means lines are less than 80 characters
+ - Line length: try to make horizontal scrolling unnecessary, which usually means lines are less than 80 characters
 
  
 
@@ -913,7 +913,7 @@ Try to avoid copy-pasting blocks of code.  If you find you need to make a change
 
 ### Test your expectations
 
-Try to frequently test your code to see that it does what you expect it to do.  Getting into this habbit helps guard against bugs.  
+Try to frequently test your code to see that it does what you expect it to do.  Getting into this habit helps guard against bugs.  
 
 There are lots of different ways to do this, from just trying out the code with a few different inputs to automated [unit testing](https://en.wikipedia.org/wiki/Unit_testing)
 
@@ -945,7 +945,7 @@ Aim to keep your data, scripts and output organized.  `RStudio` helps you with t
  - Treat raw data and metadata as read-only.  Put it in a folder called `data` and don't write anything to that folder except for more raw data
  - Put source code in a folder called `src`
  - Put files generated during analysis in a folder called `out` or `results`.  It shouldn't matter if this folder gets deleted, since you should be able to re-create its contents using your data and scripts
- - A `README` file can be useful for a broad overview of the project, and for explaning how to run the analysis
+ - A `README` file can be useful for a broad overview of the project, and for explaining how to run the analysis
  - Keep track of the packages required for your analysis using [`renv`](https://rstudio.github.io/renv/articles/renv.html) (for `R` projects only), or `conda` (more general but has a few gotchas for `R` packages)
  
 That is, an organized project might look something like this:
@@ -1006,11 +1006,11 @@ This lesson is inspired by and draws on some material from [Software Carpentries
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
 - Use RStudio for writing and executing `R` code
-- Add comments to your code by starting a line wtih `#`
+- Add comments to your code by starting a line with `#`
 - Assign values to variables using the assignment operator `<-`
 - Functions covert inputs to outputs
 - Vectors are a collection of values of the same type
-- Following best practices will help the with the correctness and readabilty of your `R` code
+- Following best practices will help the with the correctness and readability of your `R` code
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

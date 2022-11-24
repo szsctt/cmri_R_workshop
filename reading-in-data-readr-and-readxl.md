@@ -48,27 +48,29 @@ The workhorse of this package is the `read_xlsx()` function (or `read_xls` for o
 
 ```r
 # define path to excel file to read - this will probably be different for you
-my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("data", "readxl_example_1.xlsx")
 
 # read in data 
 my_excel_data <- readxl::read_xlsx(my_excel_sheet)
+```
+
+```{.error}
+Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/data/readxl_example_1.xlsx'
+```
+
+```r
 my_excel_data
 ```
 
-```{.output}
-# A tibble: 3 × 3
-  word           count number
-  <chr>          <chr>  <dbl>
-1 prematurely    one        4
-2 airconditioned two        5
-3 supermarket    three      6
+```{.error}
+Error in eval(expr, envir, enclos): object 'my_excel_data' not found
 ```
 
 ### File paths with `here::here()`
 
 Note that I use a function called `here` to create the file path to the excel file.  You can read more about this function [here](https://cran.r-project.org/web/packages/here/vignettes/here.html).   
 
-Using this function helps with cross-platform compatbility (so it works on Windows as well as MacOX and Linux).  This is because directories on Windows are usually separated with a backslash `\`, whereas on Unix-based distributions (like MacOS and Linux) directories are separated by a slash `/`.
+Using this function helps with cross-platform compatibility (so it works on Windows as well as MacOSX and Linux).  This is because directories on Windows are usually separated with a backslash `\`, whereas on Unix-based distributions (like MacOS and Linux) directories are separated by a slash `/`.
 
 You can check what the file path looks like on your platform by printing out the variable we defined with the file path:
 
@@ -78,7 +80,7 @@ my_excel_sheet
 ```
 
 ```{.output}
-[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/data/readxl_example_1.xlsx"
+[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/data/readxl_example_1.xlsx"
 ```
 
 
@@ -88,7 +90,7 @@ Note that this example file path is a little convoluted, because of the way the 
 
 
 ```r
-my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("data", "readxl_example_1.xlsx")
 ```
 
 
@@ -96,7 +98,7 @@ my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 
 Coming back to the output of the call to `readxl::read_xlsx()` - calls to this function return a `tibble` object with the data contained in the excel spreadsheet.
 
-The `tibble` object is a convenient way of storing rectangular data, where column has a type, (which is shown when you print the table).  Ideally, in a tibble each column should contain data from one variable, and each row consists of observations of each varaiables - this is known as 'tidy data' (more on this in the next lesson).
+The `tibble` object is a convenient way of storing rectangular data, where column has a type, (which is shown when you print the table).  Ideally, in a tibble each column should contain data from one variable, and each row consists of observations of each variables - this is known as 'tidy data' (more on this in the next lesson).
 
 If you don't specify the types (like character, integer, double) of each column, `readxl` will try to [guess them based on the types in the excel spreadhsheet](https://readxl.tidyverse.org/articles/cell-and-column-types.html).  This can lead to unexpected behaviour, especially if you mix numbers and strings in the same column.
 
@@ -132,13 +134,13 @@ Note that:
 
  - The 'replicate' column has a type of `dbl` even though it contains only integers.
  - The 'drug concentration' column is of type `chr` because R doesn't know that 'uM' is a unit.
- - Mixing numbers and charaters in the 'assay 2' column results in a column of characters (why do you think this is?)
+ - Mixing numbers and characters in the 'assay 2' column results in a column of characters (why do you think this is?)
  
 :::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-The type of the columns is important to be aware of because some fucntions in R expect that you feed them columns of a particular type.  For example, we can extract the 'drug concentration' column from the second file we imported using the `$` operator.
+The type of the columns is important to be aware of because some functions in R expect that you feed them columns of a particular type.  For example, we can extract the 'drug concentration' column from the second file we imported using the `$` operator.
 
 
 ```r
@@ -204,13 +206,13 @@ data
 3         2 20 uM                +         high              0
 ```
 
-Note that the last column ('assay 3') contains boolean (TRUE/FALSE) values, but we coerced it to a numeric type when we imported it.  `R` prints a warning to let us know.
+Note that the last column ('assay 3') contains Boolean (TRUE/FALSE) values, but we coerced it to a numeric type when we imported it.  `R` prints a warning to let us know.
 
 ### Other options
 
 `readxl::read_xlsx()` also has lots of other options to deal with other aspects of data imports - for example, you can:
 
- - Use the `sheet` and `range` named arguments to specifiy which parts of the sheet to import 
+ - Use the `sheet` and `range` named arguments to specify which parts of the sheet to import 
  - Skip a number of header rows using the `skip` option, 
  - Provide a vector of your own column names using the `col_names` argument
  - Pass `col_names=FALSE` to avoid using the first line of the file as your column names if your data doesn't have column names
@@ -271,25 +273,18 @@ The syntax is very similar to `read_xlsx()`, and you should specify the column t
 
 
 ```r
-data <- readr::read_csv(here::here("episodes", "data", "readr_example_1.tsv"),
+data <- readr::read_csv(here::here("episodes", "data", "readr_example_1.csv"),
                            col_types = c("cci"))
-```
-
-```{.error}
-Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/data/readr_example_1.tsv' does not exist.
-```
-
-```r
 data
 ```
 
 ```{.output}
-# A tibble: 3 × 5
-  replicate `drug concentration` `assay 1` `assay 2` `assay 3`
-      <dbl> <chr>                <chr>     <chr>         <dbl>
-1         1 10 uM                ++        1                 1
-2         2 20 uM                +++       medium            0
-3         2 20 uM                +         high              0
+# A tibble: 3 × 3
+  word           count number
+  <chr>          <chr>  <int>
+1 prematurely    one        4
+2 airconditioned two        5
+3 supermarket    three      6
 ```
 
 You can read more about the column specification for `readr` functions [here](https://r4ds.had.co.nz/data-import.html).
