@@ -192,9 +192,10 @@
       <div class="accordion-body">
         <ul><li><a href="#data-and-aesthetic-mappings">Data and aesthetic mappings</a></li>
 <li><a href="#geometic-objects">Geometic objects</a></li>
-<li><a href="#scales">Scales</a></li>
 <li><a href="#facets">Facets</a></li>
-<li><a href="#customization-labels-themes-and-scales">Customization: Labels, themes and scales</a></li>
+<li><a href="#visual-customization-labels-themes-and-scales">Visual customization: Labels, themes and scales</a></li>
+<li><a href="#labels">Labels</a></li>
+<li><a href="#scales">Scales</a></li>
 <li><a href="#saving-plots">Saving plots</a></li>
 <li><a href="#combining-plots-with-patchwork">Combining plots with <code>patchwork</code></a></li>
         </ul></div><!--/div.accordion-body-->
@@ -521,45 +522,11 @@
 <pre class="error" tabindex="0"><code>Error in ggplot(., aes(x = date, y = max_temp_c, color = city)): object 'weather' not found</code></pre>
 </div>
 </div>
-</section><section id="scales"><h2 class="section-heading">Scales<a class="anchor" aria-label="anchor" href="#scales"></a>
+</section><section id="facets"><h2 class="section-heading">Facets<a class="anchor" aria-label="anchor" href="#facets"></a>
 </h2>
-<hr class="half-width"><p>Let’s say we now have exponentially distrbuted data. None of our weather data really is, so let’s simulate some by drawing from two different exponential distributions with different rates.</p>
-<div class="codewrapper sourceCode" id="cb23">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exp_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
-<span>  <span class="co"># two groups</span></span>
-<span>  group <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="fu">rep</span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">50</span><span class="op">)</span>, </span>
-<span>            <span class="fu">rep</span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="co"># rexp samples from exponential distribution</span></span>
-<span>  freq <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="fu">rexp</span><span class="op">(</span>n<span class="op">=</span><span class="fl">50</span>, rate<span class="op">=</span><span class="fl">500</span><span class="op">)</span>, </span>
-<span>            <span class="fu">rexp</span><span class="op">(</span>n<span class="op">=</span><span class="fl">50</span>, rate<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># compare freq between groups</span></span>
-<span><span class="va">exp_data</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">group</span>, y<span class="op">=</span><span class="va">freq</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_jitter</span><span class="op">(</span>height <span class="op">=</span> <span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="../fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This plot isn’t so nice because the two groups are on different scales. Changing the scale on your plot to logarithmic is easy with <code>ggplot</code>. Just add <code>scale_x_log10()</code>, <code>scale_y_log10()</code>, etc:</p>
-<div class="codewrapper sourceCode" id="cb24">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># compare freq between groups on log scale</span></span>
-<span><span class="va">exp_data</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">group</span>, y<span class="op">=</span><span class="va">freq</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_jitter</span><span class="op">(</span>height <span class="op">=</span> <span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="../fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section id="facets"><h2 class="section-heading">Facets<a class="anchor" aria-label="anchor" href="#facets"></a>
-</h2>
-<hr class="half-width"><p>Returning to our weather data, let’ say we want to compare the minimum and maximum temperatures for the two cities over time. We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.</p>
+<hr class="half-width"><p>Let’ say we want to compare the minimum and maximum temperatures for the two cities over time. We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.</p>
 <p>However, currently our temperature data is spread out over two columns: <code>mean_temp_c</code> and <code>max_temp_c</code>, but in <code>ggplot</code> we need to asign the color using <code>color=temp_type</code>. So in order to make this plot, we need to rearrange the data a little using <code>dplyr</code> functions.</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -578,16 +545,19 @@
 <pre class="error" tabindex="0"><code>Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found</code></pre>
 </div>
 <p>This works, but it’s a little difficult to tell the circles and the triangles apart. Instead, we can use facets to plot the data from each city side by side.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -596,17 +566,20 @@
 <pre class="error" tabindex="0"><code>Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found</code></pre>
 </div>
 <p>You can facet on multiple variables, for example:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">facet_grid</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span>, rows<span class="op">=</span><span class="fu">vars</span><span class="op">(</span><span class="va">temp_type</span><span class="op">)</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span></code></pre>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> </span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -614,22 +587,30 @@
 <pre class="error" tabindex="0"><code>Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found</code></pre>
 </div>
 <p>Although in this case I think the comparison is clearer without the extra faceting variable. Don’t go too crazy with your faceting, but instead think about what story you are trying to tell.</p>
-</section><section id="customization-labels-themes-and-scales"><h2 class="section-heading">Customization: Labels, themes and scales<a class="anchor" aria-label="anchor" href="#customization-labels-themes-and-scales"></a>
+</section><section id="visual-customization-labels-themes-and-scales"><h2 class="section-heading">Visual customization: Labels, themes and scales<a class="anchor" aria-label="anchor" href="#visual-customization-labels-themes-and-scales"></a>
 </h2>
-<hr class="half-width"><p>There are a number of other customization that you can use to display your data more clearly. It’s important to always label your x and y axes - <code>ggplot</code> does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.</p>
+<hr class="half-width"><p>There are a number of other customization that you can use to display your data more clearly.</p>
+</section><section id="labels"><h2 class="section-heading">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
+</h2>
+<hr class="half-width"><p>It’s important to always label your x and y axes - <code>ggplot</code> does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.</p>
 <p>Use the <code>labs()</code> function to add labels, and <code>scale_color_discrete()</code> to change the title and label for the legend.</p>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (degrees C)"</span>, title <span class="op">=</span> <span class="st">"Temperature in two cities"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add label</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change legend</span></span>
 <span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
@@ -639,9 +620,136 @@
 </div>
 <p>Note that when changing the legend, you have to match the function to the asthetic. So <code>scale_color_disrete()</code> acts on a discrete color scale, <code>scale_color_continuous()</code> acts on a continuous color scale, <code>scale_fill_discrete()</code> acts on a discrete fill scale, etc.</p>
 <p>If you’re trying to change a legend but it doesn’t seem to be working, check that you used the correct function for your data type and aesthetic!</p>
-<p>For example, perhaps you decide that it’s pretty clear that the date</p>
-<p><code>ggplot</code> also allows you to customise the apperance of the plot. If you wanted to remove the x axis labels, for example</p>
-<p>The default is a grey background with white bars, but you can use</p>
+</section><section id="scales"><h2 class="section-heading">Scales<a class="anchor" aria-label="anchor" href="#scales"></a>
+</h2>
+<hr class="half-width"><p>We used <code>scale_color_disrete()</code> to change the labels in the legend earlier, but there are a number of scale functions in <code>ggplot2</code> that can be used to change many other aspects of graphs.</p>
+<div class="section level3">
+<h3 id="color-scales">Color scales<a class="anchor" aria-label="anchor" href="#color-scales"></a></h3>
+<p>If you are unhappy with the default color scale that <code>ggplot</code> provides, you can change it using an appropriate scaling function - for example, <code>scale_color_discrete()</code> for discrete color scales, <code>scale_fill_continuous</code> for continuous fill scales, etc.</p>
+<div class="codewrapper sourceCode" id="cb31">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add label</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change color scale</span></span>
+<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found</code></pre>
+</div>
+<p>There are a number of different ways you can specify colors to use. One is to use color names, as above, although this requires you to know what the allowed color names are. I tend to use <a href="https://r-graph-gallery.com/42-colors-names.html" class="external-link">this list of color names for R</a>.</p>
+<p>Another is to use a package to generate color names for you. For example, I tend to use <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html" class="external-link"><code>virids</code></a> for continuous scales because it’s colorblind-friendly. Another favourite is <a href="https://github.com/karthik/wesanderson" class="external-link"><code>wesanderson</code></a>, which makes palettes from Wes Anderson movies.</p>
+</div>
+<div class="section level3">
+<h3 id="axes-scales">Axes scales<a class="anchor" aria-label="anchor" href="#axes-scales"></a></h3>
+<p>Let’s say we now have exponentially distrbuted data. None of our weather data really is, so let’s simulate some by drawing from two different exponential distributions with different rates.</p>
+<div class="codewrapper sourceCode" id="cb33">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exp_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span></span>
+<span>  <span class="co"># two groups</span></span>
+<span>  group <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="fu">rep</span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">50</span><span class="op">)</span>, </span>
+<span>            <span class="fu">rep</span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="co"># rexp samples from exponential distribution</span></span>
+<span>  freq <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="fu">rexp</span><span class="op">(</span>n<span class="op">=</span><span class="fl">50</span>, rate<span class="op">=</span><span class="fl">500</span><span class="op">)</span>, </span>
+<span>            <span class="fu">rexp</span><span class="op">(</span>n<span class="op">=</span><span class="fl">50</span>, rate<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># compare freq between groups</span></span>
+<span><span class="va">exp_data</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">group</span>, y<span class="op">=</span><span class="va">freq</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_jitter</span><span class="op">(</span>height <span class="op">=</span> <span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="../fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This plot isn’t so nice because the two groups are on different scales. Changing the scale on your plot to logarithmic is easy with <code>ggplot</code>. Just add <code>scale_x_log10()</code>, <code>scale_y_log10()</code>, etc:</p>
+<div class="codewrapper sourceCode" id="cb34">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># compare freq between groups on log scale</span></span>
+<span><span class="va">exp_data</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">group</span>, y<span class="op">=</span><span class="va">freq</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_jitter</span><span class="op">(</span>height <span class="op">=</span> <span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="../fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<div class="section level3">
+<h3 id="themes">Themes<a class="anchor" aria-label="anchor" href="#themes"></a></h3>
+<p><code>ggplot</code> also allows you to customise the apperance of the plot in other ways. Getting back to our weather example, if you wanted to remove the x axis labels because you decided that it’s already clear what is on that axis, you can do that with <code>theme()</code>.</p>
+<div class="codewrapper sourceCode" id="cb35">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># plot lines and points</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add label</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change color scale</span></span>
+<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># remove x axis label</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found</code></pre>
+</div>
+<p>There are many aspects of the plot you can customize this way: check the <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link"><code>ggplot2</code> documentation</a> for more information.</p>
+<p>You can also change many aspects of the plot at once with pre-configured themes, for example <code>theme_classic()</code>.</p>
+<div class="codewrapper sourceCode" id="cb37">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># plot lines and points</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add label</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change color scale</span></span>
+<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change to theme classic</span></span>
+<span>  <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># remove x axis label</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in select(., city, date, max_temp_c, min_temp_c): object 'weather' not found</code></pre>
+</div>
+<p>Note that we have to do this <strong>before</strong> we remove the x axis label, because in <code>theme_light()</code>, the <code>axis.title.x</code> parameter is set to something other than <code>element_blank()</code>, so this would overwrite our call to <code>theme()</code>.</p>
+<p>You can find out more about the other available themes <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html?q=complete%20themes" class="external-link">in the <code>ggplot2</code> documentation</a>.</p>
+</div>
 </section><section id="saving-plots"><h2 class="section-heading">Saving plots<a class="anchor" aria-label="anchor" href="#saving-plots"></a>
 </h2>
 <hr class="half-width"></section><section id="combining-plots-with-patchwork"><h2 class="section-heading">Combining plots with <code>patchwork</code><a class="anchor" aria-label="anchor" href="#combining-plots-with-patchwork"></a>
@@ -696,7 +804,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="../LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.10.8" class="external-link">sandpaper (0.10.8)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper" class="external-link">sandpaper (0.10.8)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.9" class="external-link">varnish (0.2.9)</a>.</p>
 			</div>
