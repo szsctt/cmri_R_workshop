@@ -296,8 +296,8 @@
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1       89   405   406   124   785   787
-2 lib2      413   790   118   805   387    97</code></pre>
+1 lib1       91   811   115   123   389   790
+2 lib2      404   395   805   796   397   100</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -307,23 +307,23 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         89   413
-2 b2        405   790
-3 b3        406   118
-4 b4        124   805
-5 b5        785   387
-6 b6        787    97</code></pre>
+1 b1         91   404
+2 b2        811   395
+3 b3        115   805
+4 b4        123   796
+5 b5        389   397
+6 b6        790   100</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code># A tibble: 2 × 13
-  library `89`  `405` `406` `124` `785` `787` `413` `790` `118` `805` `387`
+  library `91`  `811` `115` `123` `389` `790` `404` `395` `805` `796` `397`
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
 2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
-# … with 1 more variable: `97` &lt;chr&gt;</code></pre>
+# … with 1 more variable: `100` &lt;chr&gt;</code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -344,18 +344,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1         89
- 2 lib1    b2        405
- 3 lib1    b3        406
- 4 lib1    b4        124
- 5 lib1    b5        785
- 6 lib1    b6        787
- 7 lib2    b1        413
- 8 lib2    b2        790
- 9 lib2    b3        118
-10 lib2    b4        805
-11 lib2    b5        387
-12 lib2    b6         97</code></pre>
+ 1 lib1    b1         91
+ 2 lib1    b2        811
+ 3 lib1    b3        115
+ 4 lib1    b4        123
+ 5 lib1    b5        389
+ 6 lib1    b6        790
+ 7 lib2    b1        404
+ 8 lib2    b2        395
+ 9 lib2    b3        805
+10 lib2    b4        796
+11 lib2    b5        397
+12 lib2    b6        100</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -441,12 +441,12 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         89   413
-2 b2        405   790
-3 b3        406   118
-4 b4        124   805
-5 b5        785   387
-6 b6        787    97</code></pre>
+1 b1         91   404
+2 b2        811   395
+3 b3        115   805
+4 b4        123   796
+5 b5        389   397
+6 b6        790   100</code></pre>
 </div>
 <p>Another way to think about tidyness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -467,18 +467,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1       89
- 2 b1      lib2      413
- 3 b2      lib1      405
- 4 b2      lib2      790
- 5 b3      lib1      406
- 6 b3      lib2      118
- 7 b4      lib1      124
- 8 b4      lib2      805
- 9 b5      lib1      785
-10 b5      lib2      387
-11 b6      lib1      787
-12 b6      lib2       97</code></pre>
+ 1 b1      lib1       91
+ 2 b1      lib2      404
+ 3 b2      lib1      811
+ 4 b2      lib2      395
+ 5 b3      lib1      115
+ 6 b3      lib2      805
+ 7 b4      lib1      123
+ 8 b4      lib2      796
+ 9 b5      lib1      389
+10 b5      lib2      397
+11 b6      lib1      790
+12 b6      lib2      100</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_longer_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting longer</figcaption></figure></div>
@@ -499,18 +499,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1         89
- 2 lib1    b2        405
- 3 lib1    b3        406
- 4 lib1    b4        124
- 5 lib1    b5        785
- 6 lib1    b6        787
- 7 lib2    b1        413
- 8 lib2    b2        790
- 9 lib2    b3        118
-10 lib2    b4        805
-11 lib2    b5        387
-12 lib2    b6         97</code></pre>
+ 1 lib1    b1         91
+ 2 lib1    b2        811
+ 3 lib1    b3        115
+ 4 lib1    b4        123
+ 5 lib1    b5        389
+ 6 lib1    b6        790
+ 7 lib2    b1        404
+ 8 lib2    b2        395
+ 9 lib2    b3        805
+10 lib2    b4        796
+11 lib2    b5        397
+12 lib2    b6        100</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -526,12 +526,12 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         89   413
-2 b2        405   790
-3 b3        406   118
-4 b4        124   805
-5 b5        785   387
-6 b6        787    97</code></pre>
+1 b1         91   404
+2 b2        811   395
+3 b3        115   805
+4 b4        123   796
+5 b5        389   397
+6 b6        790   100</code></pre>
 </div>
 </div>
 </div>
@@ -597,7 +597,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper" class="external-link">sandpaper (0.10.8)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.10.8" class="external-link">sandpaper (0.10.8)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.9" class="external-link">varnish (0.2.9)</a>.</p>
 			</div>
