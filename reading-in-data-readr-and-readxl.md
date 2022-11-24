@@ -47,15 +47,45 @@ The workhorse of this package is the `read_xlsx()` function (or `read_xls` for o
 
 
 ```r
+getwd()
+```
+
+```{.output}
+[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built"
+```
+
+```r
+list.files("..")
+```
+
+```{.output}
+[1] "_pkgdown.yaml" "built"         "DESCRIPTION"   "README.md"    
+```
+
+```r
+list.files("../..")
+```
+
+```{.output}
+ [1] "cmri_R_workshop.Rproj" "CODE_OF_CONDUCT.md"    "config.yaml"          
+ [4] "CONTRIBUTING.md"       "episodes"              "index.md"             
+ [7] "instructors"           "learners"              "LICENSE.md"           
+[10] "links.md"              "profiles"              "README.md"            
+[13] "renv"                  "site"                 
+```
+
+
+
+```r
 # define path to excel file to read
-my_excel_sheet <- here::here("..", "episodes",  "data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 
 # read in data 
 my_excel_data <- readxl::read_xlsx(my_excel_sheet)
 ```
 
 ```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/readxl_example_1.xlsx'
+Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_1.xlsx'
 ```
 
 ```r
@@ -80,7 +110,7 @@ my_excel_sheet
 ```
 
 ```{.output}
-[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/readxl_example_1.xlsx"
+[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_1.xlsx"
 ```
 
 
@@ -90,7 +120,7 @@ Note that this example file path is a little convoluted, because of the way the 
 
 
 ```r
-my_excel_sheet <- here::here("data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 ```
 
 
@@ -117,11 +147,11 @@ Open the file `readxl_example_2.xlsx` in Excel.  What do you think the types wil
 
 ```r
 # read in data 
-data <- readxl::read_xlsx(here::here("..", "episodes", "data", "readxl_example_2.xlsx"))
+data <- readxl::read_xlsx(here::here("episodes", "data", "readxl_example_2.xlsx"))
 ```
 
 ```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/readxl_example_2.xlsx'
+Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_2.xlsx'
 ```
 
 ```r
@@ -196,12 +226,12 @@ Since the guessing of types can result in unexpected behaviour, it's best to alw
 
 
 ```r
-data <- readxl::read_xlsx(here::here("..", "episodes", "data", "readxl_example_2.xlsx"),
+data <- readxl::read_xlsx(here::here("episodes", "data", "readxl_example_2.xlsx"),
                            col_types = c("numeric", "text", "text", "text", "numeric"))
 ```
 
 ```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/readxl_example_2.xlsx'
+Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readxl_example_2.xlsx'
 ```
 
 ```r
@@ -390,7 +420,7 @@ function (..., list = character(), package = NULL, lib.loc = NULL,
     }
     invisible(names)
 }
-<bytecode: 0x55f34fc2f7c8>
+<bytecode: 0x5654856330d0>
 <environment: namespace:utils>
 ```
 
@@ -422,7 +452,7 @@ Import this data, including the `col_names`, `skip`, `col_types`, `sheet` and `r
 
 
 ```r
-readxl::read_xlsx(here::here("..", "episodes", "data", "human_codon_table.xlsx"),
+readxl::read_xlsx(here::here("episodes", "data", "human_codon_table.xlsx"),
                   col_names = c("codon", "frequency", "count"),
                   skip=0,
                   col_types = c('text', 'numeric', 'numeric'),
@@ -431,7 +461,7 @@ readxl::read_xlsx(here::here("..", "episodes", "data", "human_codon_table.xlsx")
 ```
 
 ```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/human_codon_table.xlsx'
+Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/human_codon_table.xlsx'
 ```
 
 :::::::::::::::
@@ -448,12 +478,12 @@ The syntax is very similar to `read_xlsx()`, and you should specify the column t
 
 
 ```r
-data <- readr::read_csv(here::here("..", "episodes", "data", "readr_example_1.tsv"),
+data <- readr::read_csv(here::here("episodes", "data", "readr_example_1.tsv"),
                            col_types = c("cci"))
 ```
 
 ```{.error}
-Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/readr_example_1.tsv' does not exist.
+Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/readr_example_1.tsv' does not exist.
 ```
 
 ```r
@@ -642,7 +672,7 @@ function (..., list = character(), package = NULL, lib.loc = NULL,
     }
     invisible(names)
 }
-<bytecode: 0x55f34fc2f7c8>
+<bytecode: 0x5654856330d0>
 <environment: namespace:utils>
 ```
 

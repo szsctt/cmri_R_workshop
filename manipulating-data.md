@@ -47,8 +47,10 @@ library(tidyverse)
 
 ```r
 # data files
-data_dir <- here::here("..", "episodes", "data") # change this for your computer
+# data files - readr can also read data from the internet
+data_dir <- "https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"
 data_files <- file.path(data_dir, c("weather_sydney.csv", "weather_brisbane.csv"))
+
 
 # column types
 col_types <- list(
@@ -81,10 +83,6 @@ weather <- readr::read_csv(data_files, skip=10,
                            id="file")
 ```
 
-```{.error}
-Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/weather_sydney.csv' does not exist.
-```
-
 ### Creating summaries with `summarise()`
 
 First, we would like to know what the mean minimum and maximum temperatures were overall.  For this, we can use `summarise()`:
@@ -96,8 +94,11 @@ weather %>%
             mean_max_temp = mean(max_temp_c))
 ```
 
-```{.error}
-Error in summarise(., mean_min_temp = mean(min_temp_c), mean_max_temp = mean(max_temp_c)): object 'weather' not found
+```{.output}
+# A tibble: 1 × 2
+  mean_min_temp mean_max_temp
+          <dbl>         <dbl>
+1          15.5            NA
 ```
 
 Notice that the mean_max_temp is `NA`, because we had some `NA` values in this column.  In `R` we use `NA` for missing values.  So how does one take the mean of some numbers, some of which are missing?  We can't so the answer is also a missing value.  We can, however, tell the `mean()` function to ignore the missing values using `na.rm=TRUE`:
@@ -109,8 +110,11 @@ weather %>%
             mean_max_temp = mean(max_temp_c, na.rm=TRUE))
 ```
 
-```{.error}
-Error in summarise(., mean_min_temp = mean(min_temp_c), mean_max_temp = mean(max_temp_c, : object 'weather' not found
+```{.output}
+# A tibble: 1 × 2
+  mean_min_temp mean_max_temp
+          <dbl>         <dbl>
+1          15.5          25.7
 ```
 
 
@@ -134,8 +138,11 @@ weather %>%
             median_max_temp = median(max_temp_c, na.rm=TRUE))
 ```
 
-```{.error}
-Error in summarise(., median_min_temp = median(min_temp_c), median_max_temp = median(max_temp_c, : object 'weather' not found
+```{.output}
+# A tibble: 1 × 2
+  median_min_temp median_max_temp
+            <dbl>           <dbl>
+1            15.5            24.9
 ```
 ::::::::::::::
 
@@ -151,8 +158,11 @@ weather %>%
             n_wind_dir = n_distinct(dir_max_wind_gust))
 ```
 
-```{.error}
-Error in summarise(., n_days_observed = n(), n_wind_dir = n_distinct(dir_max_wind_gust)): object 'weather' not found
+```{.output}
+# A tibble: 1 × 2
+  n_days_observed n_wind_dir
+            <int>      <int>
+1              43         14
 ```
 
 #### Grouped summaries with `group_by()`
@@ -167,8 +177,28 @@ weather %>%
   group_by(file)
 ```
 
-```{.error}
-Error in group_by(., file): object 'weather' not found
+```{.output}
+# A tibble: 43 × 22
+# Groups:   file [2]
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    11.1    20.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    11.1    22       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    13.4    23.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    13.4    23.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    13.3    24       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    15.4    24.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    16      24.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    14.9    24.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 13 more variables: time_max_wind_gust <time>,
+#   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, and abbreviated
+#   variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, ⁴​evaporation_mm, …
 ```
 
 The only difference is that when you print it out, it tells you that it's grouped by file.  However, a grouped data frame interacts differently with other `dplyr` verbs, such as `summary`.
@@ -181,8 +211,13 @@ weather %>%
             median_max_temp = median(max_temp_c, na.rm=TRUE))
 ```
 
-```{.error}
-Error in group_by(., file): object 'weather' not found
+```{.output}
+# A tibble: 2 × 3
+  file                                                           media…¹ media…²
+  <chr>                                                            <dbl>   <dbl>
+1 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    15.6    26.0
+2 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    14.9    24.2
+# … with abbreviated variable names ¹​median_min_temp, ²​median_max_temp
 ```
 
 Now we get the median temperature for both Sydney and Brisbane.
@@ -207,8 +242,28 @@ weather %>%
   summarise(max_max_wind_gust = max(speed_max_wind_gust_kph))
 ```
 
-```{.error}
-Error in group_by(., file, dir_max_wind_gust): object 'weather' not found
+```{.output}
+`summarise()` has grouped output by 'file'. You can override using the
+`.groups` argument.
+```
+
+```{.output}
+# A tibble: 21 × 3
+# Groups:   file [2]
+   file                                                          dir_m…¹ max_m…²
+   <chr>                                                         <chr>     <dbl>
+ 1 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… E            35
+ 2 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… ENE          37
+ 3 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… ESE          35
+ 4 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NE           26
+ 5 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NNE          35
+ 6 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NW           48
+ 7 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… W            44
+ 8 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WNW          33
+ 9 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WSW          43
+10 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… <NA>         NA
+# … with 11 more rows, and abbreviated variable names ¹​dir_max_wind_gust,
+#   ²​max_max_wind_gust
 ```
 ::::::::::::::
 
@@ -227,8 +282,18 @@ weather %>%
   pivot_wider(id_cols=file, names_from = "dir_max_wind_gust", values_from = "max_max_wind_gust")
 ```
 
-```{.error}
-Error in group_by(., file, dir_max_wind_gust): object 'weather' not found
+```{.output}
+`summarise()` has grouped output by 'file'. You can override using the
+`.groups` argument.
+```
+
+```{.output}
+# A tibble: 2 × 15
+  file       E   ENE   ESE    NE   NNE    NW     W   WNW   WSW  `NA`   NNW     S
+  <chr>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+1 https…    35    37    35    26    35    48    44    33    43    NA    NA    NA
+2 https…    33    50    26    41    NA    NA    83    69    NA    NA    46    54
+# … with 2 more variables: SSE <dbl>, SW <dbl>
 ```
 
 Do you prefer the long or wide form of the table?
@@ -268,18 +333,30 @@ We can use `mutate()` to apply the `str_extract()` function to the `file` column
 ```r
 weather <- weather %>% 
   mutate(city = stringr::str_extract(file, "sydney|brisbane"))
-```
-
-```{.error}
-Error in mutate(., city = stringr::str_extract(file, "sydney|brisbane")): object 'weather' not found
-```
-
-```r
 weather
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'weather' not found
+```{.output}
+# A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    11.1    20.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    11.1    22       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    13.4    23.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    13.4    23.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    13.3    24       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    15.4    24.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    16      24.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    14.9    24.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+#   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 Now if we repeat the same summary as before, we get an output that's a bit easier to read.
@@ -292,8 +369,12 @@ weather %>%
             median_max_temp = median(max_temp_c, na.rm=TRUE))
 ```
 
-```{.error}
-Error in group_by(., city): object 'weather' not found
+```{.output}
+# A tibble: 2 × 3
+  city     median_min_temp median_max_temp
+  <chr>              <dbl>           <dbl>
+1 brisbane            15.6            26.0
+2 sydney              14.9            24.2
 ```
 
 
@@ -310,8 +391,27 @@ weather %>%
          temp_3pm_c = temp_3pm_c + 1) 
 ```
 
-```{.error}
-Error in mutate(., min_temp_c = min_temp_c + 1, max_temp_c = max_temp_c + : object 'weather' not found
+```{.output}
+# A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    12.1    21.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    12.1    23       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    14.4    24.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    14.4    24.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    14.3    25       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    16.4    25.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+#   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 
@@ -324,8 +424,27 @@ weather %>%
   mutate(across(contains("temp"), ~.+1))
 ```
 
-```{.error}
-Error in mutate(., across(contains("temp"), ~. + 1)): object 'weather' not found
+```{.output}
+# A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    12.1    21.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    12.1    23       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    14.4    24.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    14.4    24.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    14.3    25       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    16.4    25.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+#   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 Equivalently, we could also use a function to make the transformation.
@@ -338,8 +457,27 @@ weather %>%
   }))
 ```
 
-```{.error}
-Error in mutate(., across(contains("temp"), function(x) {: object 'weather' not found
+```{.output}
+# A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    12.1    21.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    12.1    23       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    14.4    24.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    14.4    24.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    14.3    25       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    16.4    25.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+#   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 ### Filtering rows with `filter()`
@@ -355,8 +493,29 @@ weather %>%
   filter(sunshine_hours < 10)
 ```
 
-```{.error}
-Error in filter(., sunshine_hours < 10): object 'weather' not found
+```{.output}
+# A tibble: 12 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-03    11.1    22       0       7.8     8.9 W            56
+ 3 https://r… 2022-11-04    13.4    23.1     1       6       5.7 SSE          26
+ 4 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
+ 5 https://r… 2022-11-11    14.9    24.9     0       7.8     9.1 ENE          39
+ 6 https://r… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
+ 7 https://r… 2022-11-13    18.9    25.6     0       6.4     1.7 NNW          46
+ 8 https://r… 2022-11-15    16.2    24.9     0.2     9.6     9.2 SW           33
+ 9 https://r… 2022-11-16    13      21.6     0.8     8       9.1 S            54
+10 https://r… 2022-11-08    14.7    25.2     0      10       9.9 ESE          33
+11 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
+12 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+# … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
+#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 
@@ -377,8 +536,12 @@ weather %>%
   summarise(n_days = n())
 ```
 
-```{.error}
-Error in filter(., sunshine_hours > 10): object 'weather' not found
+```{.output}
+# A tibble: 2 × 2
+  city     n_days
+  <chr>     <int>
+1 brisbane     17
+2 sydney       12
 ```
 
 There were more days with more than 10 hours of sunlight in Brisbane than in Sydney.  I'll let you draw your own conclusions.
@@ -397,8 +560,32 @@ weather %>%
   filter((sunshine_hours > 10 & max_temp_c > 25) | (sunshine_hours < 10 & max_temp_c < 15))
 ```
 
-```{.error}
-Error in filter(., (sunshine_hours > 10 & max_temp_c > 25) | (sunshine_hours < : object 'weather' not found
+```{.output}
+# A tibble: 15 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+ 2 https://r… 2022-11-20    18      27.4     0.8     7.8    13.3 W            70
+ 3 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
+ 4 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
+ 5 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
+ 6 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
+ 7 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
+ 8 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
+ 9 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+11 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+12 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+13 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
+14 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+15 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+# … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
+#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 But you can imagine that with more conditions, this can get a bit messy.  I prefer to use `case_when()` in such situations:
@@ -413,8 +600,32 @@ weather %>%
   ))
 ```
 
-```{.error}
-Error in filter(., case_when(sunshine_hours > 10 & max_temp_c > 25 ~ TRUE, : object 'weather' not found
+```{.output}
+# A tibble: 15 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+ 2 https://r… 2022-11-20    18      27.4     0.8     7.8    13.3 W            70
+ 3 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
+ 4 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
+ 5 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
+ 6 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
+ 7 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
+ 8 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
+ 9 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+11 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+12 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+13 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
+14 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+15 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+# … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
+#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 Essentially, `case_when()` looks at each condition in turn, and if the left part of the expression (before the `~`) evaulates to `TRUE`, then it returns whatever is on the right of the `~`.  
@@ -452,8 +663,12 @@ weather %>%
             mean_rel_humid_3pm = mean(rel_humid_3pm_pc, na.rm=TRUE))
 ```
 
-```{.error}
-Error in mutate(., day_type = case_when(sunshine_hours > 10 & max_temp_c > : object 'weather' not found
+```{.output}
+# A tibble: 2 × 3
+  day_type  mean_rel_humid_9am mean_rel_humid_3pm
+  <chr>                  <dbl>              <dbl>
+1 hot_sunny               49.3               40.9
+2 neither                 57.0               47.1
 ```
 
 Notice that we didn't actually have any cold cloudy days, but hot sunny days seem to be less humid.
@@ -475,8 +690,16 @@ weather %>%
   filter(max_temp_c == max(max_temp_c))
 ```
 
-```{.error}
-Error in group_by(., city): object 'weather' not found
+```{.output}
+# A tibble: 0 × 23
+# Groups:   city [0]
+# … with 23 variables: file <chr>, date <date>, min_temp_c <dbl>,
+#   max_temp_c <dbl>, rainfall_mm <dbl>, evaporation_mm <dbl>,
+#   sunshine_hours <dbl>, dir_max_wind_gust <chr>,
+#   speed_max_wind_gust_kph <dbl>, time_max_wind_gust <time>, temp_9am_c <dbl>,
+#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>, …
 ```
 
 
@@ -489,8 +712,21 @@ weather %>%
   slice_max(order_by=max_temp_c, n=1)
 ```
 
-```{.error}
-Error in group_by(., city): object 'weather' not found
+```{.output}
+# A tibble: 3 × 23
+# Groups:   city [2]
+  file        date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+  <chr>       <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+1 https://ra… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+2 https://ra… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
+3 https://ra… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+# … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
+#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 If you want the minimum values instead, use `slice_min()` and if you want a random sample, use `slice_sample()`.
@@ -518,8 +754,12 @@ weather %>%
   )
 ```
 
-```{.error}
-Error in group_by(., city): object 'weather' not found
+```{.output}
+# A tibble: 2 × 2
+  city     mean_temp
+  <chr>        <dbl>
+1 brisbane      32.2
+2 sydney        26.7
 ```
 
 Ooof, Brisbane was hot!  Maybe this changes your conclusion about which city is better.
@@ -544,8 +784,27 @@ weather %>%
   select(-file)
 ```
 
-```{.error}
-Error in select(., -file): object 'weather' not found
+```{.output}
+# A tibble: 43 × 22
+   date       min_temp_c max_t…¹ rainf…² evapo…³ sunsh…⁴ dir_m…⁵ speed…⁶ time_…⁷
+   <date>          <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl> <time> 
+ 1 2022-11-01       18.2    24       0.2     4.6     9.5 WNW          69 06:50  
+ 2 2022-11-02       11.1    20.5     0.6    13      12.8 W            67 12:54  
+ 3 2022-11-03       11.1    22       0       7.8     8.9 W            56 07:41  
+ 4 2022-11-04       13.4    23.1     1       6       5.7 SSE          26 23:24  
+ 5 2022-11-05       13.4    23.6     0.2     4.4    11.8 ENE          37 15:20  
+ 6 2022-11-06       13.3    24       0       4      12.1 ENE          39 16:12  
+ 7 2022-11-07       15.4    24.2     0       9.8    12.3 NE           41 11:44  
+ 8 2022-11-08       16      24.2     1.2     8      11   ENE          35 15:55  
+ 9 2022-11-09       14.9    24.2     0.2     8      10.3 E            33 12:37  
+10 2022-11-10       14.9    24.4     0       7.8     9.3 ENE          43 17:10  
+# … with 33 more rows, 13 more variables: temp_9am_c <dbl>,
+#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​max_temp_c, ²​rainfall_mm, ³​evaporation_mm, …
 ```
 
 Alternatively, if we only wanted to keep the date, city and the 3pm observations, we can do this as well.
@@ -556,8 +815,22 @@ weather %>%
   select(date, city, contains("3pm"))
 ```
 
-```{.error}
-Error in select(., date, city, contains("3pm")): object 'weather' not found
+```{.output}
+# A tibble: 43 × 8
+   date       city   temp_3pm_c rel_humid_3pm_pc cloud…¹ wind_…² wind_…³ MSL_p…⁴
+   <date>     <chr>       <dbl>            <dbl>   <dbl> <chr>     <dbl>   <dbl>
+ 1 2022-11-01 sydney       23.1               30       2 WNW          31    992 
+ 2 2022-11-02 sydney       19.7               29       1 SW           22   1006.
+ 3 2022-11-03 sydney       20                 42       7 SE           20   1017.
+ 4 2022-11-04 sydney       22.8               55       5 ENE          17   1027.
+ 5 2022-11-05 sydney       22.2               60       2 ENE          24   1027.
+ 6 2022-11-06 sydney       23.1               59       1 E            26   1023.
+ 7 2022-11-07 sydney       23.4               58       2 ENE          24   1021.
+ 8 2022-11-08 sydney       24                 59       2 ENE          24   1020.
+ 9 2022-11-09 sydney       23.6               46       1 ENE          26   1022.
+10 2022-11-10 sydney       24.1               55       1 ENE          24   1019.
+# … with 33 more rows, and abbreviated variable names ¹​cloud_amount_3pm_oktas,
+#   ²​wind_direction_3pm, ³​wind_speed_3pm_kph, ⁴​MSL_pressure_3pm_hPa
 ```
 
 ### Sorting rows with `arrange()`
@@ -574,8 +847,27 @@ weather %>%
   arrange(desc(max_temp_c))
 ```
 
-```{.error}
-Error in arrange(., desc(max_temp_c)): object 'weather' not found
+```{.output}
+# A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+ 1 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+ 2 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+ 3 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+ 4 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+ 5 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
+ 6 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+ 7 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+ 8 https://r… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
+ 9 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+#   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
+#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
+#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
+#   cloud_amount_3pm_oktas <dbl>, wind_direction_3pm <chr>,
+#   wind_speed_3pm_kph <dbl>, MSL_pressure_3pm_hPa <dbl>, city <chr>, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …
 ```
 
 
@@ -601,8 +893,22 @@ weather %>%
   select(city, date, min_temp_c, rank)
 ```
 
-```{.error}
-Error in group_by(., city): object 'weather' not found
+```{.output}
+# A tibble: 43 × 4
+# Groups:   city [2]
+   city     date       min_temp_c  rank
+   <chr>    <date>          <dbl> <int>
+ 1 sydney   2022-11-17       10       1
+ 2 sydney   2022-11-02       11.1     2
+ 3 sydney   2022-11-03       11.1     3
+ 4 sydney   2022-11-22       11.7     4
+ 5 sydney   2022-11-18       12.4     5
+ 6 brisbane 2022-11-03       12.8     1
+ 7 sydney   2022-11-19       12.9     6
+ 8 sydney   2022-11-16       13       7
+ 9 sydney   2022-11-06       13.3     8
+10 sydney   2022-11-04       13.4     9
+# … with 33 more rows
 ```
 
 ::::::::::::::::::
@@ -631,18 +937,25 @@ Let's say we have a second table which contains the forecast for each day.  Here
 forecast <- weather %>% 
   select(date, city) %>% 
   mutate(forecast = sample(c("cloudy", "sunny"), size = n(), replace=TRUE))
-```
 
-```{.error}
-Error in select(., date, city): object 'weather' not found
-```
-
-```r
 forecast
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'forecast' not found
+```{.output}
+# A tibble: 43 × 3
+   date       city   forecast
+   <date>     <chr>  <chr>   
+ 1 2022-11-01 sydney sunny   
+ 2 2022-11-02 sydney sunny   
+ 3 2022-11-03 sydney sunny   
+ 4 2022-11-04 sydney cloudy  
+ 5 2022-11-05 sydney sunny   
+ 6 2022-11-06 sydney cloudy  
+ 7 2022-11-07 sydney cloudy  
+ 8 2022-11-08 sydney sunny   
+ 9 2022-11-09 sydney cloudy  
+10 2022-11-10 sydney sunny   
+# … with 33 more rows
 ```
 
 Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.
@@ -654,8 +967,21 @@ weather %>%
   select(city, date, sunshine_hours, forecast)
 ```
 
-```{.error}
-Error in left_join(., forecast, by = c("date", "city")): object 'weather' not found
+```{.output}
+# A tibble: 43 × 4
+   city   date       sunshine_hours forecast
+   <chr>  <date>              <dbl> <chr>   
+ 1 sydney 2022-11-01            9.5 sunny   
+ 2 sydney 2022-11-02           12.8 sunny   
+ 3 sydney 2022-11-03            8.9 sunny   
+ 4 sydney 2022-11-04            5.7 cloudy  
+ 5 sydney 2022-11-05           11.8 sunny   
+ 6 sydney 2022-11-06           12.1 cloudy  
+ 7 sydney 2022-11-07           12.3 cloudy  
+ 8 sydney 2022-11-08           11   sunny   
+ 9 sydney 2022-11-09           10.3 cloudy  
+10 sydney 2022-11-10            9.3 sunny   
+# … with 33 more rows
 ```
 
 
@@ -686,8 +1012,12 @@ weather %>%
   summarise(count = n())
 ```
 
-```{.error}
-Error in left_join(., forecast, by = c("date", "city")): object 'weather' not found
+```{.output}
+# A tibble: 2 × 2
+  forecast_accurate count
+  <lgl>             <int>
+1 FALSE                24
+2 TRUE                 19
 ```
 
 ::::::::::::::::::
