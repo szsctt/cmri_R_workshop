@@ -38,7 +38,7 @@ When I first learnt `R` in a first-year statistics course, the way we did this w
 5. Enter the command `read.table(pipe("pbpaste"), header = TRUE)`
 
 This is a pretty convoluted way to do things! This weird process was part of the reason that, after I finished the course, I didn't touch `R` again for almost ten years.  
-
+ 
 Luckily, in the meantime people worked out better ways of doing things.  This lesson will cover two awesome packages which can help you import your data: `readxl` for Excel files, and `readr` for text files.
 
 
