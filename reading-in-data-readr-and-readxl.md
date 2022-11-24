@@ -48,22 +48,20 @@ The workhorse of this package is the `read_xlsx()` function (or `read_xls` for o
 
 ```r
 # define path to excel file to read - this will probably be different for you
-my_excel_sheet <- here::here("data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 
 # read in data 
 my_excel_data <- readxl::read_xlsx(my_excel_sheet)
-```
-
-```{.error}
-Error: `path` does not exist: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/data/readxl_example_1.xlsx'
-```
-
-```r
 my_excel_data
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'my_excel_data' not found
+```{.output}
+# A tibble: 3 × 3
+  word           count number
+  <chr>          <chr>  <dbl>
+1 prematurely    one        4
+2 airconditioned two        5
+3 supermarket    three      6
 ```
 
 ### File paths with `here::here()`
@@ -80,7 +78,7 @@ my_excel_sheet
 ```
 
 ```{.output}
-[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/data/readxl_example_1.xlsx"
+[1] "/home/runner/work/cmri_R_workshop/cmri_R_workshop/episodes/data/readxl_example_1.xlsx"
 ```
 
 
