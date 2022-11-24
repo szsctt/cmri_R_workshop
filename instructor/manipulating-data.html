@@ -316,8 +316,10 @@
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># data files</span></span>
-<span><span class="va">data_dir</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">".."</span>, <span class="st">"episodes"</span>, <span class="st">"data"</span><span class="op">)</span> <span class="co"># change this for your computer</span></span>
+<span><span class="co"># data files - readr can also read data from the internet</span></span>
+<span><span class="va">data_dir</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"</span></span>
 <span><span class="va">data_files</span> <span class="op">&lt;-</span> <span class="fu">file.path</span><span class="op">(</span><span class="va">data_dir</span>, <span class="fu">c</span><span class="op">(</span><span class="st">"weather_sydney.csv"</span>, <span class="st">"weather_brisbane.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span><span class="co"># column types</span></span>
 <span><span class="va">col_types</span> <span class="op">&lt;-</span> <span class="fu">list</span><span class="op">(</span></span>
@@ -349,16 +351,11 @@
 <span>                           col_types<span class="op">=</span><span class="va">col_types</span>, col_names <span class="op">=</span> <span class="fu">names</span><span class="op">(</span><span class="va">col_types</span><span class="op">)</span>,</span>
 <span>                           id<span class="op">=</span><span class="st">"file"</span><span class="op">)</span></span></code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/../episodes/data/weather_sydney.csv' does not exist.</code></pre>
-</div>
 <div class="section level3">
 <h3 id="creating-summaries-with-summarise">Creating summaries with <code>summarise()</code>
 <a class="anchor" aria-label="anchor" href="#creating-summaries-with-summarise"></a></h3>
 <p>First, we would like to know what the mean minimum and maximum temperatures were overall. For this, we can use <code>summarise()</code>:</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -367,12 +364,15 @@
 <span>            mean_max_temp <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">max_temp_c</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in summarise(., mean_min_temp = mean(min_temp_c), mean_max_temp = mean(max_temp_c)): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 1 × 2
+  mean_min_temp mean_max_temp
+          &lt;dbl&gt;         &lt;dbl&gt;
+1          15.5            NA</code></pre>
 </div>
 <p>Notice that the mean_max_temp is <code>NA</code>, because we had some <code>NA</code> values in this column. In <code>R</code> we use <code>NA</code> for missing values. So how does one take the mean of some numbers, some of which are missing? We can’t so the answer is also a missing value. We can, however, tell the <code>mean()</code> function to ignore the missing values using <code>na.rm=TRUE</code>:</p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -381,9 +381,12 @@
 <span>            mean_max_temp <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">max_temp_c</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in summarise(., mean_min_temp = mean(min_temp_c), mean_max_temp = mean(max_temp_c, : object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 1 × 2
+  mean_min_temp mean_max_temp
+          &lt;dbl&gt;         &lt;dbl&gt;
+1          15.5          25.7</code></pre>
 </div>
 <div id="challenge1" class="callout challenge">
 <div class="callout-square">
@@ -404,9 +407,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -415,16 +418,19 @@
 <span>            median_max_temp <span class="op">=</span> <span class="fu">median</span><span class="op">(</span><span class="va">max_temp_c</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in summarise(., median_min_temp = median(min_temp_c), median_max_temp = median(max_temp_c, : object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 1 × 2
+  median_min_temp median_max_temp
+            &lt;dbl&gt;           &lt;dbl&gt;
+1            15.5            24.9</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <p><code>dplyr</code> also has some special functions that are designed to be used inside of other functions. For example, if we want to know how many observations there were of the minimum and maximum temperatures, we could use <code>n()</code>. Or if we wanted to know how many different directions the maximum wind gust had, we can use <code>n_distinct()</code>.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -433,16 +439,19 @@
 <span>            n_wind_dir <span class="op">=</span> <span class="fu">n_distinct</span><span class="op">(</span><span class="va">dir_max_wind_gust</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in summarise(., n_days_observed = n(), n_wind_dir = n_distinct(dir_max_wind_gust)): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 1 × 2
+  n_days_observed n_wind_dir
+            &lt;int&gt;      &lt;int&gt;
+1              43         14</code></pre>
 </div>
 <div class="section level4">
 <h4 id="grouped-summaries-with-group_by">Grouped summaries with <code>group_by()</code>
 <a class="anchor" aria-label="anchor" href="#grouped-summaries-with-group_by"></a></h4>
 <p>However, all of these summaries have combined the observations for Sydney and Brisbane. It probably makes sense to group the observations by city, and then compute the summary statistics. For this, we can use <code>group_by()</code>.</p>
 <p>If you use <code>group_by()</code> on a tibble, it doesn’t actually look like it changes that much.</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -450,12 +459,32 @@
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., file): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 22
+# Groups:   file [2]
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    11.1    20.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    11.1    22       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    13.4    23.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    13.4    23.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    13.3    24       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    15.4    24.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    16      24.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    14.9    24.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 13 more variables: time_max_wind_gust &lt;time&gt;,
+#   temp_9am_c &lt;dbl&gt;, rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, and abbreviated
+#   variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, ⁴​evaporation_mm, …</code></pre>
 </div>
 <p>The only difference is that when you print it out, it tells you that it’s grouped by file. However, a grouped data frame interacts differently with other <code>dplyr</code> verbs, such as <code>summary</code>.</p>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -465,9 +494,14 @@
 <span>            median_max_temp <span class="op">=</span> <span class="fu">median</span><span class="op">(</span><span class="va">max_temp_c</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., file): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 3
+  file                                                           media…¹ media…²
+  &lt;chr&gt;                                                            &lt;dbl&gt;   &lt;dbl&gt;
+1 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    15.6    26.0
+2 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    14.9    24.2
+# … with abbreviated variable names ¹​median_min_temp, ²​median_max_temp</code></pre>
 </div>
 <p>Now we get the median temperature for both Sydney and Brisbane.</p>
 <div id="challenge2" class="callout challenge">
@@ -489,9 +523,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb17">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -500,9 +534,30 @@
 <span>  <span class="fu">summarise</span><span class="op">(</span>max_max_wind_gust <span class="op">=</span> <span class="fu">max</span><span class="op">(</span><span class="va">speed_max_wind_gust_kph</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., file, dir_max_wind_gust): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'file'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 21 × 3
+# Groups:   file [2]
+   file                                                          dir_m…¹ max_m…²
+   &lt;chr&gt;                                                         &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… E            35
+ 2 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… ENE          37
+ 3 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… ESE          35
+ 4 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NE           26
+ 5 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NNE          35
+ 6 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NW           48
+ 7 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… W            44
+ 8 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WNW          33
+ 9 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WSW          43
+10 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… &lt;NA&gt;         NA
+# … with 11 more rows, and abbreviated variable names ¹​dir_max_wind_gust,
+#   ²​max_max_wind_gust</code></pre>
 </div>
 </div>
 </div>
@@ -527,7 +582,7 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -540,9 +595,20 @@
 <span>  <span class="fu">pivot_wider</span><span class="op">(</span>id_cols<span class="op">=</span><span class="va">file</span>, names_from <span class="op">=</span> <span class="st">"dir_max_wind_gust"</span>, values_from <span class="op">=</span> <span class="st">"max_max_wind_gust"</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., file, dir_max_wind_gust): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'file'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 15
+  file       E   ENE   ESE    NE   NNE    NW     W   WNW   WSW  `NA`   NNW     S
+  &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 https…    35    37    35    26    35    48    44    33    43    NA    NA    NA
+2 https…    33    50    26    41    NA    NA    83    69    NA    NA    46    54
+# … with 2 more variables: SSE &lt;dbl&gt;, SW &lt;dbl&gt;</code></pre>
 </div>
 <p>Do you prefer the long or wide form of the table?</p>
 </div>
@@ -556,7 +622,7 @@
 <a class="anchor" aria-label="anchor" href="#creating-new-columns-with-mutate"></a></h3>
 <p>It’s kind of annoying that we have the whole file names, rather than just the names of the cities. To fix this, we can create (or overwrite) columns with <code>mutate()</code>.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/dplyr-mutate-16-10-2019.png" alt="" class="figure mx-auto d-block"><figcaption><code>dplyr::mutate()</code> <a href="https://ab604.github.io/docs/coding-together-2019" class="external-link">image credit</a></figcaption></figure><p>For example, the <code>stringr::str_extract()</code> function extracts a matching pattern from a string:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -580,31 +646,40 @@
 </div>
 </div>
 <p>We can use <code>mutate()</code> to apply the <code>str_extract()</code> function to the <code>file</code> column</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weather</span> <span class="op">&lt;-</span> <span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>city <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_extract</span><span class="op">(</span><span class="va">file</span>, <span class="st">"sydney|brisbane"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">mutate</span><span class="op">(</span>city <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu">str_extract</span><span class="op">(</span><span class="va">file</span>, <span class="st">"sydney|brisbane"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">weather</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in mutate(., city = stringr::str_extract(file, "sydney|brisbane")): object 'weather' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb25">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">weather</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    11.1    20.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    11.1    22       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    13.4    23.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    13.4    23.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    13.3    24       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    15.4    24.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    16      24.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    14.9    24.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust &lt;time&gt;,
+#   temp_9am_c &lt;dbl&gt;, rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <p>Now if we repeat the same summary as before, we get an output that’s a bit easier to read.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -614,15 +689,19 @@
 <span>            median_max_temp <span class="op">=</span> <span class="fu">median</span><span class="op">(</span><span class="va">max_temp_c</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., city): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 3
+  city     median_min_temp median_max_temp
+  &lt;chr&gt;              &lt;dbl&gt;           &lt;dbl&gt;
+1 brisbane            15.6            26.0
+2 sydney              14.9            24.2</code></pre>
 </div>
 <div class="section level4">
 <h4 id="mutating-multiple-columns-with-across">Mutating multiple columns with <code>across()</code>
 <a class="anchor" aria-label="anchor" href="#mutating-multiple-columns-with-across"></a></h4>
 <p>Let’s imagine that the calibration was wrong for both temperature sensors, and all the temperature measurements are out by 1°C. We’d like to add 1 to each of the temperature measurements. There are multiple columns that contain temperatures, so we could do this:</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -633,12 +712,31 @@
 <span>         temp_3pm_c <span class="op">=</span> <span class="va">temp_3pm_c</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> </span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in mutate(., min_temp_c = min_temp_c + 1, max_temp_c = max_temp_c + : object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    12.1    21.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    12.1    23       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    14.4    24.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    14.4    24.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    14.3    25       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    16.4    25.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust &lt;time&gt;,
+#   temp_9am_c &lt;dbl&gt;, rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <p>But it’s a bit annoying to type out each column. Instead, we can use <code>across()</code> inside <code>mutate()</code> to apply the same transformation to all columns whose name contains the string “temp”. The syntax is a little complicated, so don’t worry if you don’t get it straight away. We use the <code>contains()</code> function to get the columns we want (by matching the regex “temp”), and then to each of these columns we add one - the <code>.</code> will be replaced by the name of each column when the expression is evaluated.</p>
-<div class="codewrapper sourceCode" id="cb31">
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -646,12 +744,31 @@
 <span>  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, <span class="op">~</span><span class="va">.</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in mutate(., across(contains("temp"), ~. + 1)): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    12.1    21.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    12.1    23       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    14.4    24.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    14.4    24.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    14.3    25       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    16.4    25.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust &lt;time&gt;,
+#   temp_9am_c &lt;dbl&gt;, rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <p>Equivalently, we could also use a function to make the transformation.</p>
-<div class="codewrapper sourceCode" id="cb33">
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -661,9 +778,28 @@
 <span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in mutate(., across(contains("temp"), function(x) {: object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-02    12.1    21.5     0.6    13      12.8 W            67
+ 3 https://r… 2022-11-03    12.1    23       0       7.8     8.9 W            56
+ 4 https://r… 2022-11-04    14.4    24.1     1       6       5.7 SSE          26
+ 5 https://r… 2022-11-05    14.4    24.6     0.2     4.4    11.8 ENE          37
+ 6 https://r… 2022-11-06    14.3    25       0       4      12.1 ENE          39
+ 7 https://r… 2022-11-07    16.4    25.2     0       9.8    12.3 NE           41
+ 8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
+ 9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
+10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
+# … with 33 more rows, 14 more variables: time_max_wind_gust &lt;time&gt;,
+#   temp_9am_c &lt;dbl&gt;, rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 </div>
 </div>
@@ -671,7 +807,7 @@
 <h3 id="filtering-rows-with-filter">Filtering rows with <code>filter()</code>
 <a class="anchor" aria-label="anchor" href="#filtering-rows-with-filter"></a></h3>
 <p>Let’s say that now we want information about days that were cloudy - for example, those where there were fewer than 10 sunshine hours. We can use <code>filter()</code> to get only those rows.</p>
-<figure><img src="https://ab604.github.io/docs/coding-together-2019/img/dplyr_filter.png" alt="" class="figure mx-auto d-block"><figcaption><code>dplyr::filter()</code> <a href="https://ab604.github.io/docs/coding-together-2019" class="external-link">image credit</a></figcaption></figure><div class="codewrapper sourceCode" id="cb35">
+<figure><img src="https://ab604.github.io/docs/coding-together-2019/img/dplyr_filter.png" alt="" class="figure mx-auto d-block"><figcaption><code>dplyr::filter()</code> <a href="https://ab604.github.io/docs/coding-together-2019" class="external-link">image credit</a></figcaption></figure><div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -679,9 +815,30 @@
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">sunshine_hours</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in filter(., sunshine_hours &lt; 10): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 12 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
+ 2 https://r… 2022-11-03    11.1    22       0       7.8     8.9 W            56
+ 3 https://r… 2022-11-04    13.4    23.1     1       6       5.7 SSE          26
+ 4 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
+ 5 https://r… 2022-11-11    14.9    24.9     0       7.8     9.1 ENE          39
+ 6 https://r… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
+ 7 https://r… 2022-11-13    18.9    25.6     0       6.4     1.7 NNW          46
+ 8 https://r… 2022-11-15    16.2    24.9     0.2     9.6     9.2 SW           33
+ 9 https://r… 2022-11-16    13      21.6     0.8     8       9.1 S            54
+10 https://r… 2022-11-08    14.7    25.2     0      10       9.9 ESE          33
+11 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
+12 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+# … with 14 more variables: time_max_wind_gust &lt;time&gt;, temp_9am_c &lt;dbl&gt;,
+#   rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <div id="challenge4" class="callout challenge">
 <div class="callout-square">
@@ -702,9 +859,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb37">
+<div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -714,9 +871,13 @@
 <span>  <span class="fu">summarise</span><span class="op">(</span>n_days <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in filter(., sunshine_hours &gt; 10): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 2
+  city     n_days
+  &lt;chr&gt;     &lt;int&gt;
+1 brisbane     17
+2 sydney       12</code></pre>
 </div>
 <p>There were more days with more than 10 hours of sunlight in Brisbane than in Sydney. I’ll let you draw your own conclusions.</p>
 </div>
@@ -727,7 +888,7 @@
 <h4 id="complex-filters-with-case_when">Complex filters with <code>case_when()</code>
 <a class="anchor" aria-label="anchor" href="#complex-filters-with-case_when"></a></h4>
 <p>Let’s say we wanted to keep only the rows from sunny, warm days and cloudy, cold days. We could do this just with one logical expression.</p>
-<div class="codewrapper sourceCode" id="cb39">
+<div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -735,12 +896,36 @@
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="op">(</span><span class="va">sunshine_hours</span> <span class="op">&gt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">max_temp_c</span> <span class="op">&gt;</span> <span class="fl">25</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">sunshine_hours</span> <span class="op">&lt;</span> <span class="fl">10</span> <span class="op">&amp;</span> <span class="va">max_temp_c</span> <span class="op">&lt;</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in filter(., (sunshine_hours &gt; 10 &amp; max_temp_c &gt; 25) | (sunshine_hours &lt; : object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 15 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+ 2 https://r… 2022-11-20    18      27.4     0.8     7.8    13.3 W            70
+ 3 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
+ 4 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
+ 5 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
+ 6 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
+ 7 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
+ 8 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
+ 9 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+11 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+12 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+13 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
+14 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+15 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+# … with 14 more variables: time_max_wind_gust &lt;time&gt;, temp_9am_c &lt;dbl&gt;,
+#   rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <p>But you can imagine that with more conditions, this can get a bit messy. I prefer to use <code>case_when()</code> in such situations:</p>
-<div class="codewrapper sourceCode" id="cb41">
+<div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -752,9 +937,33 @@
 <span>  <span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in filter(., case_when(sunshine_hours &gt; 10 &amp; max_temp_c &gt; 25 ~ TRUE, : object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 15 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+ 2 https://r… 2022-11-20    18      27.4     0.8     7.8    13.3 W            70
+ 3 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
+ 4 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
+ 5 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
+ 6 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
+ 7 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
+ 8 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
+ 9 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+11 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+12 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+13 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
+14 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+15 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+# … with 14 more variables: time_max_wind_gust &lt;time&gt;, temp_9am_c &lt;dbl&gt;,
+#   rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <p>Essentially, <code>case_when()</code> looks at each condition in turn, and if the left part of the expression (before the <code>~</code>) evaulates to <code>TRUE</code>, then it returns whatever is on the right of the <code>~</code>.</p>
 <ul><li>We first ask if this row has more than ten sunshine hours and a maximum temperature of more than 25 - if this is the case, we return <code>TRUE</code> (and <code>filter()</code> retains this row).<br></li>
@@ -782,9 +991,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb43">
+<div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -799,9 +1008,13 @@
 <span>            mean_rel_humid_3pm <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">rel_humid_3pm_pc</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in mutate(., day_type = case_when(sunshine_hours &gt; 10 &amp; max_temp_c &gt; : object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 3
+  day_type  mean_rel_humid_9am mean_rel_humid_3pm
+  &lt;chr&gt;                  &lt;dbl&gt;              &lt;dbl&gt;
+1 hot_sunny               49.3               40.9
+2 neither                 57.0               47.1</code></pre>
 </div>
 <p>Notice that we didn’t actually have any cold cloudy days, but hot sunny days seem to be less humid.</p>
 </div>
@@ -813,7 +1026,7 @@
 <h4 id="filter-within-groups-with-slice_xxx">Filter within groups with <code>slice_xxx()</code>
 <a class="anchor" aria-label="anchor" href="#filter-within-groups-with-slice_xxx"></a></h4>
 <p>If you want to filter within groups, you could use <code>filter()</code> and <code>group_by()</code> together - for example if we wanted to know what the hottest day in each city was, you might try this:</p>
-<div class="codewrapper sourceCode" id="cb45">
+<div class="codewrapper sourceCode" id="cb44">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -822,12 +1035,20 @@
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">max_temp_c</span> <span class="op">==</span> <span class="fu">max</span><span class="op">(</span><span class="va">max_temp_c</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., city): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code><span><span class="co"># A tibble: 0 × 23</span></span>
+<span><span class="co"># Groups:   city [0]</span></span>
+<span><span class="co"># … with 23 variables: file &lt;chr&gt;, date &lt;date&gt;, min_temp_c &lt;dbl&gt;,</span></span>
+<span><span class="co">#   max_temp_c &lt;dbl&gt;, rainfall_mm &lt;dbl&gt;, evaporation_mm &lt;dbl&gt;,</span></span>
+<span><span class="co">#   sunshine_hours &lt;dbl&gt;, dir_max_wind_gust &lt;chr&gt;,</span></span>
+<span><span class="co">#   speed_max_wind_gust_kph &lt;dbl&gt;, time_max_wind_gust &lt;time&gt;, temp_9am_c &lt;dbl&gt;,</span></span>
+<span><span class="co">#   rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,</span></span>
+<span><span class="co">#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,</span></span>
+<span><span class="co">#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;, …</span></span></code></pre>
 </div>
 <p>But it doesn’t work! The reasons why are somewhat technical, so here I’ll sidestep them and just give you the solution instead: use <code>slice_max()</code></p>
-<div class="codewrapper sourceCode" id="cb47">
+<div class="codewrapper sourceCode" id="cb46">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -836,9 +1057,22 @@
 <span>  <span class="fu">slice_max</span><span class="op">(</span>order_by<span class="op">=</span><span class="va">max_temp_c</span>, n<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., city): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 3 × 23
+# Groups:   city [2]
+  file        date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+  &lt;chr&gt;       &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+1 https://ra… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+2 https://ra… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
+3 https://ra… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+# … with 14 more variables: time_max_wind_gust &lt;time&gt;, temp_9am_c &lt;dbl&gt;,
+#   rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <p>If you want the minimum values instead, use <code>slice_min()</code> and if you want a random sample, use <code>slice_sample()</code>.</p>
 <div id="challenge6" class="callout challenge">
@@ -860,9 +1094,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb49">
+<div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -875,9 +1109,13 @@
 <span>  <span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., city): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 2
+  city     mean_temp
+  &lt;chr&gt;        &lt;dbl&gt;
+1 brisbane      32.2
+2 sydney        26.7</code></pre>
 </div>
 <p>Ooof, Brisbane was hot! Maybe this changes your conclusion about which city is better.</p>
 </div>
@@ -891,7 +1129,7 @@
 <a class="anchor" aria-label="anchor" href="#selecting-columns-with-select"></a></h3>
 <p>If you want to drop or only retain columns from your table, use <code>select()</code>.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/dplyr_select.png" alt="" class="figure mx-auto d-block"><figcaption><code>dplyr::select()</code> <a href="https://ab604.github.io/docs/coding-together-2019" class="external-link">image credit</a></figcaption></figure><p>For example, we added a <code>city</code> column to our table, so we can drop the <code>file</code> column that also contains this information.</p>
-<div class="codewrapper sourceCode" id="cb51">
+<div class="codewrapper sourceCode" id="cb50">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -899,12 +1137,31 @@
 <span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">file</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in select(., -file): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 22
+   date       min_temp_c max_t…¹ rainf…² evapo…³ sunsh…⁴ dir_m…⁵ speed…⁶ time_…⁷
+   &lt;date&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;time&gt; 
+ 1 2022-11-01       18.2    24       0.2     4.6     9.5 WNW          69 06:50  
+ 2 2022-11-02       11.1    20.5     0.6    13      12.8 W            67 12:54  
+ 3 2022-11-03       11.1    22       0       7.8     8.9 W            56 07:41  
+ 4 2022-11-04       13.4    23.1     1       6       5.7 SSE          26 23:24  
+ 5 2022-11-05       13.4    23.6     0.2     4.4    11.8 ENE          37 15:20  
+ 6 2022-11-06       13.3    24       0       4      12.1 ENE          39 16:12  
+ 7 2022-11-07       15.4    24.2     0       9.8    12.3 NE           41 11:44  
+ 8 2022-11-08       16      24.2     1.2     8      11   ENE          35 15:55  
+ 9 2022-11-09       14.9    24.2     0.2     8      10.3 E            33 12:37  
+10 2022-11-10       14.9    24.4     0       7.8     9.3 ENE          43 17:10  
+# … with 33 more rows, 13 more variables: temp_9am_c &lt;dbl&gt;,
+#   rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​max_temp_c, ²​rainfall_mm, ³​evaporation_mm, …</code></pre>
 </div>
 <p>Alternatively, if we only wanted to keep the date, city and the 3pm observations, we can do this as well.</p>
-<div class="codewrapper sourceCode" id="cb53">
+<div class="codewrapper sourceCode" id="cb52">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -912,16 +1169,30 @@
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">date</span>, <span class="va">city</span>, <span class="fu">contains</span><span class="op">(</span><span class="st">"3pm"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in select(., date, city, contains("3pm")): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 8
+   date       city   temp_3pm_c rel_humid_3pm_pc cloud…¹ wind_…² wind_…³ MSL_p…⁴
+   &lt;date&gt;     &lt;chr&gt;       &lt;dbl&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2022-11-01 sydney       23.1               30       2 WNW          31    992 
+ 2 2022-11-02 sydney       19.7               29       1 SW           22   1006.
+ 3 2022-11-03 sydney       20                 42       7 SE           20   1017.
+ 4 2022-11-04 sydney       22.8               55       5 ENE          17   1027.
+ 5 2022-11-05 sydney       22.2               60       2 ENE          24   1027.
+ 6 2022-11-06 sydney       23.1               59       1 E            26   1023.
+ 7 2022-11-07 sydney       23.4               58       2 ENE          24   1021.
+ 8 2022-11-08 sydney       24                 59       2 ENE          24   1020.
+ 9 2022-11-09 sydney       23.6               46       1 ENE          26   1022.
+10 2022-11-10 sydney       24.1               55       1 ENE          24   1019.
+# … with 33 more rows, and abbreviated variable names ¹​cloud_amount_3pm_oktas,
+#   ²​wind_direction_3pm, ³​wind_speed_3pm_kph, ⁴​MSL_pressure_3pm_hPa</code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="sorting-rows-with-arrange">Sorting rows with <code>arrange()</code>
 <a class="anchor" aria-label="anchor" href="#sorting-rows-with-arrange"></a></h3>
 <p>You can re-order the rows in a table by the values in one or more columns using <code>arrange()</code>.</p>
-<figure><img src="https://ab604.github.io/docs/coding-together-2019/img/dplyr_arrange.png" alt="dplyr::arrange() image credit" class="figure mx-auto d-block"> Here I sort for the hottest days, using <code>desc()</code> to get the maximum temperatures in descending order.</figure><div class="codewrapper sourceCode" id="cb55">
+<figure><img src="https://ab604.github.io/docs/coding-together-2019/img/dplyr_arrange.png" alt="dplyr::arrange() image credit" class="figure mx-auto d-block"> Here I sort for the hottest days, using <code>desc()</code> to get the maximum temperatures in descending order.</figure><div class="codewrapper sourceCode" id="cb54">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -929,9 +1200,28 @@
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">max_temp_c</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in arrange(., desc(max_temp_c)): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 23
+   file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
+   &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+ 2 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+ 3 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+ 4 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+ 5 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
+ 6 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+ 7 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+ 8 https://r… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
+ 9 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+# … with 33 more rows, 14 more variables: time_max_wind_gust &lt;time&gt;,
+#   temp_9am_c &lt;dbl&gt;, rel_humid_9am_pc &lt;int&gt;, cloud_amount_9am_oktas &lt;dbl&gt;,
+#   wind_direction_9am &lt;chr&gt;, wind_speed_9am_kph &lt;dbl&gt;,
+#   MSL_pressure_9am_hPa &lt;dbl&gt;, temp_3pm_c &lt;dbl&gt;, rel_humid_3pm_pc &lt;dbl&gt;,
+#   cloud_amount_3pm_oktas &lt;dbl&gt;, wind_direction_3pm &lt;chr&gt;,
+#   wind_speed_3pm_kph &lt;dbl&gt;, MSL_pressure_3pm_hPa &lt;dbl&gt;, city &lt;chr&gt;, and
+#   abbreviated variable names ¹​min_temp_c, ²​max_temp_c, ³​rainfall_mm, …</code></pre>
 </div>
 <div id="challenge7" class="callout challenge">
 <div class="callout-square">
@@ -953,9 +1243,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb57">
+<div class="codewrapper sourceCode" id="cb56">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -967,9 +1257,23 @@
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">min_temp_c</span>, <span class="va">rank</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in group_by(., city): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 4
+# Groups:   city [2]
+   city     date       min_temp_c  rank
+   &lt;chr&gt;    &lt;date&gt;          &lt;dbl&gt; &lt;int&gt;
+ 1 sydney   2022-11-17       10       1
+ 2 sydney   2022-11-02       11.1     2
+ 3 sydney   2022-11-03       11.1     3
+ 4 sydney   2022-11-22       11.7     4
+ 5 sydney   2022-11-18       12.4     5
+ 6 brisbane 2022-11-03       12.8     1
+ 7 sydney   2022-11-19       12.9     6
+ 8 sydney   2022-11-16       13       7
+ 9 sydney   2022-11-06       13.3     8
+10 sydney   2022-11-04       13.4     9
+# … with 33 more rows</code></pre>
 </div>
 </div>
 </div>
@@ -986,32 +1290,36 @@
 <a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">filtering joins</a>, which don’t add extra columns but change the number of rows</li>
 </ul><p>Here, I’ll only cover the join I use the most, <code>left_join()</code>, but there are several joins of each type, which I will leave to you to explore more using the links above.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/left_join.png" alt="" class="figure mx-auto d-block"><figcaption>left join</figcaption></figure><p>Let’s say we have a second table which contains the forecast for each day. Here I generate this randomly, but you could equally use <code>readr</code> or <code>readxl</code> to load this data in if you have it in a file.</p>
-<div class="codewrapper sourceCode" id="cb59">
+<div class="codewrapper sourceCode" id="cb58">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">forecast</span> <span class="op">&lt;-</span> <span class="va">weather</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">date</span>, <span class="va">city</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>forecast <span class="op">=</span> <span class="fu">sample</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"cloudy"</span>, <span class="st">"sunny"</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">mutate</span><span class="op">(</span>forecast <span class="op">=</span> <span class="fu">sample</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"cloudy"</span>, <span class="st">"sunny"</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>, replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">forecast</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in select(., date, city): object 'weather' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb61">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">forecast</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'forecast' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 3
+   date       city   forecast
+   &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;   
+ 1 2022-11-01 sydney sunny   
+ 2 2022-11-02 sydney sunny   
+ 3 2022-11-03 sydney sunny   
+ 4 2022-11-04 sydney cloudy  
+ 5 2022-11-05 sydney sunny   
+ 6 2022-11-06 sydney cloudy  
+ 7 2022-11-07 sydney cloudy  
+ 8 2022-11-08 sydney sunny   
+ 9 2022-11-09 sydney cloudy  
+10 2022-11-10 sydney sunny   
+# … with 33 more rows</code></pre>
 </div>
 <p>Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.</p>
-<div class="codewrapper sourceCode" id="cb63">
+<div class="codewrapper sourceCode" id="cb60">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1020,9 +1328,22 @@
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">sunshine_hours</span>, <span class="va">forecast</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in left_join(., forecast, by = c("date", "city")): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 43 × 4
+   city   date       sunshine_hours forecast
+   &lt;chr&gt;  &lt;date&gt;              &lt;dbl&gt; &lt;chr&gt;   
+ 1 sydney 2022-11-01            9.5 sunny   
+ 2 sydney 2022-11-02           12.8 sunny   
+ 3 sydney 2022-11-03            8.9 sunny   
+ 4 sydney 2022-11-04            5.7 cloudy  
+ 5 sydney 2022-11-05           11.8 sunny   
+ 6 sydney 2022-11-06           12.1 cloudy  
+ 7 sydney 2022-11-07           12.3 cloudy  
+ 8 sydney 2022-11-08           11   sunny   
+ 9 sydney 2022-11-09           10.3 cloudy  
+10 sydney 2022-11-10            9.3 sunny   
+# … with 33 more rows</code></pre>
 </div>
 <div id="challenge8" class="callout challenge">
 <div class="callout-square">
@@ -1043,9 +1364,9 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
+<div id="collapseSolution8" class="accordion-collapse collapse" aria-labelledby="headingSolution8" data-bs-parent="#accordionSolution8">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb65">
+<div class="codewrapper sourceCode" id="cb62">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1063,9 +1384,13 @@
 <span>  <span class="fu">summarise</span><span class="op">(</span>count <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="error" tabindex="0"><code>Error in left_join(., forecast, by = c("date", "city")): object 'weather' not found</code></pre>
+<pre class="output" tabindex="0"><code># A tibble: 2 × 2
+  forecast_accurate count
+  &lt;lgl&gt;             &lt;int&gt;
+1 FALSE                24
+2 TRUE                 19</code></pre>
 </div>
 </div>
 </div>
