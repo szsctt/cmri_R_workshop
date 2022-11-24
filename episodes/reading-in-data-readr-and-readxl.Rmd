@@ -50,7 +50,7 @@ The workhorse of this package is the `read_xlsx()` function (or `read_xls` for o
 
 ```{r}
 # define path to excel file to read - this will probably be different for you
-my_excel_sheet <- here::here("data", "readxl_example_1.xlsx")
+my_excel_sheet <- here::here("episodes", "data", "readxl_example_1.xlsx")
 
 # read in data 
 my_excel_data <- readxl::read_xlsx(my_excel_sheet)
