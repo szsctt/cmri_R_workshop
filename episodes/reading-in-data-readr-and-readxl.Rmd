@@ -23,7 +23,7 @@ exercises: 2
 
 ```{r setup, include=FALSE}
 #knitr::opts_knit$set(root.dir = here::here("episodes"))
-here::i_am("site/built/reading-in-data-readr-and-readxl.Rmd")
+here::i_am("episodes/reading-in-data-readr-and-readxl.Rmd")
 ```
 
 
