@@ -27,7 +27,7 @@ After all of that data manipulation perhaps you, like me, are a bit sick of look
 
 I won't go into too much theory here about the best way of visually representing different kinds of datasets, but I'd recommend everyone take a look at [Claus Wilke's excellent book 'Fundamentals of data visualization'](https://clauswilke.com/dataviz/).
 
-One popular framework for greating plots is the ['grammar of graphics' approach](http://vita.had.co.nz/papers/layered-grammar.pdf).  The idea here is to build up a graphic from multiple layers of components, including:
+One popular framework for generating plots is the ['grammar of graphics' approach](http://vita.had.co.nz/papers/layered-grammar.pdf).  The idea here is to build up a graphic from multiple layers of components, including:
 
  - data and aesthetic mappings
  - geometric objects
@@ -107,9 +107,9 @@ weather %>%
   geom_point()
 ```
 
-Note that we use a `+` to add layers to a ggplot, not the pipe (`%>%`).  The `ggplot2` package was developed before the `magrittr` packgage that contains `%>%`, so it uses the addition operator instead.
+Note that we use a `+` to add layers to a ggplot, not the pipe (`%>%`).  The `ggplot2` package was developed before the `magrittr` package that contains `%>%`, so it uses the addition operator instead.
 
-`ggplot` doesn't know how to plot mising values, so it removes those rows and warns you that it's doing so. Those warnings about missing values are going to get annoying, so I use a `tidyr` function to remove rows with `NA` in any column.
+`ggplot` doesn't know how to plot missing values, so it removes those rows and warns you that it's doing so. Those warnings about missing values are going to get annoying, so I use a `tidyr` function to remove rows with `NA` in any column.
 
 ```{r}
 weather <- weather %>% 
@@ -118,7 +118,7 @@ weather <- weather %>%
 ```
 
 
-There are a large number of `geoms` for diplaying data in different ways - we will explore some here, but you can find more in the [`ggplot` documentation](https://ggplot2.tidyverse.org/).
+There are a large number of `geoms` for displaying data in different ways - we will explore some here, but you can find more in the [`ggplot` documentation](https://ggplot2.tidyverse.org/).
 
 :::::::::::::::::::::::: challenge
 
@@ -142,7 +142,7 @@ weather %>%
 
 ### Layering geoms
 
-Our initial graph looks ok, but we might want to know which temperature belongs to which city.  Let's add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
+Our initial graph looks OK, but we might want to know which temperature belongs to which city.  Let's add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
 
 ```{r}
 # plot temp over time with lines and points
@@ -155,7 +155,7 @@ weather %>%
 If we didn't care about the time aspect and just wanted to compare the distribution of temperatures instead, we could plot city on the x axis, temperature on the y axis.  To avoid points being on top of each other when the temperature is the same , I use `geom_jitter()` instead of `geom_point()`, which adds random jitter to each point before plotting.
 
 ```{r}
-# show differences between temps in brisbane and sydney
+# show differences between temps in Brisbane and Sydney
 weather %>% 
   ggplot(aes(x=city, y=max_temp_c, color=city)) +
   geom_violin() +
@@ -217,7 +217,7 @@ mean_temps <- weather %>%
 # make plot
 weather %>% 
   ggplot(aes(x=date, y=max_temp_c, color=city)) +
-  # data and asthetics are inherited from ggplot call
+  # data and aesthetics are inherited from ggplot call
   geom_point() +
   geom_line() +
   # add horizontal line with different data and aesthetic
@@ -235,7 +235,7 @@ I won't go into any detail about these, but a few that I've used include `ggforc
 
 Let' say we want to compare the minimum and maximum temperatures for the two cities over time.  We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.
 
-However, currently our temperature data is spread out over two columns: `mean_temp_c` and `max_temp_c`, but in `ggplot` we need to asign the color using `color=temp_type`.  So in order to make this plot, we need to rearrange the data a little using `dplyr` functions.
+However, currently our temperature data is spread out over two columns: `mean_temp_c` and `max_temp_c`, but in `ggplot` we need to assign the color using `color=temp_type`.  So in order to make this plot, we need to rearrange the data a little using `dplyr` functions.
 
 ```{r}
 # pivot longer to facilitate plotting
@@ -335,7 +335,7 @@ weather %>%
   scale_color_discrete(name = "Type", labels=c("max", "min"))
 ```
 
-Note that when changing the legend, you have to match the function to the asthetic.  So `scale_color_disrete()` acts on a discrete color scale, `scale_color_continuous()` acts on a continuous color scale, `scale_fill_discrete()` acts on a discrete fill scale, etc.  
+Note that when changing the legend, you have to match the function to the aesthetic.  So `scale_color_disrete()` acts on a discrete color scale, `scale_color_continuous()` acts on a continuous color scale, `scale_fill_discrete()` acts on a discrete fill scale, etc.  
 
 If you're trying to change a legend but it doesn't seem to be working, check that you used the correct function for your data type and aesthetic!
 
@@ -368,7 +368,7 @@ There are a number of different ways you can specify colors to use.  One is to u
 
 Another is to use a package to generate color names for you.  For example, I tend to use [`virids`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) for continuous scales because it's colorblind-friendly.  Another favourite is [`wesanderson`](https://github.com/karthik/wesanderson), which makes palettes from Wes Anderson movies.
 
-Let's say we now have exponentially distrbuted data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
+Let's say we now have exponentially distributed data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
 
 ```{r}
 exp_data <- tibble(
@@ -400,7 +400,7 @@ exp_data %>%
 
 ### Themes 
 
-`ggplot` also allows you to customise the apperance of the plot in other ways. Getting back to our weather example, if you wanted to remove the x axis labels because you decided that it's already clear what is on that axis, you can do that with `theme()`.
+`ggplot` also allows you to customize the appearance of the plot in other ways. Getting back to our weather example, if you wanted to remove the x axis labels because you decided that it's already clear what is on that axis, you can do that with `theme()`.
 
 ```{r}
 # pivot longer
@@ -496,7 +496,7 @@ weather %>%
  
 Saving plots with `ggplot` is easy - just use `ggsave()`.  This will either save the last plot you generated, or you can assign the plot to a variable and use that to tell the function while plot to save.
 
-It works with a variety of formats - I usually use `.pdf` as a vector format (e.g. for publications) and `.png` as a raster format (e.g. for slides).  The function will infer the format you want from the filename you provide.  You can also specify the `width` and `height` of the output file (you'll probably want `units="cm"`).
+It works with a variety of formats - I usually use `.pdf` as a vector format (e.g. for publications) and `.png` as a raster format (e.g. for slides).  The function will infer the format you want from the file name you provide.  You can also specify the `width` and `height` of the output file (you'll probably want `units="cm"`).
 
 
 ```{r}
@@ -526,11 +526,11 @@ ggsave(here::here("my_great_plot.png"), plot=p, height=10, width=17, units="cm")
 
 ## Combining plots with `patchwork`
 
-Making individual plots is well and good, but sometime it's useful to combine them together to make a figure with multiple panels.  Although it's possible to do this with Illustrator, doing your whole figure generation process in R (or another languague) will allow you to easily reproduce your figures (for example, when adding new data or for visual tweaks).  To quote [Claus Wilke](https://clauswilke.com/dataviz/preface.html)
+Making individual plots is well and good, but sometime it's useful to combine them together to make a figure with multiple panels.  Although it's possible to do this with Illustrator, doing your whole figure generation process in R (or another language) will allow you to easily reproduce your figures (for example, when adding new data or for visual tweaks).  To quote [Claus Wilke](https://clauswilke.com/dataviz/preface.html)
 
 >  I think figures should be autogenerated as part of the data analysis pipeline (which should also be automated), and they should come out of the pipeline ready to be sent to the printer, no manual post-processing needed. I see a lot of trainees autogenerate rough drafts of their figures, which they then import into Illustrator for sprucing up. There are several reasons why this is a bad idea. First, the moment you manually edit a figure, your final figure becomes irreproducible. A third party cannot generate the exact same figure you did. While this may not matter much if all you did was change the font of the axis labels, the lines are blurry, and it’s easy to cross over into territory where things are less clear cut. As an example, let’s say you want to manually replace cryptic labels with more readable ones. A third party may not be able to verify that the label replacement was appropriate. Second, if you add a lot of manual post-processing to your figure-preparation pipeline then you will be more reluctant to make any changes or redo your work. Thus, you may ignore reasonable requests for change made by collaborators or colleagues, or you may be tempted to re-use an old figure even though you actually regenerated all the data. These are not made-up examples. I’ve seen all of them play out with real people and real papers. Third, you may yourself forget what exactly you did to prepare a given figure, or you may not be able to generate a future figure on new data that exactly visually matches your earlier figure.
 
-To combine plots together, I often use the `patchwork` package (although there are also good alternatives, such as `cowplot` for the aformentioned Claus Wilke).  In this package, we can combine plots using the `+` and `/` operators.
+To combine plots together, I often use the `patchwork` package (although there are also good alternatives, such as `cowplot` for the aforementioned Claus Wilke).  In this package, we can combine plots using the `+` and `/` operators.
 
 ```{r fig.width=10, fig.height=10, warning=FALSE}
 # import patchwork library

@@ -304,7 +304,7 @@ weather %>%
   ))
 ```
 
-Essentially, `case_when()` looks at each condition in turn, and if the left part of the expression (before the `~`) evaulates to `TRUE`, then it returns whatever is on the right of the `~`.  
+Essentially, `case_when()` looks at each condition in turn, and if the left part of the expression (before the `~`) evaluates to `TRUE`, then it returns whatever is on the right of the `~`.  
 
  - We first ask if this row has more than ten sunshine hours and a maximum temperature of more than 25 - if this is the case, we return `TRUE` (and `filter()` retains this row).  
  - Next, we ask if the row has less than ten sunshine hours and a maximum temperature of less than 15, in which case we also return `TRUE`.  
