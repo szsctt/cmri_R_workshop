@@ -23,9 +23,11 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables.  Using visualizations is essential for communicating your results, especially in large datasets.  
+After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables.  Using visualizations is essential for communicating your results, because [summary statistics can be misleading](https://ab604.github.io/docs/coding-together-2019/viz.html), and because large datasets don't display well in tables.
 
-There is lots of thinking about the best way to represent a given dataset, but one popular framework is the ['grammar of graphics' approach](http://vita.had.co.nz/papers/layered-grammar.pdf).  The idea here is to build up a graphic from multiple layers of components, including:
+I won't go into too much theory here about the best way of visually representing different kinds of datasets, but I'd recommend everyone take a look at [Claus Wilke's excellent book 'Fundamentals of data visualization'](https://clauswilke.com/dataviz/).
+
+One popular framework for greating plots is the ['grammar of graphics' approach](http://vita.had.co.nz/papers/layered-grammar.pdf).  The idea here is to build up a graphic from multiple layers of components, including:
 
  - data and aesthetic mappings
  - geometric objects
@@ -73,7 +75,7 @@ col_types <- list(
 weather <- readr::read_csv(data_files, skip=10, 
                            col_types=col_types, col_names = names(col_types),
                            id="file") %>% 
-  mutate(city = stringr::str_detct(file, "brisbane|sydney")) %>% 
+  mutate(city = stringr::str_detect(file, "brisbane|sydney")) %>% 
   select(-file)
 
 glimpse(weather)
