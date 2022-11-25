@@ -118,11 +118,11 @@ params:
 ---
 ```
 
-You can then refer to these parameters using the syntax `params$test` and `params$species`
+You can then refer to these parameters using the syntax `params$test` and `params$species`.
 
 ### Markdown
 
-Writing markdown documents are pretty simple.  Use `#` for headings
+Writing markdown documents are pretty simple.  Use `#` for headings.
 
 ```markdown
 # Largest heading
