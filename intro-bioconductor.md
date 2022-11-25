@@ -68,25 +68,83 @@ BiocManager::install("Biostrings")
 Biostrings contains useful variable and functions for working with sequences.  For example, you can translate a nucleotide sequence:
 
 
-```{.error}
-Error in library(Biostrings): there is no package called 'Biostrings'
+```{.output}
+Loading required package: BiocGenerics
+```
+
+```{.output}
+
+Attaching package: 'BiocGenerics'
+```
+
+```{.output}
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+```
+
+```{.output}
+The following objects are masked from 'package:base':
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
+    table, tapply, union, unique, unsplit, which.max, which.min
+```
+
+```{.output}
+Loading required package: S4Vectors
+```
+
+```{.output}
+Loading required package: stats4
+```
+
+```{.output}
+
+Attaching package: 'S4Vectors'
+```
+
+```{.output}
+The following objects are masked from 'package:base':
+
+    expand.grid, I, unname
+```
+
+```{.output}
+Loading required package: IRanges
+```
+
+```{.output}
+Loading required package: XVector
+```
+
+```{.output}
+Loading required package: GenomeInfoDb
+```
+
+```{.output}
+
+Attaching package: 'Biostrings'
+```
+
+```{.output}
+The following object is masked from 'package:base':
+
+    strsplit
 ```
 
 
 ```r
 my_seq <- DNAString("GTAAGTGTATGC")
-```
-
-```{.error}
-Error in DNAString("GTAAGTGTATGC"): could not find function "DNAString"
-```
-
-```r
 translate(my_seq)
 ```
 
-```{.error}
-Error in translate(my_seq): could not find function "translate"
+```{.output}
+4-letter AAString object
+seq: VSVC
 ```
 
 Or calculate the frequency of each nucleotide:
@@ -96,8 +154,9 @@ Or calculate the frequency of each nucleotide:
 alphabetFrequency(my_seq)
 ```
 
-```{.error}
-Error in alphabetFrequency(my_seq): could not find function "alphabetFrequency"
+```{.output}
+A C G T M R W S Y K V H D B N - + . 
+3 1 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 ```
 
 Or the codon frequencies
@@ -107,8 +166,15 @@ Or the codon frequencies
 trinucleotideFrequency(my_seq)
 ```
 
-```{.error}
-Error in trinucleotideFrequency(my_seq): could not find function "trinucleotideFrequency"
+```{.output}
+AAA AAC AAG AAT ACA ACC ACG ACT AGA AGC AGG AGT ATA ATC ATG ATT CAA CAC CAG CAT 
+  0   0   1   0   0   0   0   0   0   0   0   1   0   0   1   0   0   0   0   0 
+CCA CCC CCG CCT CGA CGC CGG CGT CTA CTC CTG CTT GAA GAC GAG GAT GCA GCC GCG GCT 
+  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 
+GGA GGC GGG GGT GTA GTC GTG GTT TAA TAC TAG TAT TCA TCC TCG TCT TGA TGC TGG TGT 
+  0   0   0   0   2   0   1   0   1   0   0   1   0   0   0   0   0   1   0   1 
+TTA TTC TTG TTT 
+  0   0   0   0 
 ```
 
 It also contains a codon table
@@ -118,8 +184,17 @@ It also contains a codon table
 GENETIC_CODE
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'GENETIC_CODE' not found
+```{.output}
+TTT TTC TTA TTG TCT TCC TCA TCG TAT TAC TAA TAG TGT TGC TGA TGG CTT CTC CTA CTG 
+"F" "F" "L" "L" "S" "S" "S" "S" "Y" "Y" "*" "*" "C" "C" "*" "W" "L" "L" "L" "L" 
+CCT CCC CCA CCG CAT CAC CAA CAG CGT CGC CGA CGG ATT ATC ATA ATG ACT ACC ACA ACG 
+"P" "P" "P" "P" "H" "H" "Q" "Q" "R" "R" "R" "R" "I" "I" "I" "M" "T" "T" "T" "T" 
+AAT AAC AAA AAG AGT AGC AGA AGG GTT GTC GTA GTG GCT GCC GCA GCG GAT GAC GAA GAG 
+"N" "N" "K" "K" "S" "S" "R" "R" "V" "V" "V" "V" "A" "A" "A" "A" "D" "D" "E" "E" 
+GGT GGC GGA GGG 
+"G" "G" "G" "G" 
+attr(,"alt_init_codons")
+[1] "TTG" "CTG"
 ```
 
 It has many more features which you can explore if you need to use this package.
@@ -154,18 +229,27 @@ alb_gr <- alb %>%
     end.field="Position",
     keep.extra.columns = FALSE
   )
-```
 
-```{.error}
-Error in loadNamespace(x): there is no package called 'GenomicRanges'
-```
-
-```r
 alb_gr
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'alb_gr' not found
+```{.output}
+GRanges object with 850 ranges and 0 metadata columns:
+        seqnames    ranges strand
+           <Rle> <IRanges>  <Rle>
+    [1]     chr4  73397115      *
+    [2]     chr4  73397120      *
+    [3]     chr4  73397122      *
+    [4]     chr4  73397122      *
+    [5]     chr4  73397123      *
+    ...      ...       ...    ...
+  [846]     chr4  73421175      *
+  [847]     chr4  73421187      *
+  [848]     chr4  73421188      *
+  [849]     chr4  73421189      *
+  [850]     chr4  73421193      *
+  -------
+  seqinfo: 1 sequence from an unspecified genome; no seqlengths
 ```
 
 Now we have the data loaded, we're ready to start making the plot.
@@ -182,8 +266,23 @@ This is human data, so we plot the albumin locus in the human genome.  I used th
 library(karyoploteR)
 ```
 
-```{.error}
-Error in library(karyoploteR): there is no package called 'karyoploteR'
+```{.output}
+Loading required package: regioneR
+```
+
+```{.output}
+Loading required package: GenomicRanges
+```
+
+```{.output}
+
+Attaching package: 'GenomicRanges'
+```
+
+```{.output}
+The following object is masked from 'package:magrittr':
+
+    subtract
 ```
 
 ```r
@@ -207,7 +306,7 @@ genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
 ```
 
 ```{.error}
-Error in makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene, karyoplot = kp, : could not find function "makeGenesDataFromTxDb"
+Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'organism': object 'TxDb.Hsapiens.UCSC.hg38.knownGene' not found
 ```
 
 ```r
@@ -216,25 +315,18 @@ genes.data <- mergeTranscripts(genes.data)
 ```
 
 ```{.error}
-Error in mergeTranscripts(genes.data): could not find function "mergeTranscripts"
+Error in methods::is(genes.data, "GenesData"): object 'genes.data' not found
 ```
 
 ```r
 # draw axis
 kp <- plotKaryotype(zoom = region)
-```
-
-```{.error}
-Error in plotKaryotype(zoom = region): could not find function "plotKaryotype"
-```
-
-```r
 # draw genes
 kpPlotGenes(kp, data=genes.data, r0=0, r1=0.15)
 ```
 
 ```{.error}
-Error in kpPlotGenes(kp, data = genes.data, r0 = 0, r1 = 0.15): could not find function "kpPlotGenes"
+Error in methods::is(data, "TxDb"): object 'genes.data' not found
 ```
 
 ```r
@@ -242,9 +334,7 @@ Error in kpPlotGenes(kp, data = genes.data, r0 = 0, r1 = 0.15): could not find f
 kpPlotDensity(kp, data=alb_gr, window=100, r0=0.3, r1=1)
 ```
 
-```{.error}
-Error in kpPlotDensity(kp, data = alb_gr, window = 100, r0 = 0.3, r1 = 1): could not find function "kpPlotDensity"
-```
+<img src="fig/intro-bioconductor-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 
 
