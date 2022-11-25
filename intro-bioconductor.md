@@ -68,77 +68,20 @@ BiocManager::install("Biostrings")
 Biostrings contains useful variable and functions for working with sequences.  For example, you can translate a nucleotide sequence:
 
 
-```{.output}
-Loading required package: BiocGenerics
-```
-
-```{.output}
-
-Attaching package: 'BiocGenerics'
-```
-
-```{.output}
-The following objects are masked from 'package:stats':
-
-    IQR, mad, sd, var, xtabs
-```
-
-```{.output}
-The following objects are masked from 'package:base':
-
-    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
-    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
-    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
-    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
-    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort,
-    table, tapply, union, unique, unsplit, which.max, which.min
-```
-
-```{.output}
-Loading required package: S4Vectors
-```
-
-```{.output}
-Loading required package: stats4
-```
-
-```{.output}
-
-Attaching package: 'S4Vectors'
-```
-
-```{.output}
-The following objects are masked from 'package:base':
-
-    expand.grid, I, unname
-```
-
-```{.output}
-Loading required package: IRanges
-```
-
-```{.output}
-Loading required package: XVector
-```
-
-```{.output}
-Loading required package: GenomeInfoDb
-```
-
-```{.output}
-
-Attaching package: 'Biostrings'
-```
-
-```{.output}
-The following object is masked from 'package:base':
-
-    strsplit
-```
 
 
 ```r
+# load library
+library(biostrings)
+```
+
+
+
+```r
+# create DNAString object
 my_seq <- DNAString("GTAAGTGTATGC")
+
+# translate to amino acids
 translate(my_seq)
 ```
 
@@ -215,10 +158,24 @@ alb <- readr::read_csv(here::here("episodes", "data", "gnomAD_v3.1.2_ENSG0000016
 Next, we need to convert the SNP locations into a `GRanges` object - this is an object from the `GenomicRanges` package that is designed to store genomic coordinates and associated metadata.  I won't go into detail about this either, but you can find more information about this package [in the documentation](https://bioconductor.org/packages/devel/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html).
 
 
+
 ```r
 # for pipe
-library(magrittr)
+library(magrittr, quietly=TRUE)
+```
 
+```{.output}
+
+Attaching package: 'magrittr'
+```
+
+```{.output}
+The following object is masked from 'package:GenomicRanges':
+
+    subtract
+```
+
+```r
 alb_gr <- alb %>% 
   # add "chr" to chromosome number
   dplyr::mutate(Chromosome = paste0("chr", Chromosome)) %>% 
@@ -264,35 +221,11 @@ This is human data, so we plot the albumin locus in the human genome.  I used th
 
 ```r
 library(karyoploteR)
-```
-
-```{.output}
-Loading required package: regioneR
-```
-
-```{.output}
-Loading required package: GenomicRanges
-```
-
-```{.output}
-
-Attaching package: 'GenomicRanges'
-```
-
-```{.output}
-The following object is masked from 'package:magrittr':
-
-    subtract
-```
-
-```r
-# this package contain transcript information for the human genome
+# this package contains transcript information for the human genome
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 ```
 
-```{.error}
-Error in library(TxDb.Hsapiens.UCSC.hg38.knownGene): there is no package called 'TxDb.Hsapiens.UCSC.hg38.knownGene'
-```
+
 
 ```r
 # region to plot
@@ -305,8 +238,16 @@ genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
                                     plot.transcripts.structure = TRUE)
 ```
 
+```{.output}
+  1662 genes were dropped because they have exons located on both strands
+  of the same reference sequence or on more than one reference sequence,
+  so cannot be represented by a single genomic range.
+  Use 'single.strand.genes.only=FALSE' to get all the genes in a
+  GRangesList object, or use suppressMessages() to suppress this message.
+```
+
 ```{.error}
-Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'organism': object 'TxDb.Hsapiens.UCSC.hg38.knownGene' not found
+Error in makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene, karyoplot = kp, : object 'kp' not found
 ```
 
 ```r

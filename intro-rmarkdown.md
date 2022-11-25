@@ -6,14 +6,15 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How do you write a notebook or document using R Markdown?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Explain how to use markdown documents and notebooks
+- Demonstrate how to include a header, markdown elements, pieces of code and code outputs
+- Discuss how to render documents and notebooks
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -64,37 +65,245 @@ output: html_document
 ---
 ```
 
-Sometimes I want the date to be updated every time I render the document.  You can do this by inserting some R code into the YAML header.
+Sometimes I want the date to be updated every time I render the document.  You can do this by replacing the date with some `R` code.
 
 ```yaml
 ---
 title: "Habits"
 author: Jane Doe
-date: "2022-11-25"
+date: `r Sys.Date()`
 output: html_document
 ---
 ```
 
+There are also lots of options for html documents and notebooks.  I often use:
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: `r Sys.Date()`
+output:
+  html_document:
+    keep_md: true
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    code_folding: hide
+---
+```
+
+
+You can also add parameters in your header that you can use throughout your code:
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: `r Sys.Date()`
+output:
+  html_document:
+    keep_md: true
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    code_folding: hide
+params:
+  test: true
+  species: "human"
+---
+```
+
+You can then refer to these parameters using the syntax `params$test` and `params$species`.
+
+### Markdown
+
+Writing markdown documents are pretty simple.  Use `#` for headings.
+
+```markdown
+# Largest heading
+## Large heading
+### Medium heading
+#### Small heading
+```
+
+To create paragraphs, leave at least one blank line between text.
+
+```markdown
+This is a paragph.
+
+This is a different paragraph.
+```
+
+To add a line break (to prevent sentences from running on from one another), add two spaces at the end of the line.
+
+```markdown
+This is a line.  
+This is another line.
+```
+
+To add emphasis, use `*` or `_`.
+
+```markdown
+This text is **bold**.
+This text is __also bold__.
+This text is in *italics*.
+This text is also in _italics_.
+This text is both ***bold and in italics***.
+___Same here___.
+```
+
+To create a block quote, add `>` to the start of each line.
+
+
+```markdown
+> This will be a quote
+>
+> that's all in the same block
+```
+
+To make a list, use numbers or dashes.
+
+```markdown
+This is an unordered list:
+
+ - element a
+ - element b
+ - element c
+ 
+This is an ordered list:
+
+1. element 1
+2. element 2
+3. element 3
+ 
+```
+
+If you want to display code, use backticks:
+
+````markdown
+
+This is `inline` code.
+
+```r
+print("this is an R code block")
+```
+
+````
+
+To add images, use this syntax:
+
+
+```markdown
+![Caption for figure](/path/to/figure.png)
+```
+
+You can add links using parentheses and brackets:
+
+```markdown
+You can read more in the [documentation](https://www.markdownguide.org/basic-syntax/)
+```
+
+### Adding code
+
+Adding code blocks is also easy.
+
+````markdown
+```{r chunk-name}
+y <- 2
+print(y)
+```
+````
+
+There are lots of options to control how the code block and it's output is displayed. For example:
+
+````markdown
+```{r chunk-name, echo=FALSE}
+print("this code block won't appear in the output, but its output will")
+```
+````
+
+````markdown
+```{r chunk-name, include=FALSE}
+print("this code block won't appear in the output, and neither will it's output")
+```
+````
+
+If your code block produces a plot, the plot will appear in the report.  You can change the size of the plot with options as well.
+
+````markdown
+```{r chunk-name, fig.width=8, fig.height=8}
+tibble(
+  group = c("A", "A", "B", "B"),
+  y = runif(4)
+) %>% 
+  ggplot(aes(x=group, y = y)) +
+  geom_point()
+```
+````
+
+You can also apply options to all chunks using `knitr::set_opts()` at the top of your file.
+
+````md
+
+```r
+knitr::opts_chunk$set(
+  echo=FALSE, fig.width = 6, fig.height = 6
+)
+```
+````
+
+### Running code blocks
+
+Run individual lines of code in a chunk by pressing <kbd>Ctrl</kbd> + <kbd>Enter</kbd>, or run the whole chunk using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> (or the 'play' symbol at the top right).  You can also highlight particular pieces of a line that you want to run, and use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run them.
+
+## Rendering notebooks
 
 
 
+There are a few different ways you can render your R markdown document.  The easiest is to use the dedicated button in Rstudio.  For documents, it' at the top of your document  looks like this:
+
+![Button for knitting documents](episodes/fig/knit.png)
+
+For notebooks, you don't need to manually render - every time you save the file, R will knit it for you.  But if you want to see what the notebook will look like, you can press the preview button:
+
+![Button for knitting documents](episodes/fig/preview.png)
+
+You can also render your notebook using code:
+
+```r
+rmarkdown::render("/path/to/document.Rmd")
+```
+
+If you set parameters, you can change them when you render the notebook:
 
 
+```r
+rmarkdown::render("/path/to/document.Rmd", params = list(test=FALSE, speces="macaque"))
+```
 
+## Other document types
+
+There are also a number of other outputs you can produce from your R markdown other than html notebooks and documents.  In particular, I've been playing around with slides using `Quatro` and `ioslides`.  They can be a little tricky compared to power point, and a bit slow to render if your analysis is compute-heavy, but I think they're worth considering!  
+
+This area is actively being developed, so it's worth trying out new technologies when they are available.
 
 ## References
 
+- [Rmarkdown guide](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 - [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
-
-
-
+- [Markdown guide](https://www.markdownguide.org/basic-syntax/)
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Specify document-wide properties in the header
+- Use markdown element to format text
+- Use code chunks to run `R` code
+- Render your notebook using the buttons in Rstudio, or using `rmarkdown::render()`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
