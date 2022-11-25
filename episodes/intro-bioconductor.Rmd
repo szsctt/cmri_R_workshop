@@ -6,6 +6,8 @@ exercises: 2
 
 ```{r setup, include=FALSE}
 here::i_am("episodes/intro-bioconductor.Rmd")
+install.packages("BiocManager")
+BiocManager::install(c("Biostrings", "karyoploteR"))
 ```
 
 :::::::::::::::::::::::::::::::::::::: questions 
