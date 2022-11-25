@@ -66,6 +66,7 @@ episodes:
 - visualizing-data.Rmd
 - intro-bioconductor.Rmd
 - intro-rmarkdown.Rmd
+- git.Rmd
 
 # Information for Learners
 learners: 
