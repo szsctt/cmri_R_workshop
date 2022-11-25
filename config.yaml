@@ -64,6 +64,8 @@ episodes:
 - tidying-data.Rmd
 - manipulating-data.Rmd
 - visualizing-data.Rmd
+- intro-bioconductor.Rmd
+- intro-rmarkdown.Rmd
 
 # Information for Learners
 learners: 
