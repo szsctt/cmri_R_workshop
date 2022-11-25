@@ -64,13 +64,13 @@ output: html_document
 ---
 ```
 
-Sometimes I want the date to be updated every time I render the document.  You can do this by inserting some R code into the YAML header.
+Sometimes I want the date to be updated every time I render the document.  You can do this by replacing the date with some `R` code.
 
 ```yaml
 ---
 title: "Habits"
 author: Jane Doe
-date: "``r Sys.Date()``"
+date: <code>&grave;r Sys.Date()&grave;</code>
 output: html_document
 ---
 ```
