@@ -6,7 +6,7 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How do you write a notebook or document using R Markdown?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -146,7 +146,7 @@ This is a line.
 This is another line.
 ```
 
-To add empahsis, use `*` or `_`.
+To add emphasis, use `*` or `_`.
 
 ```markdown
 This text is **bold**.
@@ -285,6 +285,11 @@ If you set parameters, you can change them when you render the notebook:
 rmarkdown::render("/path/to/document.Rmd", params = list(test=FALSE, speces="macaque"))
 ```
 
+## Other document types
+
+There are also a number of other outputs you can produce from your R markdown other than html notebooks and documents.  In particular, I've been playing around with slides using `Quatro` and `ioslides`.  They can be a little tricky compared to power point, and a bit slow to render if your analysis is compute-heavy, but I think they're worth considering!  
+
+This area is actively being developed, so it's worth trying out new technologies when they are available.
 
 ## References
 
@@ -292,15 +297,12 @@ rmarkdown::render("/path/to/document.Rmd", params = list(test=FALSE, speces="mac
 - [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
 - [Markdown guide](https://www.markdownguide.org/basic-syntax/)
 
-
-
-
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
 - Specify document-wide properties in the header
 - Use markdown element to format text
 - Use code chunks to run `R` code
-- Render your notebook uing the buttons in Rstudio, or using `rmarkdown::render()`
+- Render your notebook using the buttons in Rstudio, or using `rmarkdown::render()`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
