@@ -71,7 +71,6 @@ Biostrings contains useful variable and functions for working with sequences.  F
 
 ```{r echo=FALSE}
 library(Biostrings)
-
 ```
 
 ```{r}
@@ -209,7 +208,7 @@ If you're more interested in single cell analysis, the workflow is in principle 
 
 - Use `BiocManager` to install `Bioconductor` packages
 - Use `Biostrings` for 
-- Use `karyoploteR` for plotting genomic features
+- Use `karyoploteR` or `circlize` for plotting genomic features
 - Use `EdgeR` and `DEseq2` for differential expression analysis
 - Use `Seurat` and `Monocle3` for single-cell RNA-seq data analysis
 
