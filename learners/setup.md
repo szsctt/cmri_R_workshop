@@ -5,7 +5,7 @@ title: Setup
 
 ## Data Sets
 
-Download the [data zip file](data/data.zip) and unzip it to your Desktop
+Download the [data zip file](data/data.tar.gz) and unzip it to your Desktop.
 
 ## Software Setup
 
