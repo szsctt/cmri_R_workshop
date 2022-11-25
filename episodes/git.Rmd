@@ -1,5 +1,5 @@
 ---
-title: 'git'
+title: 'Version control with `git`'
 teaching: 10
 exercises: 2
 ---
@@ -17,88 +17,75 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Introduction
 
-This is a lesson created via The Carpentries Workbench. It is written in
-[Pandoc-flavored Markdown][pandoc] for static files (with extension `.md`) and
-[R Markdown][r-markdown] for dynamic files that can render code into output
-(with extension `.Rmd`). Please refer to the [Introduction to The Carpentries
-Workbench][carpentries-workbench] for full documentation.
+## Version control with `git`
 
-What you need to know is that there are three sections required for a valid
-Carpentries lesson template:
+Have you ever needed to refer back to the edit history of a document to restore a change you'd made?  Or maybe you've sometimes worried about losing files that are only on your computer?  Do you waste lots of time deploying software manually?
 
- 1. `questions` are displayed at the beginning of the episode to prime the
-    learner for the content.
- 2. `objectives` are the learning objectives for an episode displayed with
-    the questions.
- 3. `keypoints` are displayed at the end of the episode to reinforce the
-    objectives.
+OK, so maybe most of you probably haven't wasted time deploying software manually, but perhaps the other two are concerns you've had at some point.
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: instructor
+All of these issues can be solved with the version control software `git`, when used together with a cloud-based repository such as github, bitbucket or gitlab.  
 
-Inline instructor notes can help inform instructors of timing challenges
-associated with the lessons. They appear in the "Instructor View"
+`git` keeps track of all the revisions to a repository that contains your code, allowing you to see when and where changes were made.  
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+![Git commit timeline [Image credit](https://dev.to/milu_franz/git-explained-the-basics-igc)](https://res.cloudinary.com/practicaldev/image/fetch/s--Dilp_rhi--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/yi9n7h1klm5m6e3odcsa.png)
 
-## Challenge 1: Can you do it?
+It also allows you to collaborate easily with other people with branches and methods for merging changes.
 
-What is the output of this command?
+![Git branches [Image credit](https://dev.to/milu_franz/git-explained-the-basics-igc)](https://res.cloudinary.com/practicaldev/image/fetch/s--pfmhZlvH--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/8ito8dl7a62luwhp18xv.png)
 
-```r
-paste("This", "new", "lesson", "looks", "good")
-```
 
-:::::::::::::::::::::::: solution 
+In my opinion, it's an essential part of any project that involves code.  So how does it work?
 
-## Output
+
+## Creating a repository
+
+We'll be working with git through Rstudio (there is a command line interface that I usually use, but it's used differently for each OS and has a bit more of a learning curve).
+
+After you've installed git, you'll need to let Rstudio know how to find it.  
+
+![Global options](https://support.posit.co/hc/en-us/article_attachments/203718287/Screen_Shot_2015-11-09_at_4.59.40_PM.png)
+
+1. Open *Tools > Global Options* and click on *Git/SVN*.
+2. Check *Enable version control interface for Rstudio projects*.
+3. Set the path for the git executable.  If you don't know where this is, click on the `Terminal` tab in the bottom left pane and type:
+ - Windows: `where git` - it'll be something like `C:/Program Files (x86)/Git/bin/git.exe`
+ - MacOSX: `which git` - it'll be something like `/usr/bin/git`
+4. Restart Rstudio
+
+To add version control to your project:
+
+
+![Project options](episodes/fig/new-repo.png)
+
+1. Open *Tools > Version Control*
+2. Change the version control system to *Git*
+3. Click 'Yes' when it asks if you want to set up a new repository
+4. You'll have to restart Rstudio again
+
+You should notice a new tab available in the top right pane:
+
+![Project options](episodes/fig/git-pane.png)
+
+
+
+## Git gotchas
+
+
+
+Don't use it for large files.
+
+Keep other backups.
+
+
+
+## Resources
+
+ - [Git basics](https://dev.to/milu_franz/git-explained-the-basics-igc)
+ - [Posit/Rstudio support article on git](https://support.posit.co/hc/en-us/articles/200532077)
  
-```output
-[1] "This new lesson looks good"
-```
 
-:::::::::::::::::::::::::::::::::
-
-
-## Challenge 2: how do you nest solutions within challenge blocks?
-
-:::::::::::::::::::::::: solution 
-
-You can add a line with at least three colons and a `solution` tag.
-
-:::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Figures
-
-You can include figures generated from R Markdown:
-
-```{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"}
-pie(
-  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
-  init.angle = 315, 
-  col = c("deepskyblue", "yellow", "yellow3"), 
-  border = FALSE
-)
-```
-Or you can use pandoc markdown for static figures with the following syntax:
-
-`![optional caption that appears below the figure](figure url){alt='alt text for
-accessibility purposes'}`
-
-![You belong in The Carpentries!](https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg){alt='Blue Carpentries hex person logo with no text.'}
-
-## Math
-
-One of our episodes contains $\LaTeX$ equations when describing how to create
-dynamic reports with {knitr}, so we now use mathjax to describe this:
-
-`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
-
-Cool, right?
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
