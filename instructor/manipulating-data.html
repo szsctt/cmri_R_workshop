@@ -85,11 +85,11 @@
   Introduction to R
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 75%" class="percentage">
-    75%
+<aside class="col-md-12 lesson-progress"><div style="width: 50%" class="percentage">
+    50%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 75%" aria-valuenow="75" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 50%" aria-valuenow="50" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -198,6 +198,24 @@
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="intro-bioconductor.html">6. <code>Bioconductor</code> and other bioinformatics packages</a>
+    </div><!--/div.accordion-header-->
+        
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="intro-rmarkdown.html">7. Using <code>R markdown</code> for notebooks and documents</a>
+    </div><!--/div.accordion-header-->
+        
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
                 </div>
               </div>
             </div>
@@ -249,7 +267,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data wrangling</h1>
-        <p> Last updated on 2022-11-24 | 
+        <p> Last updated on 2022-11-25 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/manipulating-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -1307,13 +1325,13 @@
    date       city   forecast
    &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;   
  1 2022-11-01 sydney cloudy  
- 2 2022-11-02 sydney sunny   
+ 2 2022-11-02 sydney cloudy  
  3 2022-11-03 sydney cloudy  
  4 2022-11-04 sydney cloudy  
  5 2022-11-05 sydney sunny   
- 6 2022-11-06 sydney sunny   
+ 6 2022-11-06 sydney cloudy  
  7 2022-11-07 sydney cloudy  
- 8 2022-11-08 sydney cloudy  
+ 8 2022-11-08 sydney sunny   
  9 2022-11-09 sydney sunny   
 10 2022-11-10 sydney sunny   
 # … with 33 more rows</code></pre>
@@ -1334,13 +1352,13 @@
    city   date       sunshine_hours forecast
    &lt;chr&gt;  &lt;date&gt;              &lt;dbl&gt; &lt;chr&gt;   
  1 sydney 2022-11-01            9.5 cloudy  
- 2 sydney 2022-11-02           12.8 sunny   
+ 2 sydney 2022-11-02           12.8 cloudy  
  3 sydney 2022-11-03            8.9 cloudy  
  4 sydney 2022-11-04            5.7 cloudy  
  5 sydney 2022-11-05           11.8 sunny   
- 6 sydney 2022-11-06           12.1 sunny   
+ 6 sydney 2022-11-06           12.1 cloudy  
  7 sydney 2022-11-07           12.3 cloudy  
- 8 sydney 2022-11-08           11   cloudy  
+ 8 sydney 2022-11-08           11   sunny   
  9 sydney 2022-11-09           10.3 sunny   
 10 sydney 2022-11-10            9.3 sunny   
 # … with 33 more rows</code></pre>
@@ -1389,8 +1407,8 @@
 <pre class="output" tabindex="0"><code># A tibble: 2 × 2
   forecast_accurate count
   &lt;lgl&gt;             &lt;int&gt;
-1 FALSE                26
-2 TRUE                 17</code></pre>
+1 FALSE                18
+2 TRUE                 25</code></pre>
 </div>
 </div>
 </div>
@@ -1479,9 +1497,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/instructor/manipulating-data.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/instructor/manipulating-data.html",
-  "dateCreated": "2022-11-24",
-  "dateModified": "2022-11-24",
-  "datePublished": "2022-11-24"
+  "dateCreated": "2022-11-25",
+  "dateModified": "2022-11-25",
+  "datePublished": "2022-11-25"
 }
 
   </script><script>
