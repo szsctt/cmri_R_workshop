@@ -78,7 +78,7 @@ At this point, you need to know how Git thinks about your files.  There are thre
 
  - Before you have told git about any of your changes, they only exist in your working directory.
  - To tell get that you've made some changes to your file, you need to **stage** it (`git add`).
- - Tell git that you're happy with the changed files by **commiting** them.
+ - Tell git that you're happy with the changed files by **committing** them.
  
 You can reset the files in your repository to an earlier version using the **checkout** process.  
 
@@ -86,7 +86,7 @@ You can reset the files in your repository to an earlier version using the **che
  
 ### Staging
  
-So how do we **stage** a file? Just check the box next to the filename in the *Git* panel.
+So how do we **stage** a file? Just check the box next to the file name in the *Git* panel.
  
 ![A staged file](episodes/fig/git-pane-staged.png)
 ### Diff
@@ -140,7 +140,7 @@ While using branches is a fundamental part of git, I won't go into any more deta
 
 ## Command line git
 
-So far, we've used git through the Rstudio terminal.  However, this will only get you so far, and eventually you'll want to do something more complicated you'll probably need to use a shell.  You can open onefrom the menu with *Tools > Shell*.
+So far, we've used git through the Rstudio terminal.  However, this will only get you so far, and eventually you'll want to do something more complicated you'll probably need to use a shell.  You can open one from the menu with *Tools > Shell*.
 
 The [git documentation](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell) has all the information you'll need for using the command line, but just to get you started, you can try:
 
@@ -169,7 +169,7 @@ There are a few things you should be aware of when working with git.
 
 Git was designed for working with source code (text files), not binaries or large datasets.  Every time you check the status of your repository with `git status`, it looks at all the files that you've committed.  If you have added large files, like NGS data, large images, or compiled binaries, git has to look through those files for changes, which can really slow things down.
 
-I tend to avoid adding any of the data that I'm working with to version control, unless it's a very small text file or image.  Github also limits the size of individual files, and the total size of each repository, so avoid hitting those limits by keeping large files sepearate.  You can still keep them in the same directory as your code, but avoid doing `git add` on them.
+I tend to avoid adding any of the data that I'm working with to version control, unless it's a very small text file or image.  Github also limits the size of individual files, and the total size of each repository, so avoid hitting those limits by keeping large files separate.  You can still keep them in the same directory as your code, but avoid doing `git add` on them.
 
 ## Keep other backups
 
