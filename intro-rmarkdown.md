@@ -1,0 +1,100 @@
+---
+title: 'Using `R markdown` for notebooks and documents'
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- How do you write a lesson using R Markdown and `{sandpaper}`?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Explain how to use markdown with the new lesson template
+- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+## `Rmarkdown` for reproducible, documented analyis
+
+For a long time, most `R` code was written in *scripts*.  These are just plain old text files, usually with the file extension `.R`, which contain `R` code.  Any documentation in these scripts was in the form of comments, and any graphic generated had to be saved to file (or viewed in a window, then closed).
+
+This paradigm worked, but it was lacking an integrated view of the results of the analysis.  This is the problem that `knitr` and R markdown were developed to address.
+
+R markdown allows the user to create notebooks and documents that contain text elements (formatted using markdown), and `R` code. If I've ever sent you a `.html` document containing some results, this is what I used to generate it.  Other formats are possible for data export, including `.pdf`, but I tend to always use `.html` for it's interactive elements.
+
+Documents you create are *rendered* into the final output format that you've specified, by running all the code and combining the outputs it with your markdown text.
+
+Although simple, this approach is powerful; I wrote all the content on this website using R markdown documents.
+
+### Rmarkdown header
+
+R markdown documents always start with a header, which is formatted in [`YAML`](https://yaml.org/spec/1.2.2/), and at it's most basic looks something like this:
+
+```yaml
+---
+title: "R Notebook"
+output: html_notebook
+---
+```
+
+That's it: just a title and an output.
+
+::::::::::::::::: callout
+
+#### Output types
+
+When you create a `.Rmd` file, you'll have to choose if you want it to be a notebook (`output: html_notebook`), a document (`output: html_document`), or some other output type (for example, `output: pdf_document`).
+
+Notebooks and documents are very similar, and the only difference between html documents and notebooks is that a `.html` file is created with your analysis every time you save a notebook, whereas an output file will only be created for a document when you tell RStudio to render it.
+
+:::::::::::::::::::::::::
+
+If you want, you can add an author and a date, for example:
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: March 22, 2005
+output: html_document
+---
+```
+
+Sometimes I want the date to be updated every time I render the document.  You can do this by inserting some R code into the YAML header.
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: "2022-11-25"
+output: html_document
+---
+```
+
+
+
+
+
+
+
+
+## References
+
+- [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+
+
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Use `.md` files for episodes when you want static content
+- Use `.Rmd` files for episodes when you need to generate output
+- Run `sandpaper::check_lesson()` to identify any issues with your lesson
+- Run `sandpaper::build_lesson()` to preview your lesson locally
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+

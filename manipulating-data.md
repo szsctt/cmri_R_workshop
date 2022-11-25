@@ -946,13 +946,13 @@ forecast
    date       city   forecast
    <date>     <chr>  <chr>   
  1 2022-11-01 sydney cloudy  
- 2 2022-11-02 sydney sunny   
+ 2 2022-11-02 sydney cloudy  
  3 2022-11-03 sydney cloudy  
  4 2022-11-04 sydney cloudy  
  5 2022-11-05 sydney sunny   
- 6 2022-11-06 sydney sunny   
+ 6 2022-11-06 sydney cloudy  
  7 2022-11-07 sydney cloudy  
- 8 2022-11-08 sydney cloudy  
+ 8 2022-11-08 sydney sunny   
  9 2022-11-09 sydney sunny   
 10 2022-11-10 sydney sunny   
 # … with 33 more rows
@@ -972,13 +972,13 @@ weather %>%
    city   date       sunshine_hours forecast
    <chr>  <date>              <dbl> <chr>   
  1 sydney 2022-11-01            9.5 cloudy  
- 2 sydney 2022-11-02           12.8 sunny   
+ 2 sydney 2022-11-02           12.8 cloudy  
  3 sydney 2022-11-03            8.9 cloudy  
  4 sydney 2022-11-04            5.7 cloudy  
  5 sydney 2022-11-05           11.8 sunny   
- 6 sydney 2022-11-06           12.1 sunny   
+ 6 sydney 2022-11-06           12.1 cloudy  
  7 sydney 2022-11-07           12.3 cloudy  
- 8 sydney 2022-11-08           11   cloudy  
+ 8 sydney 2022-11-08           11   sunny   
  9 sydney 2022-11-09           10.3 sunny   
 10 sydney 2022-11-10            9.3 sunny   
 # … with 33 more rows
@@ -1016,8 +1016,8 @@ weather %>%
 # A tibble: 2 × 2
   forecast_accurate count
   <lgl>             <int>
-1 FALSE                26
-2 TRUE                 17
+1 FALSE                18
+2 TRUE                 25
 ```
 
 ::::::::::::::::::
