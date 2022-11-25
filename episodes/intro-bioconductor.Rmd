@@ -1,5 +1,5 @@
 ---
-title: '`bioconductor` and other bioinformatics packages'
+title: '`Bioconductor` and other bioinformatics packages'
 teaching: 10
 exercises: 2
 ---
@@ -18,7 +18,7 @@ here::i_am("episodes/intro-bioconductor.Rmd")
 ::::::::::::::::::::::::::::::::::::: objectives
 
 - Install bioconductor packages with `BiocManager`
-- Understand that p
+- Be aware of some `Bioconductor packages`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -119,7 +119,7 @@ library(magrittr)
 alb_gr <- alb %>% 
   # add "chr" to chromosome number
   dplyr::mutate(Chromosome = paste0("chr", Chromosome)) %>% 
-  # convert to GRanges ojbect
+  # convert to GRanges object
   GenomicRanges::makeGRangesFromDataFrame(
     seqnames.field="Chromosome",
     start.field = "Position",
@@ -143,7 +143,7 @@ This is human data, so we plot the albumin locus in the human genome.  I used th
 ```{r}
 library(karyoploteR)
 
-# this package contain transcipt information for the human genome
+# this package contain transcript information for the human genome
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 
 # region to plot
@@ -169,7 +169,7 @@ kpPlotDensity(kp, data=alb_gr, window=100, r0=0.3, r1=1)
 
 ### circlize
 
-Another package for plotting geomic information is `circlize`, which plots chromosome in a circle rather than in a linear format.  I won't cover this in any detail, but you can check out the [documentation](https://jokergoo.github.io/circlize_book/book/) for more information.
+Another package for plotting genomic information is `circlize`, which plots chromosome in a circle rather than in a linear format.  I won't cover this in any detail, but you can check out the [documentation](https://jokergoo.github.io/circlize_book/book/) for more information.
 
 ## RNA-seq 
 
@@ -179,7 +179,7 @@ One common tasks people use `Bioconductor` packages for is RNA-seq analysis. The
 2. Counting reads aligned to each exon/transcript/gene (I use [`htseq-count` from `HTSeq`](https://htseq.readthedocs.io/en/master/htseqcount.html))
 3. Downstream analysis with counts - batch correction, differential expression, gene ontology, pathway analysis, etc
 
-While it's possible to do the entire RNA-seq analysis pipeline, from reads to differential expressed genes, in `R`, you'll notice that I usually do the first two steps using other software.  This mostly comes down to momentum - this is how I was taught - but also has to do with the perception that `R` easier to use but slower and more memory-intensive than other languagues (like `C++`, the language in which `STAR` is written).  
+While it's possible to do the entire RNA-seq analysis pipeline, from reads to differential expressed genes, in `R`, you'll notice that I usually do the first two steps using other software.  This mostly comes down to momentum - this is how I was taught - but also has to do with the perception that `R` easier to use but slower and more memory-intensive than other languages (like `C++`, the language in which `STAR` is written).  
 
 We could spend a whole session (or workshop) on RNA-seq, so instead of trying to cover all of this material, I'll instead link to several resources that might be helpful for experimental design and data processing.
 
@@ -202,12 +202,19 @@ If you're more interested in single cell analysis, the workflow is in principle 
  - [Biostrings documentation](https://bioconductor.org/packages/release/bioc/html/Biostrings.html)
  - [karyoploteR documentation](https://bernatgel.github.io/karyoploter_tutorial/)
  - [circlize documentation](https://jokergoo.github.io/circlize_book/book/)
+ - [Notes on RNA-seq experimental design](https://www.melbournebioinformatics.org.au/tutorials/tutorials/rna_seq_exp_design/rna_seq_experimental_design/) (Very important!! Without proper experimental design you are only wasting time and money.)
+ - The [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
+ - The [EdgeR vignette](http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeR.pdf)
+ - [Materials from a two-day RNA-seq workshop](https://combine-australia.github.io/2018-09-26-RNAseq-Melbourne/)
+ - [Sample differential gene expression workflow](https://hbctraining.github.io/DGE_workshop_salmon/lessons/07_DGE_summarizing_workflow.html)
+ - [Seurat documentation](https://satijalab.org/seurat/)
+ - [Monocle3 documentation](https://cole-trapnell-lab.github.io/monocle3/)
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
 - Use `BiocManager` to install `Bioconductor` packages
-- Use `Biostrings` for 
+- Use `Biostrings` for working with biological sequences
 - Use `karyoploteR` or `circlize` for plotting genomic features
 - Use `EdgeR` and `DEseq2` for differential expression analysis
 - Use `Seurat` and `Monocle3` for single-cell RNA-seq data analysis
