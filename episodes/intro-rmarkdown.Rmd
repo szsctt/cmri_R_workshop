@@ -12,8 +12,9 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Explain how to use markdown documents and notebooks
+- Demonstrate how to include a header, markdown elements, pieces of code and code outputs
+- Discuss how to render documents and notebooks
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -70,7 +71,7 @@ Sometimes I want the date to be updated every time I render the document.  You c
 ---
 title: "Habits"
 author: Jane Doe
-date: <code>&grave;r Sys.Date()&grave;</code>
+date: `r knitr::inline_expr("Sys.Date()")`
 output: html_document
 ---
 ```
@@ -81,7 +82,7 @@ There are also lots of options for html documents and notebooks.  I often use:
 ---
 title: "Habits"
 author: Jane Doe
-date: "`r Sys.Date()`"
+date: `r knitr::inline_expr("Sys.Date()")`
 output:
   html_document:
     keep_md: true
@@ -94,7 +95,32 @@ output:
 ---
 ```
 
-### Markdown elements
+
+You can also add parameters in your header that you can use throughout your code:
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: `r knitr::inline_expr("Sys.Date()")`
+output:
+  html_document:
+    keep_md: true
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    code_folding: hide
+params:
+  test: true
+  species: "human"
+---
+```
+
+You can then refer to these parameters using the syntax `params$test` and `params$species`
+
+### Markdown
 
 Writing markdown documents are pretty simple.  Use `#` for headings
 
@@ -184,10 +210,85 @@ You can read more in the [documentation](https://www.markdownguide.org/basic-syn
 
 ### Adding code
 
+Adding code blocks is also easy.
+
+````markdown
+```{r chunk-name}`r ''`
+y <- 2
+print(y)
+```
+````
+
+There are lots of options to control how the code block and it's output is displayed. For example:
+
+````markdown
+```{r chunk-name, echo=FALSE}`r ''`
+print("this code block won't appear in the output, but its output will")
+```
+````
+
+````markdown
+```{r chunk-name, include=FALSE}`r ''`
+print("this code block won't appear in the output, and neither will it's output")
+```
+````
+
+If your code block produces a plot, the plot will appear in the report.  You can change the size of the plot with options as well.
+
+````markdown
+```{r chunk-name, fig.width=8, fig.height=8}`r ''`
+tibble(
+  group = c("A", "A", "B", "B"),
+  y = runif(4)
+) %>% 
+  ggplot(aes(x=group, y = y)) +
+  geom_point()
+```
+````
+
+You can also apply options to all chunks using `knitr::set_opts()` at the top of your file.
+
+````md
+```{r}
+knitr::opts_chunk$set(
+  echo=FALSE, fig.width = 6, fig.height = 6
+)
+```
+````
+
+### Running code blocks
+
+Run individual lines of code in a chunk by pressing <kbd>Ctrl</kbd> + <kbd>Enter</kbd>, or run the whole chunk using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> (or the 'play' symbol at the top right).  You can also highlight particular pieces of a line that you want to run, and use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run them.
+
+## Rendering notebooks
+
+
+
+There are a few different ways you can render your R markdown document.  The easiest is to use the dedicated button in Rstudio.  For documents, it' at the top of your document  looks like this:
+
+![Button for knitting documents](episodes/fig/knit.png)
+
+For notebooks, you don't need to manually render - every time you save the file, R will knit it for you.  But if you want to see what the notebook will look like, you can press the preview button:
+
+![Button for knitting documents](episodes/fig/preview.png)
+
+You can also render your notebook using code:
+
+```r
+rmarkdown::render("/path/to/document.Rmd")
+```
+
+If you set parameters, you can change them when you render the notebook:
+
+
+```r
+rmarkdown::render("/path/to/document.Rmd", params = list(test=FALSE, speces="macaque"))
+```
 
 
 ## References
 
+- [Rmarkdown guide](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
 - [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
 - [Markdown guide](https://www.markdownguide.org/basic-syntax/)
 
@@ -196,10 +297,10 @@ You can read more in the [documentation](https://www.markdownguide.org/basic-syn
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Specify document-wide properties in the header
+- Use markdown element to format text
+- Use code chunks to run `R` code
+- Render your notebook uing the buttons in Rstudio, or using `rmarkdown::render()`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
