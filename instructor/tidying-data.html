@@ -316,8 +316,8 @@
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1      401   805   102    97    91   380
-2 lib2      797   395   799    88   390   808</code></pre>
+1 lib1      386   792   377   806    92   108
+2 lib2      421   104   394   780   815    98</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -327,23 +327,23 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        401   797
-2 b2        805   395
-3 b3        102   799
-4 b4         97    88
-5 b5         91   390
-6 b6        380   808</code></pre>
+1 b1        386   421
+2 b2        792   104
+3 b3        377   394
+4 b4        806   780
+5 b5         92   815
+6 b6        108    98</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code># A tibble: 2 × 13
-  library `401` `805` `102` `97`  `91`  `380` `797` `395` `799` `88`  `390`
+  library `386` `792` `377` `806` `92`  `108` `421` `104` `394` `780` `815`
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
 2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
-# … with 1 more variable: `808` &lt;chr&gt;</code></pre>
+# … with 1 more variable: `98` &lt;chr&gt;</code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -364,18 +364,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        401
- 2 lib1    b2        805
- 3 lib1    b3        102
- 4 lib1    b4         97
- 5 lib1    b5         91
- 6 lib1    b6        380
- 7 lib2    b1        797
- 8 lib2    b2        395
- 9 lib2    b3        799
-10 lib2    b4         88
-11 lib2    b5        390
-12 lib2    b6        808</code></pre>
+ 1 lib1    b1        386
+ 2 lib1    b2        792
+ 3 lib1    b3        377
+ 4 lib1    b4        806
+ 5 lib1    b5         92
+ 6 lib1    b6        108
+ 7 lib2    b1        421
+ 8 lib2    b2        104
+ 9 lib2    b3        394
+10 lib2    b4        780
+11 lib2    b5        815
+12 lib2    b6         98</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -396,7 +396,7 @@
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Issues with this dataset:</p>
 <ul><li>Doesn’t start in cell A1</li>
@@ -483,12 +483,12 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        401   797
-2 b2        805   395
-3 b3        102   799
-4 b4         97    88
-5 b5         91   390
-6 b6        380   808</code></pre>
+1 b1        386   421
+2 b2        792   104
+3 b3        377   394
+4 b4        806   780
+5 b5         92   815
+6 b6        108    98</code></pre>
 </div>
 <p>Another way to think about tidiness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -509,18 +509,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1      401
- 2 b1      lib2      797
- 3 b2      lib1      805
- 4 b2      lib2      395
- 5 b3      lib1      102
- 6 b3      lib2      799
- 7 b4      lib1       97
- 8 b4      lib2       88
- 9 b5      lib1       91
-10 b5      lib2      390
-11 b6      lib1      380
-12 b6      lib2      808</code></pre>
+ 1 b1      lib1      386
+ 2 b1      lib2      421
+ 3 b2      lib1      792
+ 4 b2      lib2      104
+ 5 b3      lib1      377
+ 6 b3      lib2      394
+ 7 b4      lib1      806
+ 8 b4      lib2      780
+ 9 b5      lib1       92
+10 b5      lib2      815
+11 b6      lib1      108
+12 b6      lib2       98</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_longer_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting longer</figcaption></figure></div>
@@ -541,18 +541,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        401
- 2 lib1    b2        805
- 3 lib1    b3        102
- 4 lib1    b4         97
- 5 lib1    b5         91
- 6 lib1    b6        380
- 7 lib2    b1        797
- 8 lib2    b2        395
- 9 lib2    b3        799
-10 lib2    b4         88
-11 lib2    b5        390
-12 lib2    b6        808</code></pre>
+ 1 lib1    b1        386
+ 2 lib1    b2        792
+ 3 lib1    b3        377
+ 4 lib1    b4        806
+ 5 lib1    b5         92
+ 6 lib1    b6        108
+ 7 lib2    b1        421
+ 8 lib2    b2        104
+ 9 lib2    b3        394
+10 lib2    b4        780
+11 lib2    b5        815
+12 lib2    b6         98</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -568,12 +568,12 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        401   797
-2 b2        805   395
-3 b3        102   799
-4 b4         97    88
-5 b5         91   390
-6 b6        380   808</code></pre>
+1 b1        386   421
+2 b2        792   104
+3 b3        377   394
+4 b4        806   780
+5 b5         92   815
+6 b6        108    98</code></pre>
 </div>
 </div>
 </div>
