@@ -70,21 +70,126 @@ Sometimes I want the date to be updated every time I render the document.  You c
 ---
 title: "Habits"
 author: Jane Doe
-date: "`r Sys.Date()`"
+date: "``r Sys.Date()``"
 output: html_document
 ---
 ```
 
+There are also lots of options for html documents and notebooks.  I often use:
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: true
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    code_folding: hide
+---
+```
+
+### Markdown elements
+
+Writing markdown documents are pretty simple.  Use `#` for headings
+
+```markdown
+# Largest heading
+## Large heading
+### Medium heading
+#### Small heading
+```
+
+To create paragraphs, leave at least one blank line between text.
+
+```markdown
+This is a paragph.
+
+This is a different paragraph.
+```
+
+To add a line break (to prevent sentences from running on from one another), add two spaces at the end of the line.
+
+```markdown
+This is a line.  
+This is another line.
+```
+
+To add empahsis, use `*` or `_`.
+
+```markdown
+This text is **bold**.
+This text is __also bold__.
+This text is in *italics*.
+This text is also in _italics_.
+This text is both ***bold and in italics***.
+___Same here___.
+```
+
+To create a block quote, add `>` to the start of each line.
 
 
+```markdown
+> This will be a quote
+>
+> that's all in the same block
+```
+
+To make a list, use numbers or dashes.
+
+```markdown
+This is an unordered list:
+
+ - element a
+ - element b
+ - element c
+ 
+This is an ordered list:
+
+1. element 1
+2. element 2
+3. element 3
+ 
+```
+
+If you want to display code, use backticks:
+
+````markdown
+
+This is `inline` code.
+
+```r
+print("this is an R code block")
+```
+
+````
+
+To add images, use this syntax:
 
 
+```markdown
+![Caption for figure](/path/to/figure.png)
+```
+
+You can add links using parentheses and brackets:
+
+```markdown
+You can read more in the [documentation](https://www.markdownguide.org/basic-syntax/)
+```
+
+### Adding code
 
 
 
 ## References
 
 - [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+- [Markdown guide](https://www.markdownguide.org/basic-syntax/)
 
 
 
