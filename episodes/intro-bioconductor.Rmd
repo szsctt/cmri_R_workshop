@@ -6,7 +6,10 @@ exercises: 2
 
 ```{r setup, include=FALSE}
 here::i_am("episodes/intro-bioconductor.Rmd")
-install.packages("BiocManager")
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
 BiocManager::install(c("Biostrings", "karyoploteR"))
 ```
 
@@ -71,12 +74,25 @@ BiocManager::install("Biostrings")
 
 Biostrings contains useful variable and functions for working with sequences.  For example, you can translate a nucleotide sequence:
 
-```{r echo=FALSE}
-library(Biostrings)
+```{r warning=FALSE, echo=FALSE, include=FALSE}
+# load library
+library(Biostrings, quietly = TRUE, warn.conflicts=FALSE, verbose=FALSE)
+library(karyploteR)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 ```
 
-```{r}
+
+```r
+# load library
+library(biostrings)
+```
+
+
+```{r warning=FALSE}
+# create DNAString object
 my_seq <- DNAString("GTAAGTGTATGC")
+
+# translate to amino acids
 translate(my_seq)
 ```
 
@@ -114,9 +130,10 @@ alb <- readr::read_csv(here::here("episodes", "data", "gnomAD_v3.1.2_ENSG0000016
 
 Next, we need to convert the SNP locations into a `GRanges` object - this is an object from the `GenomicRanges` package that is designed to store genomic coordinates and associated metadata.  I won't go into detail about this either, but you can find more information about this package [in the documentation](https://bioconductor.org/packages/devel/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html).
 
+
 ```{r}
 # for pipe
-library(magrittr)
+library(magrittr, quietly=TRUE)
 
 alb_gr <- alb %>% 
   # add "chr" to chromosome number
@@ -142,11 +159,15 @@ Here I'm more or less following part of the [karyploteR tutorial](https://bernat
 This is human data, so we plot the albumin locus in the human genome.  I used the [UCSC genome brower](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr4%3A73402360%2D73423322&hgsid=1504808111_WcWVaHMGon8yjsLsfnwXMp51XDT0) to identify the coordinates for ALB (roughly chr4:73,394,000-73,425,000), but you could equally use [Ensembl](https://asia.ensembl.org/Homo_sapiens/Gene/Summary?g=ENSG00000163631;r=4:73397114-73421482).
 
 
-```{r}
-library(karyoploteR)
 
-# this package contain transcript information for the human genome
+```r
+library(karyoploteR)
+# this package contains transcript information for the human genome
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+```
+
+
+```{r}
 
 # region to plot
 region <- "chr4:73,394,000-73,425,000"
