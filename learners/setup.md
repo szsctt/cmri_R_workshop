@@ -56,9 +56,8 @@ git --version
 Once you have `R` and `Rstudio` installed, please also install the necessary packages by opening `Rstudio` and typing:
 
 ```R
-install.packages("tidyverse")
-install.packages("patchwork")
-install.packages("wesanderson")
+install.packages(c("tidyverse", "patchwork", "wesanderson", "BiocManager"))
+BiocManager::install(c("Biostrings", "karyoploteR"))
 
 ```
 
