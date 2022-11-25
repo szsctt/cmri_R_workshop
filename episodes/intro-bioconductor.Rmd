@@ -77,7 +77,7 @@ Biostrings contains useful variable and functions for working with sequences.  F
 ```{r warning=FALSE, echo=FALSE, include=FALSE}
 # load library
 library(Biostrings, quietly = TRUE, warn.conflicts=FALSE, verbose=FALSE)
-library(karyploteR)
+library(karyoploteR)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 ```
 
