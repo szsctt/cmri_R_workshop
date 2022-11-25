@@ -10,7 +10,7 @@ here::i_am("episodes/intro-bioconductor.Rmd")
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install(c("Biostrings", "karyoploteR"))
+BiocManager::install(c("Biostrings", "karyoploteR", "TxDb.Hsapiens.UCSC.hg38.knownGene"))
 ```
 
 :::::::::::::::::::::::::::::::::::::: questions 
