@@ -219,7 +219,11 @@
       <div class="accordion-body">
         <ul><li><a href="#version-control-with-git">Version control with <code>git</code></a></li>
 <li><a href="#creating-a-repository">Creating a repository</a></li>
+<li><a href="#making-changes">Making changes</a></li>
+<li><a href="#branches">Branches</a></li>
+<li><a href="#command-line-git">Command line git</a></li>
 <li><a href="#git-gotchas">Git gotchas</a></li>
+<li><a href="#keep-other-backups">Keep other backups</a></li>
 <li><a href="#resources">Resources</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -299,7 +303,8 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How do you write a lesson using R Markdown and <a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<ul><li>What is version control?</li>
+<li>How to use git in Rstudio?</li>
 </ul></div>
 </div>
 </div>
@@ -307,8 +312,9 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Explain how to use markdown with the new lesson template</li>
-<li>Demonstrate how to include pieces of code, figures, and nested challenge blocks</li>
+<ul><li>Explain the basics of git</li>
+<li>Demonstrate how stage and commit files</li>
+<li>Demonstrate pulls and pushes from a remote repository</li>
 </ul></div>
 </div>
 </div>
@@ -334,21 +340,85 @@
 <li>MacOSX: <code>which git</code> - it’ll be something like <code>/usr/bin/git</code>
 </li>
 </ul><ol start="4" style="list-style-type: decimal"><li>Restart Rstudio</li>
-</ol><p>To add version control to your project:</p>
-<figure><img src="../fig/new-repo.png" alt="" class="figure mx-auto d-block"><figcaption>Project options</figcaption></figure><ol style="list-style-type: decimal"><li>Open <em>Tools &gt; Version Control</em>
+</ol><p>The easiest way to start working with a project is to initialize an empty repository. I’ll walk you though the process with github, but you can also use bitbucket or gitlab if you prefer (although I’m not as familiar with these).</p>
+<p>Head to <a href="https://github.com/" class="external-link">github</a> and if you aren’t already logged in, look for the <em>Sign in</em> and <em>Sign up</em> buttons in the top right corner. Make an account if necessary, and then sign in. On the left hand side next to <em>Top Repositories</em>, click <em>New</em>. Give your new repository a name and a description, and decide if you want it to be public or private. Check the <em>Add a README file</em> box, then create the repository.</p>
+<p>Back in Rstudio,</p>
+<ol style="list-style-type: decimal"><li>Open <em>File &gt; New Project</em>
 </li>
-<li>Change the version control system to <em>Git</em>
+<li>Select <em>Version Control &gt; Git</em>
 </li>
-<li>Click ‘Yes’ when it asks if you want to set up a new repository</li>
-<li>You’ll have to restart Rstudio again</li>
-</ol><p>You should notice a new tab available in the top right pane:</p>
-<figure><img src="../fig/git-pane.png" alt="" class="figure mx-auto d-block"><figcaption>Project options</figcaption></figure></section><section id="git-gotchas"><h2 class="section-heading">Git gotchas<a class="anchor" aria-label="anchor" href="#git-gotchas"></a>
+<li>Grab the HTTPS URL from github (see picture below) and fill in the <em>Repository URL</em> box</li>
+<li>Set a name for your project directory - I usually make it the same as the name of the repository on github</li>
+<li>Choose where you want the project directory to be located</li>
+</ol><figure><img src="../fig/github-setup.png" alt="" class="figure mx-auto d-block"><figcaption>A new repo on github</figcaption></figure></section><section id="making-changes"><h2 class="section-heading">Making changes<a class="anchor" aria-label="anchor" href="#making-changes"></a>
 </h2>
-<hr class="half-width"><p>Don’t use it for large files.</p>
-<p>Keep other backups.</p>
+<hr class="half-width"><p>After you’ve set up your project, you’ll probably want to add the <code>.Rproj</code> file to version control. A new <em>Git</em> tab is available in the top right pane where you can do this. You’ll see in this panel that RStudio has created an <code>.Rproj</code> file for you when it created the project directory, and there’ll be some <strong>?</strong> next to the file name.</p>
+<figure><img src="../fig/git-pane.png" alt="" class="figure mx-auto d-block"><figcaption>Git pane</figcaption></figure><p>At this point, you need to know how Git thinks about your files. There are three statuses that your files can have:</p>
+<ul><li>Before you have told git about any of your changes, they only exist in your working directory.</li>
+<li>To tell get that you’ve made some changes to your file, you need to <strong>stage</strong> it (<code>git add</code>).</li>
+<li>Tell git that you’re happy with the changed files by <strong>committing</strong> them.</li>
+</ul><p>You can reset the files in your repository to an earlier version using the <strong>checkout</strong> process.</p>
+<figure><img src="https://git-scm.com/book/en/v2/images/areas.png" alt="" class="figure mx-auto d-block"><figcaption>Three sections of a git project</figcaption></figure><div class="section level3">
+<h3 id="staging">Staging<a class="anchor" aria-label="anchor" href="#staging"></a></h3>
+<p>So how do we <strong>stage</strong> a file? Just check the box next to the file name in the <em>Git</em> panel.</p>
+<figure><img src="../fig/git-pane-staged.png" alt="A staged file" class="figure mx-auto d-block"> ### Diff</figure><p>At any time, you can check what you changed relative to the latest commit by clicking on <em>Diff</em>.</p>
+<figure><img src="../fig/git-pane-diff.png" alt="" class="figure mx-auto d-block"><figcaption>Git diff</figcaption></figure><p>In this case, all the lines are green because we’re adding a new file.</p>
+</div>
+<div class="section level3">
+<h3 id="commit">Commit<a class="anchor" aria-label="anchor" href="#commit"></a></h3>
+<p>If you’re happy with the changes you’ve made, you can <strong>commit</strong> them using the <em>Commit</em> button (next to <em>Diff</em>). You will see the same view with your changes as you did with <em>Diff</em>, and an additional box to add a commit message - this is required for all commits. Try to make it as informative as possible!</p>
+<figure><img src="../fig/git-pane-commit.png" alt="Git commit" class="figure mx-auto d-block"> You should get a pop-up telling you the commit was successful.</figure><figure><img src="../fig/git-commit-success.png" alt="" class="figure mx-auto d-block"><figcaption>Git commit success</figcaption></figure></div>
+<div class="section level3">
+<h3 id="pushpull">Push/pull<a class="anchor" aria-label="anchor" href="#pushpull"></a></h3>
+<p>So far all the changes we’ve made have been to the <em>local</em> repository (that exists only on your computer). After you’ve made some commits, you should <strong>push</strong> the changes to your remote repository so that your collaborators can see them, and they’re backed up in the cloud. If someone else has made changes to the same branch, you might need to <strong>pull</strong> and <strong>merge</strong> any changes that are in the repository but not on your local computer first.</p>
+<figure><img src="https://www.janbasktraining.com/blog/uploads/images/image_750x_5d76346f0fbf8.jpg" alt="" class="figure mx-auto d-block"><figcaption>Working with remotes</figcaption></figure><p>You can push and pull from the same pop-up panel you get when you click <em>Commit</em>, or int the <em>Git</em> tab in the top-right pane.</p>
+<figure><img src="../fig/git-pane-push-pull.png" alt="" class="figure mx-auto d-block"><figcaption>Pulling and pushing</figcaption></figure><p>Your first push should be pretty straightforward.</p>
+<p>If there are changes in the remote repository that you don’t have in your local repository, you’ll need to pull them before you can push any changes.</p>
+<figure><img src="../fig/git-failed-push.png" alt="" class="figure mx-auto d-block"><figcaption>A failed push</figcaption></figure><p>The first time you try a pull like this, you might get this message:</p>
+<figure><img src="../fig/git-failed-pull.png" alt="" class="figure mx-auto d-block"><figcaption>A failed push</figcaption></figure><p>This just means that you have to open a terminal and type in one of those options. I won’t go into details about what they all mean, but I usually use <code>git config pull.rebase false</code>. You’ll have to open a shell from the menu with <em>Tools &gt; Shell</em> (on Mac you can just use the terminal pane at the bottom left), type this command and press enter.</p>
+<p>Try your pull again and it should then work. Your files should be updated!</p>
+</div>
+</section><section id="branches"><h2 class="section-heading">Branches<a class="anchor" aria-label="anchor" href="#branches"></a>
+</h2>
+<hr class="half-width"><p>I mentioned earlier that you can create <strong>branches</strong>. Their purpose is to facilitate work on the same files as your collaborators without immediate conflicts. When you are ready to integrate your changes, you can open a <strong>pull request</strong> and <strong>merge</strong> the changes.</p>
+<p>While using branches is a fundamental part of git, I won’t go into any more detail than that now. You can read more about how branches work in the <a href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell" class="external-link">git documentation</a>.</p>
+</section><section id="command-line-git"><h2 class="section-heading">Command line git<a class="anchor" aria-label="anchor" href="#command-line-git"></a>
+</h2>
+<hr class="half-width"><p>So far, we’ve used git through the Rstudio terminal. However, this will only get you so far, and eventually you’ll want to do something more complicated you’ll probably need to use a shell. You can open one from the menu with <em>Tools &gt; Shell</em>.</p>
+<p>The <a href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell" class="external-link">git documentation</a> has all the information you’ll need for using the command line, but just to get you started, you can try:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of changed, staged files</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># stage file</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file1<span class="op">&gt;</span> <span class="op">&lt;</span>file2<span class="op">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># commit changes</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"My informative commit message"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># push to remote</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># pull changes from remote</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code></pre>
+</div>
+</section><section id="git-gotchas"><h2 class="section-heading">Git gotchas<a class="anchor" aria-label="anchor" href="#git-gotchas"></a>
+</h2>
+<hr class="half-width"><p>There are a few things you should be aware of when working with git.</p>
+<div class="section level3">
+<h3 id="dont-add-large-files">Don’t add large files<a class="anchor" aria-label="anchor" href="#dont-add-large-files"></a></h3>
+<p>Git was designed for working with source code (text files), not binaries or large datasets. Every time you check the status of your repository with <code>git status</code>, it looks at all the files that you’ve committed. If you have added large files, like NGS data, large images, or compiled binaries, git has to look through those files for changes, which can really slow things down.</p>
+<p>I tend to avoid adding any of the data that I’m working with to version control, unless it’s a very small text file or image. Github also limits the size of individual files, and the total size of each repository, so avoid hitting those limits by keeping large files separate. You can still keep them in the same directory as your code, but avoid doing <code>git add</code> on them.</p>
+</div>
+</section><section id="keep-other-backups"><h2 class="section-heading">Keep other backups<a class="anchor" aria-label="anchor" href="#keep-other-backups"></a>
+</h2>
+<hr class="half-width"><p>Although your code is pretty safe in the cloud, it’s good practice to keep other backups of your code elsewhere. Since your data shouldn’t be in your repository, you’ll need to think about other backups anyway. So keep your code and data backed up somewhere else, like other clouds (e.g. One Drive), CMRI shared folders and portable hard drives (but never <em>only</em> on a portable hard drive).</p>
 </section><section id="resources"><h2 class="section-heading">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
-<hr class="half-width"><ul><li><a href="https://dev.to/milu_franz/git-explained-the-basics-igc" class="external-link">Git basics</a></li>
+<hr class="half-width"><ul><li><a href="https://git-scm.com/book/en/v2" class="external-link">Git documentation</a></li>
+<li><a href="https://dev.to/milu_franz/git-explained-the-basics-igc" class="external-link">Git basics</a></li>
 <li><a href="https://support.posit.co/hc/en-us/articles/200532077" class="external-link">Posit/Rstudio support article on git</a></li>
 </ul><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -358,10 +428,10 @@
 <h3 class="callout-title">Keypoints<a class="anchor" aria-label="anchor" href="#keypoints1"></a>
 </h3>
 <div class="callout-content">
-<ul><li>Use <code>.md</code> files for episodes when you want static content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson locally</li>
+<ul><li>Keep your files safe and keep track of changes with version control</li>
+<li>Use github as a remote repository for your code</li>
+<li>Stage and commit changes to your files so that git keeps track of them</li>
+<li>Push your changes to your remote repository, and pull changes made by others</li>
 </ul></div>
 </div>
 </div>
