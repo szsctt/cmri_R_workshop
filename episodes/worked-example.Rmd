@@ -1,0 +1,311 @@
+---
+title: 'Case study'
+teaching: 10
+exercises: 2
+---
+
+```{r include=FALSE}
+here::i_am("episodes/worked-example.Rmd")
+```
+
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- How do you write a lesson using R Markdown and `{sandpaper}`?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Explain how to use markdown with the new lesson template
+- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Peptide count data
+
+## Excercies
+
+:::::::::::::::::::::::: challenge 
+Load the data into variable called `count`.  Then, create a new column called `lib` with the library type ('plasmid', 'vector', 'entry', 'expression').
+
+:::::::::::::: solution
+
+```{r}
+library(tidyverse)
+
+# file paths
+files <- here::here("episodes", "data", c("counts_plasmid.tsv", 
+                                          "counts_entry.tsv",
+                                          "counts_expression.tsv",
+                                          "counts_vector.tsv"))
+
+# load data
+counts <- read_tsv(files, col_types = "ci", id="file")
+
+# create extra column
+counts <- counts %>% 
+  mutate(lib = stringr::str_extract(file, "plasmid|vector|entry|expression")) %>% 
+  select(-file)
+
+glimpse(counts)
+
+```
+
+:::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+
+
+
+:::::::::::::::::::::::: challenge 
+
+Make a table with the following information
+
+ - The number of distinct peptides per library
+ - The mean count in each library
+ - The median count in each library
+ - The standard deviation of counts for each libary
+ - The sum of all the counts for each library
+ 
+:::::::::::::: solution
+
+```{r}
+counts %>% 
+  group_by(lib) %>% 
+  summarise(n_pept = n_distinct(peptide),
+            mean_count = mean(count),
+            median_count = median(count),
+            sd_count = sd(count),
+            lib_size = sum(count))
+
+```
+
+:::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+
+
+
+
+:::::::::::::::::::::::: challenge
+
+Get a table of the top 10 peptides from each library.
+
+:::::::::::::: solution
+
+```{r}
+counts %>% 
+  group_by(lib) %>% 
+  slice_max(order_by=count, n=10)
+
+```
+
+:::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+
+
+
+
+:::::::::::::::::::::::: challenge 
+
+For each peptide, calculate the fraction of counts within the library in a new column called `frac`.
+
+:::::::::::::: solution
+
+```{r}
+counts <- counts %>% 
+  group_by(lib) %>% 
+  mutate(frac = count/sum(count))
+
+glimpse(counts)
+```
+
+:::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+ 
+
+
+
+
+:::::::::::::::::::::::: challenge 
+
+Reproduce this 'bubble plot' of the normalized counts.
+
+```{r, echo=FALSE}
+counts %>% 
+  ggplot(aes(x=lib, y=frac, size=frac, color=lib)) +
+  geom_jitter(alpha=0.5) +
+  scale_y_log10() +
+  labs(x="Library", y="Fraction")
+```
+
+:::::::::::::: solution
+
+```{r}
+counts %>% 
+  ggplot(aes(x=lib, y=frac, size=frac, color=lib)) +
+  geom_jitter(alpha=0.5) +
+  scale_y_log10() +
+  labs(x="Library", y="Fraction")
+```
+
+:::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::
+
+
+
+
+:::::::::::::::::::::::: challenge 
+
+Add column called `rank` with ranks within each library, with 1 for peptide with highest fraction, 2 for peptide with second highest, and so on.
+
+:::::::::::::: solution
+```{r}
+counts <- counts %>% 
+  arrange(desc(frac)) %>% 
+  group_by(lib) %>% 
+  mutate(rank = row_number())
+
+glimpse(count)
+```
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
+
+
+
+:::::::::::::::::::::::: challenge 
+
+Make a table where there is one row for each peptide, and a column for the rank of the peptide in each library. 
+
+Use this to assign a unique ID (using `row_number()`) to each peptide, ranking by count in the expression library.
+
+Assign this new table to a variable `ranked`.
+
+
+:::::::::::::: solution
+```{r}
+ranked <- counts %>% 
+  select(lib, peptide, rank) %>% 
+  pivot_wider(names_from="lib", values_from = rank) %>% 
+  arrange(expression) %>% 
+  mutate(id = row_number())
+
+ranked
+```
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
+
+
+
+:::::::::::::::::::::::: challenge 
+
+Reproduce this raster plot showing the ranks for each peptide in each library
+ 
+
+```{r, echo=FALSE}
+ranked %>% 
+  pivot_longer(expression:plasmid, names_to="lib", values_to="rank") %>% 
+  ggplot(aes(x=lib, y=id, fill=rank)) +
+  geom_raster() +
+  scale_fill_viridis_c() +
+  labs(x="Library", y="Peptide ID")
+```
+
+
+:::::::::::::: solution
+```{r, echo=FALSE}
+ranked %>% 
+  pivot_longer(expression:plasmid, names_to="lib", values_to="rank") %>% 
+  ggplot(aes(x=lib, y=id, fill=rank)) +
+  geom_raster() +
+  scale_fill_viridis_c()+
+  labs(x="Library", y="Peptide ID")
+```
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::: challenge 
+
+Create a new table (called `expr_enrich`) in which you calculate the 'enrichment score' of each peptide in the expression library relative to the vector library (that is, $\frac{\text{fraction in expression library}}{\text{fraction in vector library}}$). Add a column called `rank` which ranks the peptides based on this enrichment score
+
+:::::::::::::: solution
+
+```{r}
+expr_enrich <- counts %>% 
+  filter(lib %in% c("expression", "vector")) %>% 
+  select(peptide, lib, frac) %>% 
+  pivot_wider(names_from = lib, values_from = frac) %>% 
+  mutate(enrichment = expression / vector) %>% 
+  arrange(desc(enrichment)) %>% 
+  mutate(rank = row_number())
+ 
+
+expr_enrich 
+```
+
+
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
+
+
+
+:::::::::::::::::::::::: challenge 
+
+Do the same, but comparing the vector to plasmid library to get an idea of how well each peptide packages. Filter for rows where the 'enrichment score' is less than 1 to get a list of 'poor packagers'.
+
+:::::::::::::: solution
+
+```{r}
+vec_enrich <- counts %>% 
+  filter(lib %in% c("plasmid", "vector")) %>% 
+  select(peptide, lib, frac) %>% 
+  pivot_wider(names_from = lib, values_from = frac) %>% 
+  mutate(enrichment = vector / plasmid) %>% 
+  arrange(desc(enrichment)) %>% 
+  mutate(rank = row_number())
+
+poor_packagers <- vec_enrich %>% 
+  filter(enrichment < 1)
+
+poor_packagers
+```
+
+
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::: challenge 
+
+Make a table of the top 500 peptides ranked by expression enrichment, removing any of the poor packagers.  Save this table to a file called `good_peptides.tsv`.
+
+:::::::::::::: solution
+
+```{r}
+good_peptides <- expr_enrich %>% 
+  filter(!peptide %in% poor_packagers$peptide) %>% 
+  slice_max(order_by=enrichemnt, n=500)
+
+good_peptides 
+
+write_tsv(good_peptides, file=here::here("good_peptides.tsv"))
+```
+
+
+:::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::
+
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Use `.md` files for episodes when you want static content
+- Use `.Rmd` files for episodes when you need to generate output
+- Run `sandpaper::check_lesson()` to identify any issues with your lesson
+- Run `sandpaper::build_lesson()` to preview your lesson locally
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+

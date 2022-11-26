@@ -67,6 +67,7 @@ episodes:
 - intro-bioconductor.Rmd
 - intro-rmarkdown.Rmd
 - git.Rmd
+- worked-example.Rmd
 
 # Information for Learners
 learners: 
