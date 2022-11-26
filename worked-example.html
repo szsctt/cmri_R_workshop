@@ -321,7 +321,12 @@
 </div>
 <section id="peptide-count-data"><h2 class="section-heading">Peptide count data<a class="anchor" aria-label="anchor" href="#peptide-count-data"></a>
 </h2>
-<hr class="half-width"></section><section id="excercies"><h2 class="section-heading">Excercies<a class="anchor" aria-label="anchor" href="#excercies"></a>
+<hr class="half-width"><p>To round things out, we’ll explore some simulated peptide library data using what we’ve learned so far. Please follow along in an R markdown notebook on your own computer. The data is included in the data files you downloaded at the start of the course.</p>
+<p>In this dataset, we’ve made an imaginary peptide insertion in the <em>cap</em> gene of AAV to create a plasmid library. We’ve then packaged this to create a vector library, and done a selection in some imaginary cells. We’ve therefore got data from <strong>plasmid</strong>, <strong>vector</strong>, <strong>DNA/entry</strong> and <strong>cDNA/expression</strong> libraries.</p>
+<p>Imagine you’ve already done the counting using <a href="https://github.com/szsctt/ngs_barcodes" class="external-link">the counting pipeline</a>, and now you want to explore the results.</p>
+<p>You’ll start with four files, one for each library, each containing two columns: <em>peptide</em> and <em>count</em>. These files are called <code>counts_plasmid.tsv</code>, <code>counts_vector.tsv</code>, <code>counts_entry.tsv</code>, <code>counts_expression.tsv</code>.</p>
+<p>The data here is <strong>simulated</strong>, so don’t interpret the results! If you want to see how I simulated the data, you can check it out <a href="https://github.com/szsctt/cmri_R_workshop/blob/main/episodes/files/sim_pept.R" class="external-link">on github</a>.</p>
+</section><section id="excercies"><h2 class="section-heading">Excercies<a class="anchor" aria-label="anchor" href="#excercies"></a>
 </h2>
 <hr class="half-width"><div id="challenge1" class="callout challenge">
 <div class="callout-square">
@@ -344,12 +349,6 @@
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">library</span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></span></code></pre>
-</div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -362,7 +361,7 @@
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb3">
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -421,7 +420,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -469,7 +468,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -521,7 +520,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
 </button>
 <div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -555,7 +554,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </h3>
 <div class="callout-content">
 <p>Reproduce this ‘bubble plot’ of the normalized counts.</p>
-<figure><img src="fig/worked-example-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/worked-example-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 <div id="accordionSolution5" class="accordion challenge-accordion accordion-flush">
@@ -567,7 +566,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -577,7 +576,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 <span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Library"</span>, y<span class="op">=</span><span class="st">"Fraction"</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/worked-example-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/worked-example-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
@@ -602,7 +601,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -645,7 +644,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -688,7 +687,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </h3>
 <div class="callout-content">
 <p>Reproduce this raster plot showing the ranks for each peptide in each library</p>
-<figure><img src="fig/worked-example-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/worked-example-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 <div id="accordionSolution8" class="accordion challenge-accordion accordion-flush">
@@ -700,7 +699,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
 <div class="accordion-body">
-<figure><img src="fig/worked-example-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/worked-example-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
@@ -725,7 +724,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution9" class="accordion-collapse collapse" data-bs-parent="#accordionSolution9" aria-labelledby="headingSolution9">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -783,7 +782,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution10" class="accordion-collapse collapse" data-bs-parent="#accordionSolution10" aria-labelledby="headingSolution10">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -843,7 +842,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 </button>
 <div id="collapseSolution11" class="accordion-collapse collapse" data-bs-parent="#accordionSolution11" aria-labelledby="headingSolution11">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -859,7 +858,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
 Caused by error:
 ! object 'enrichemnt' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb22">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -870,7 +869,7 @@ Caused by error:
 </h3>
 <pre class="error" tabindex="0"><code>Error in eval(expr, envir, enclos): object 'good_peptides' not found</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
