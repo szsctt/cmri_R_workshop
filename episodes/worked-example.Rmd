@@ -24,16 +24,31 @@ here::i_am("episodes/worked-example.Rmd")
 
 ## Peptide count data
 
+To round things out, we'll explore some simulated peptide library data using what we've learned so far.  Please follow along in an R markdown notebook on your own computer.  The data is included in the data files you downloaded at the start of the course.
+
+In this dataset, we've made an imaginary peptide insertion in the *cap* gene of AAV to create a plasmid library. We've then packaged this to create a vector library, and done a selection in some imaginary cells.  We've therefore got data from **plasmid**, **vector**, **DNA/entry** and **cDNA/expression** libraries.  
+
+Imagine you've already done the counting using [the counting pipeline](https://github.com/szsctt/ngs_barcodes), and now you want to explore the results.  
+
+You'll start with four files, one for each library, each containing two columns: *peptide* and *count*. These files are called `counts_plasmid.tsv`, `counts_vector.tsv`, `counts_entry.tsv`, `counts_expression.tsv`.
+
+The data here is **simulated**, so don't interpret the results!  If you want to see how I simulated the data, you can check it out [on github](https://github.com/szsctt/cmri_R_workshop/blob/main/episodes/files/sim_pept.R).
+
 ## Excercies
 
 :::::::::::::::::::::::: challenge 
+
 Load the data into variable called `count`.  Then, create a new column called `lib` with the library type ('plasmid', 'vector', 'entry', 'expression').
 
 :::::::::::::: solution
+```{r echo=FALSE}
+# load tidyverse library
+library(tidyverse)
+```
+
+
 
 ```{r}
-library(tidyverse)
-
 # file paths
 files <- here::here("episodes", "data", c("counts_plasmid.tsv", 
                                           "counts_entry.tsv",
