@@ -1,0 +1,115 @@
+---
+title: 'Notes from test Workshop: part 1'
+author: "Suzanne Scott"
+date: "2022-11-26"
+output: html_document
+---
+
+
+## Install + setup
+
+had to do updates!  Took ~ 15 minutes to get set up
+
+Downlaod data file doesn't work.
+Use zip instead of tar for windows users
+
+## Base R
+
+Started: 11:33 Finished 1:16
+
+Prisim size limit?
+
+Prompt demo with sleep
+
+Add dtplyr mention in dplyr epsiode
+
+Add section about projects
+
+More detail about making and running scripts
+
+Add modulus to list of arithmetic operators\
+
+no nested function calls - too confusing
+ - explain that function calls can
+
+Challenge 1 incorrect - 3 instead of 9
+
+Debugging by comment - control not command
+
+Hello operator : ->
+
+Typo in challenge 8
+
+emphaises building up scripts piece by piece, rather than trying to 'complete' the code
+
+## Readr/readxl
+
+Started at 2:00pm
+
+Typo read_xls missing parantheses
+
+
+Add here to install list
+
+column types specifying - link to documentation 
+logical instead of text in colunn type example
+
+don't use skip in challenge 2 - ignored when range used
+
+
+Finished at 3:34 pm
+
+## Tidy data
+
+Started at 3:36pm
+
+
+discussion - file missing
+
+
+Add shortcut for pipe
+
+
+load tidyr and magrittr libraries
+
+challenge - tidy data from example file
+
+Finished at 4:08
+
+
+## dplyr
+
+Started at 4:10 ish
+Finished at 5:27pm
+
+
+## ggplot2
+
+Started at 5:34pm
+
+xUsing geom_freqpoly(), make frequency polynomials of the speed of the maximum wind gust on each day for each city, using 10 bins (you might need to check the documentation). - confusingly worded
+
+Challenge 1 is too early - or add section about how to add color
+
+
+Change proportion example to:
+
+weather %>% 
+  group_by(city, wind_direction_9am) %>% 
+  summarise(count = n()) %>% 
+  ggplot(aes(x=city, y=count, fill=wind_direction_9am)) +
+  geom_col(position="fill")
+  
+  
+colors - hexadecimal value
+
+link to colorblind websites
+
+axes scales not separated from previous section on colors
+
+rstatix - mention???
+
+theme light doesn't match theme classic
+
+Finished at 6:29
+
