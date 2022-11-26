@@ -76,6 +76,9 @@
     <loc>https://carpentries.github.io/workbench-template-rmd/instructor/visualizing-data.html</loc>
   </url>
   <url>
+    <loc>https://carpentries.github.io/workbench-template-rmd/instructor/worked-example.html</loc>
+  </url>
+  <url>
     <loc>https://carpentries.github.io/workbench-template-rmd/instructor-notes.html</loc>
   </url>
   <url>
@@ -107,5 +110,8 @@
   </url>
   <url>
     <loc>https://carpentries.github.io/workbench-template-rmd/visualizing-data.html</loc>
+  </url>
+  <url>
+    <loc>https://carpentries.github.io/workbench-template-rmd/worked-example.html</loc>
   </url>
 </urlset>
