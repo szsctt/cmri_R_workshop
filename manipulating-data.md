@@ -948,13 +948,13 @@ forecast
  1 2022-11-01 sydney cloudy  
  2 2022-11-02 sydney cloudy  
  3 2022-11-03 sydney cloudy  
- 4 2022-11-04 sydney cloudy  
- 5 2022-11-05 sydney sunny   
- 6 2022-11-06 sydney cloudy  
- 7 2022-11-07 sydney cloudy  
- 8 2022-11-08 sydney sunny   
- 9 2022-11-09 sydney sunny   
-10 2022-11-10 sydney sunny   
+ 4 2022-11-04 sydney sunny   
+ 5 2022-11-05 sydney cloudy  
+ 6 2022-11-06 sydney sunny   
+ 7 2022-11-07 sydney sunny   
+ 8 2022-11-08 sydney cloudy  
+ 9 2022-11-09 sydney cloudy  
+10 2022-11-10 sydney cloudy  
 # … with 33 more rows
 ```
 
@@ -974,13 +974,13 @@ weather %>%
  1 sydney 2022-11-01            9.5 cloudy  
  2 sydney 2022-11-02           12.8 cloudy  
  3 sydney 2022-11-03            8.9 cloudy  
- 4 sydney 2022-11-04            5.7 cloudy  
- 5 sydney 2022-11-05           11.8 sunny   
- 6 sydney 2022-11-06           12.1 cloudy  
- 7 sydney 2022-11-07           12.3 cloudy  
- 8 sydney 2022-11-08           11   sunny   
- 9 sydney 2022-11-09           10.3 sunny   
-10 sydney 2022-11-10            9.3 sunny   
+ 4 sydney 2022-11-04            5.7 sunny   
+ 5 sydney 2022-11-05           11.8 cloudy  
+ 6 sydney 2022-11-06           12.1 sunny   
+ 7 sydney 2022-11-07           12.3 sunny   
+ 8 sydney 2022-11-08           11   cloudy  
+ 9 sydney 2022-11-09           10.3 cloudy  
+10 sydney 2022-11-10            9.3 cloudy  
 # … with 33 more rows
 ```
 
@@ -1016,8 +1016,8 @@ weather %>%
 # A tibble: 2 × 2
   forecast_accurate count
   <lgl>             <int>
-1 FALSE                21
-2 TRUE                 22
+1 FALSE                23
+2 TRUE                 20
 ```
 
 ::::::::::::::::::

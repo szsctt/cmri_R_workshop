@@ -91,7 +91,9 @@ You can reset the files in your repository to an earlier version using the **che
 So how do we **stage** a file? Just check the box next to the file name in the *Git* panel.
  
 ![A staged file](episodes/fig/git-pane-staged.png)
+
 ### Diff
+
 
 At any time, you can check what you changed relative to the latest commit by clicking on *Diff*.
 

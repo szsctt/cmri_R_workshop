@@ -15,7 +15,7 @@ Ideally you'll have a laptop to work on during the sessions.  If you don't have 
 
 ### Details
 
-You will need to install `R` and `Rstudio` before the workshop begins.
+You will need to install `R` and `Rstudio` before the workshop begins.  Windows users will also need to install `git`.
 
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
