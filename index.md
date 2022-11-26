@@ -12,16 +12,16 @@ Session 1: Monday 5 December 2022, 1:30pm-5:30pm
 
  - Introduction to R and Rstudio
  - Introduction to the tidyverse
- - `readr`: Reading in data
- - `dplyr`: Manipulating data
- - `ggplot2`: Plotting data
+ - Reading in data with `readr` and `readxl`
+ - Manipulating data with `tidyr` and `dplyr`
+ - Plotting data with `ggplot2`
  
 Session 2: Tuesday 6 December 2022, 2:00pm-5:30pm
 
  - Introduction to `bioconductor`
  - Introduction to `Rmarkdown`
  - Version control with `git`
- - Case study
+ - Case study: peptide counts during selection
 
 
 ## What you will not learn
