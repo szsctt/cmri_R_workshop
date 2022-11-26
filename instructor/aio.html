@@ -961,7 +961,7 @@ mean of x mean of y
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] -1.1383809  3.0492581  3.3350998  0.1311203  4.1152766</code></pre>
+<pre class="output" tabindex="0"><code>[1]  1.6718782 -0.6204196  1.2480044 -1.4291155  4.1006665</code></pre>
 </div>
 </div>
 </div>
@@ -1637,7 +1637,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1775,7 +1775,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1941,8 +1941,8 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1      788   392   794   414   102   123
-2 lib2       99    89   387   786   798   404</code></pre>
+1 lib1      399    99   780   802   389   408
+2 lib2       93   105   792   408    96   773</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -1952,23 +1952,22 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        788    99
-2 b2        392    89
-3 b3        794   387
-4 b4        414   786
-5 b5        102   798
-6 b6        123   404</code></pre>
+1 b1        399    93
+2 b2         99   105
+3 b3        780   792
+4 b4        802   408
+5 b5        389    96
+6 b6        408   773</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code># A tibble: 2 × 13
-  library `788` `392` `794` `414` `102` `123` `99`  `89`  `387` `786` `798`
+<pre class="output" tabindex="0"><code># A tibble: 2 × 12
+  library `399` `99`  `780` `802` `389` `408` `93`  `105` `792` `96`  `773`
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
-2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
-# … with 1 more variable: `404` &lt;chr&gt;</code></pre>
+2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b4    b1    b2    b3    b5    b6   </code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -1991,18 +1990,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        788
- 2 lib1    b2        392
- 3 lib1    b3        794
- 4 lib1    b4        414
- 5 lib1    b5        102
- 6 lib1    b6        123
- 7 lib2    b1         99
- 8 lib2    b2         89
- 9 lib2    b3        387
-10 lib2    b4        786
-11 lib2    b5        798
-12 lib2    b6        404</code></pre>
+ 1 lib1    b1        399
+ 2 lib1    b2         99
+ 3 lib1    b3        780
+ 4 lib1    b4        802
+ 5 lib1    b5        389
+ 6 lib1    b6        408
+ 7 lib2    b1         93
+ 8 lib2    b2        105
+ 9 lib2    b3        792
+10 lib2    b4        408
+11 lib2    b5         96
+12 lib2    b6        773</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -2118,12 +2117,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        788    99
-2 b2        392    89
-3 b3        794   387
-4 b4        414   786
-5 b5        102   798
-6 b6        123   404</code></pre>
+1 b1        399    93
+2 b2         99   105
+3 b3        780   792
+4 b4        802   408
+5 b5        389    96
+6 b6        408   773</code></pre>
 </div>
 <p>Another way to think about tidiness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -2145,18 +2144,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1      788
- 2 b1      lib2       99
- 3 b2      lib1      392
- 4 b2      lib2       89
- 5 b3      lib1      794
- 6 b3      lib2      387
- 7 b4      lib1      414
- 8 b4      lib2      786
- 9 b5      lib1      102
-10 b5      lib2      798
-11 b6      lib1      123
-12 b6      lib2      404</code></pre>
+ 1 b1      lib1      399
+ 2 b1      lib2       93
+ 3 b2      lib1       99
+ 4 b2      lib2      105
+ 5 b3      lib1      780
+ 6 b3      lib2      792
+ 7 b4      lib1      802
+ 8 b4      lib2      408
+ 9 b5      lib1      389
+10 b5      lib2       96
+11 b6      lib1      408
+12 b6      lib2      773</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_longer_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting longer</figcaption></figure>
@@ -2179,18 +2178,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        788
- 2 lib1    b2        392
- 3 lib1    b3        794
- 4 lib1    b4        414
- 5 lib1    b5        102
- 6 lib1    b6        123
- 7 lib2    b1         99
- 8 lib2    b2         89
- 9 lib2    b3        387
-10 lib2    b4        786
-11 lib2    b5        798
-12 lib2    b6        404</code></pre>
+ 1 lib1    b1        399
+ 2 lib1    b2         99
+ 3 lib1    b3        780
+ 4 lib1    b4        802
+ 5 lib1    b5        389
+ 6 lib1    b6        408
+ 7 lib2    b1         93
+ 8 lib2    b2        105
+ 9 lib2    b3        792
+10 lib2    b4        408
+11 lib2    b5         96
+12 lib2    b6        773</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -2206,12 +2205,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        788    99
-2 b2        392    89
-3 b3        794   387
-4 b4        414   786
-5 b5        102   798
-6 b6        123   404</code></pre>
+1 b1        399    93
+2 b2         99   105
+3 b3        780   792
+4 b4        802   408
+5 b5        389    96
+6 b6        408   773</code></pre>
 </div>
 </div>
 </div>
@@ -2411,7 +2410,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2528,7 +2527,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2587,7 +2586,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2867,7 +2866,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3004,7 +3003,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3108,7 +3107,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb48">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3259,7 +3258,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb56">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3325,16 +3324,16 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 43 × 3
    date       city   forecast
    &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;   
- 1 2022-11-01 sydney sunny   
- 2 2022-11-02 sydney sunny   
+ 1 2022-11-01 sydney cloudy  
+ 2 2022-11-02 sydney cloudy  
  3 2022-11-03 sydney cloudy  
  4 2022-11-04 sydney sunny   
  5 2022-11-05 sydney cloudy  
- 6 2022-11-06 sydney cloudy  
- 7 2022-11-07 sydney sunny   
- 8 2022-11-08 sydney sunny   
- 9 2022-11-09 sydney sunny   
-10 2022-11-10 sydney sunny   
+ 6 2022-11-06 sydney sunny   
+ 7 2022-11-07 sydney cloudy  
+ 8 2022-11-08 sydney cloudy  
+ 9 2022-11-09 sydney cloudy  
+10 2022-11-10 sydney cloudy  
 # … with 33 more rows</code></pre>
 </div>
 <p>Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.</p>
@@ -3352,16 +3351,16 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 43 × 4
    city   date       sunshine_hours forecast
    &lt;chr&gt;  &lt;date&gt;              &lt;dbl&gt; &lt;chr&gt;   
- 1 sydney 2022-11-01            9.5 sunny   
- 2 sydney 2022-11-02           12.8 sunny   
+ 1 sydney 2022-11-01            9.5 cloudy  
+ 2 sydney 2022-11-02           12.8 cloudy  
  3 sydney 2022-11-03            8.9 cloudy  
  4 sydney 2022-11-04            5.7 sunny   
  5 sydney 2022-11-05           11.8 cloudy  
- 6 sydney 2022-11-06           12.1 cloudy  
- 7 sydney 2022-11-07           12.3 sunny   
- 8 sydney 2022-11-08           11   sunny   
- 9 sydney 2022-11-09           10.3 sunny   
-10 sydney 2022-11-10            9.3 sunny   
+ 6 sydney 2022-11-06           12.1 sunny   
+ 7 sydney 2022-11-07           12.3 cloudy  
+ 8 sydney 2022-11-08           11   cloudy  
+ 9 sydney 2022-11-09           10.3 cloudy  
+10 sydney 2022-11-10            9.3 cloudy  
 # … with 33 more rows</code></pre>
 </div>
 <div id="challenge8" class="callout challenge">
@@ -3383,7 +3382,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution8" class="accordion-collapse collapse" aria-labelledby="headingSolution8" data-bs-parent="#accordionSolution8">
+<div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb62">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3408,8 +3407,8 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 2 × 2
   forecast_accurate count
   &lt;lgl&gt;             &lt;int&gt;
-1 FALSE                24
-2 TRUE                 19</code></pre>
+1 FALSE                28
+2 TRUE                 15</code></pre>
 </div>
 </div>
 </div>
@@ -5210,7 +5209,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5283,7 +5282,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5331,7 +5330,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5383,7 +5382,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5430,7 +5429,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5466,7 +5465,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5509,7 +5508,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5565,7 +5564,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
+<div id="collapseSolution8" class="accordion-collapse collapse" aria-labelledby="headingSolution8" data-bs-parent="#accordionSolution8">
 <div class="accordion-body">
 <figure><img src="../fig/worked-example-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
 </div>
@@ -5591,7 +5590,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution9" class="accordion-collapse collapse" data-bs-parent="#accordionSolution9" aria-labelledby="headingSolution9">
+<div id="collapseSolution9" class="accordion-collapse collapse" aria-labelledby="headingSolution9" data-bs-parent="#accordionSolution9">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5649,7 +5648,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution10" class="accordion-collapse collapse" data-bs-parent="#accordionSolution10" aria-labelledby="headingSolution10">
+<div id="collapseSolution10" class="accordion-collapse collapse" aria-labelledby="headingSolution10" data-bs-parent="#accordionSolution10">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5709,7 +5708,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution11" class="accordion-collapse collapse" data-bs-parent="#accordionSolution11" aria-labelledby="headingSolution11">
+<div id="collapseSolution11" class="accordion-collapse collapse" aria-labelledby="headingSolution11" data-bs-parent="#accordionSolution11">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
