@@ -4,7 +4,7 @@ site: sandpaper::sandpaper_site
 
 ## What you will learn
 
-This workshop will introduce `R` and the `tidyverse`.  The goal is to cover enough to get you started with `R`, but it will not be a comprehensive guide.
+This workshop will introduce `R` and the `tidyverse`.  The goal is to cover enough to get you started with `R`.
 
 We will cover the following topics:
 
