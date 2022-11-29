@@ -196,7 +196,9 @@ glimpse(count)
 
 Make a table where there is one row for each peptide, and a column for the rank of the peptide in each library. 
 
-Use this to assign a unique ID (using `row_number()`) to each peptide, ranking by count in the expression library.
+That is, there's one column containing the counts for the plasmid library, one column for the counts in the vector library, and so on.
+
+In this table, assign a unique ID (using `row_number()`) to each peptide, ranking by count in the expression library.  That is, the peptide ranked 1 in the expression library should have ID 1, the peptide ranked 2 in the expression library should have ID 2, and so on.
 
 Assign this new table to a variable `ranked`.
 
@@ -205,7 +207,7 @@ Assign this new table to a variable `ranked`.
 ```{r}
 ranked <- counts %>% 
   select(lib, peptide, rank) %>% 
-  pivot_wider(names_from="lib", values_from = rank) %>% 
+  pivot_wider(id_cols = "peptide", names_from="lib", values_from = "rank") %>% 
   arrange(expression) %>% 
   mutate(id = row_number())
 
@@ -232,7 +234,7 @@ ranked %>%
 
 
 :::::::::::::: solution
-```{r, echo=FALSE}
+```{r}
 ranked %>% 
   pivot_longer(expression:plasmid, names_to="lib", values_to="rank") %>% 
   ggplot(aes(x=lib, y=id, fill=rank)) +
@@ -270,7 +272,8 @@ expr_enrich
 
 :::::::::::::::::::::::: challenge 
 
-Do the same, but comparing the vector to plasmid library to get an idea of how well each peptide packages. Filter for rows where the 'enrichment score' is less than 1 to get a list of 'poor packagers'.
+Do the same, but comparing the vector to plasmid library to get an idea of how well each peptide packages. Filter for rows where the 'enrichment score' is less than 1 to get a list of 'poor packagers'.  
+Save this to a variable called `vec_enrich`.
 
 :::::::::::::: solution
 
