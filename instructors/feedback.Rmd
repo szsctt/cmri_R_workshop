@@ -1,9 +1,11 @@
 ---
-title: 'Notes from test Workshop: part 1'
-author: "Suzanne Scott"
-date: "2022-11-26"
-output: html_document
+title: "Things to change after practice"
+date: "27 November 2022"
+output: html_notebook
 ---
+
+
+
 
 
 ## Install + setup
@@ -19,42 +21,40 @@ Started: 11:33 Finished 1:16
 
 Prisim size limit?
 
-Prompt demo with sleep
+Prompt demo with sleep - done
 
-Add dtplyr mention in dplyr epsiode
+Add section about projects - done
 
-Add section about projects
+More detail about making and running scripts- Added a litt - DOne
 
-More detail about making and running scripts
-
-Add modulus to list of arithmetic operators\
+Add modulus to list of arithmetic operators - done
 
 no nested function calls - too confusing
- - explain that function calls can
+ - explain function calls - done
 
-Challenge 1 incorrect - 3 instead of 9
+Challenge 1 incorrect - 3 instead of 9 - done
 
-Debugging by comment - control not command
+Debugging by comment - control not command - ??
 
-Hello operator : ->
+Hello operator : -> - done
 
-Typo in challenge 8
+Typo in challenge 8 - done
 
-emphaises building up scripts piece by piece, rather than trying to 'complete' the code
+emphaises building up scripts piece by piece, rather than trying to 'complete' the code - done
 
 ## Readr/readxl
 
 Started at 2:00pm
 
-Typo read_xls missing parantheses
+Typo read_xls missing parantheses - done
 
 
-Add here to install list
+Add here to install list - done
 
-column types specifying - link to documentation 
-logical instead of text in colunn type example
+column types specifying - link to documentation - done
+logical instead of text in colunn type example - nope
 
-don't use skip in challenge 2 - ignored when range used
+don't use skip in challenge 2 - ignored when range used - done
 
 
 Finished at 3:34 pm
@@ -64,15 +64,15 @@ Finished at 3:34 pm
 Started at 3:36pm
 
 
-discussion - file missing
+discussion - file missing - done
 
 
-Add shortcut for pipe
+Add shortcut for pipe - done
 
 
-load tidyr and magrittr libraries
+load tidyr and magrittr libraries - done
 
-challenge - tidy data from example file
+challenge - tidy data from example file - done
 
 Finished at 4:08
 
@@ -81,6 +81,8 @@ Finished at 4:08
 
 Started at 4:10 ish
 Finished at 5:27pm
+
+Add dtplyr mention in dplyr epsiode - done
 
 
 ## ggplot2
@@ -112,4 +114,62 @@ rstatix - mention???
 theme light doesn't match theme classic
 
 Finished at 6:29
+
+## Bioconductor
+
+Started 11:30
+
+Problem with karyoploteR lesson
+
+Finished at 11:50
+
+## R markdown
+
+Started at 11:50
+
+Exampler header with TOC doesn't work - issue with date?
+
+
+sp This is a paragph.
+
+R code block shouldn't have r
+
+Shortcut to add new code chunk
+
+![Caption for figure](https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png)
+
+
+Render figure caption wrong
+
+Add inline code to chunk part
+
+Finished 12:24
+
+
+## git
+
+Started 12:30
+
+Tokens!!
+
+Gotacha headings - wrong size for second
+
+Finished 1pm
+
+
+# Case study
+
+Started 1:05pm
+
+File.path for loading data won't work on windows - use paste0 instead
+
+For each peptide, calculate the fraction of counts within the library in a new column called frac. - clarify 'fraction of counts within the library '
+
+Bubble plot height=0
+
+Typo: Add column called rank with ranks within each library, with 1 for peptide with highest fraction, 2 for peptide with second highest, and so on. in result - 'count' instead of 'counts'
+
+Print out cheatsheets
+
+FInished at 3:35pm
 
