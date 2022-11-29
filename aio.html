@@ -1020,7 +1020,7 @@ sample estimates:
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] -0.48703116 -0.08562071  1.48385708  1.98903939  3.67220613</code></pre>
+<pre class="output" tabindex="0"><code>[1]  2.4912581 -2.0875783 -1.5008974 -0.2727968  2.0720432</code></pre>
 </div>
 </div>
 </div>
@@ -2223,8 +2223,8 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1      815   807   802   391    99   770
-2 lib2       99   390   406    78    96   403</code></pre>
+1 lib1      417   798    90    89    94   397
+2 lib2      790   419   408    95   800   801</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -2234,22 +2234,23 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        815    99
-2 b2        807   390
-3 b3        802   406
-4 b4        391    78
-5 b5         99    96
-6 b6        770   403</code></pre>
+1 b1        417   790
+2 b2        798   419
+3 b3         90   408
+4 b4         89    95
+5 b5         94   800
+6 b6        397   801</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code># A tibble: 2 × 12
-  library `815` `807` `802` `391` `99`  `770` `390` `406` `78`  `96`  `403`
+<pre class="output" tabindex="0"><code># A tibble: 2 × 13
+  library `417` `798` `90`  `89`  `94`  `397` `790` `419` `408` `95`  `800`
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
-2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    &lt;NA&gt;  b2    b3    b4    b5    b6   </code></pre>
+2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
+# … with 1 more variable: `801` &lt;chr&gt;</code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -2272,18 +2273,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        815
- 2 lib1    b2        807
- 3 lib1    b3        802
- 4 lib1    b4        391
- 5 lib1    b5         99
- 6 lib1    b6        770
- 7 lib2    b1         99
- 8 lib2    b2        390
- 9 lib2    b3        406
-10 lib2    b4         78
-11 lib2    b5         96
-12 lib2    b6        403</code></pre>
+ 1 lib1    b1        417
+ 2 lib1    b2        798
+ 3 lib1    b3         90
+ 4 lib1    b4         89
+ 5 lib1    b5         94
+ 6 lib1    b6        397
+ 7 lib2    b1        790
+ 8 lib2    b2        419
+ 9 lib2    b3        408
+10 lib2    b4         95
+11 lib2    b5        800
+12 lib2    b6        801</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -2327,12 +2328,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        815    99
-2 b2        807   390
-3 b3        802   406
-4 b4        391    78
-5 b5         99    96
-6 b6        770   403</code></pre>
+1 b1        417   790
+2 b2        798   419
+3 b3         90   408
+4 b4         89    95
+5 b5         94   800
+6 b6        397   801</code></pre>
 </div>
 <p>Another way to think about tidiness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -2356,18 +2357,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1      815
- 2 b1      lib2       99
- 3 b2      lib1      807
- 4 b2      lib2      390
- 5 b3      lib1      802
- 6 b3      lib2      406
- 7 b4      lib1      391
- 8 b4      lib2       78
- 9 b5      lib1       99
-10 b5      lib2       96
-11 b6      lib1      770
-12 b6      lib2      403</code></pre>
+ 1 b1      lib1      417
+ 2 b1      lib2      790
+ 3 b2      lib1      798
+ 4 b2      lib2      419
+ 5 b3      lib1       90
+ 6 b3      lib2      408
+ 7 b4      lib1       89
+ 8 b4      lib2       95
+ 9 b5      lib1       94
+10 b5      lib2      800
+11 b6      lib1      397
+12 b6      lib2      801</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <div id="callout1" class="callout callout">
@@ -2436,18 +2437,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        815
- 2 lib1    b2        807
- 3 lib1    b3        802
- 4 lib1    b4        391
- 5 lib1    b5         99
- 6 lib1    b6        770
- 7 lib2    b1         99
- 8 lib2    b2        390
- 9 lib2    b3        406
-10 lib2    b4         78
-11 lib2    b5         96
-12 lib2    b6        403</code></pre>
+ 1 lib1    b1        417
+ 2 lib1    b2        798
+ 3 lib1    b3         90
+ 4 lib1    b4         89
+ 5 lib1    b5         94
+ 6 lib1    b6        397
+ 7 lib2    b1        790
+ 8 lib2    b2        419
+ 9 lib2    b3        408
+10 lib2    b4         95
+11 lib2    b5        800
+12 lib2    b6        801</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -2463,12 +2464,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        815    99
-2 b2        807   390
-3 b3        802   406
-4 b4        391    78
-5 b5         99    96
-6 b6        770   403</code></pre>
+1 b1        417   790
+2 b2        798   419
+3 b3         90   408
+4 b4         89    95
+5 b5         94   800
+6 b6        397   801</code></pre>
 </div>
 </div>
 </div>
@@ -3906,7 +3907,7 @@ Attaching package: 'lubridate'</code></pre>
  7 2022-11-07 sydney sunny   
  8 2022-11-08 sydney sunny   
  9 2022-11-09 sydney sunny   
-10 2022-11-10 sydney sunny   
+10 2022-11-10 sydney cloudy  
 # … with 47 more rows</code></pre>
 </div>
 <p>Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.</p>
@@ -3933,7 +3934,7 @@ Attaching package: 'lubridate'</code></pre>
  7 sydney 2022-11-07           12.3 sunny   
  8 sydney 2022-11-08           11   sunny   
  9 sydney 2022-11-09           10.3 sunny   
-10 sydney 2022-11-10            9.3 sunny   
+10 sydney 2022-11-10            9.3 cloudy  
 # … with 47 more rows</code></pre>
 </div>
 <div id="challenge9" class="callout challenge">
@@ -3980,8 +3981,8 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 2 × 2
   forecast_accurate count
   &lt;lgl&gt;             &lt;int&gt;
-1 FALSE                32
-2 TRUE                 25</code></pre>
+1 FALSE                27
+2 TRUE                 30</code></pre>
 </div>
 </div>
 </div>
@@ -5786,7 +5787,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5859,7 +5860,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5907,7 +5908,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5959,7 +5960,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6006,7 +6007,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6042,7 +6043,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6086,7 +6087,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6142,7 +6143,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution8" class="accordion-collapse collapse" aria-labelledby="headingSolution8" data-bs-parent="#accordionSolution8">
+<div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6179,7 +6180,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution9" class="accordion-collapse collapse" aria-labelledby="headingSolution9" data-bs-parent="#accordionSolution9">
+<div id="collapseSolution9" class="accordion-collapse collapse" data-bs-parent="#accordionSolution9" aria-labelledby="headingSolution9">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6238,7 +6239,7 @@ Save this to a variable called <code>vec_enrich</code>.</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution10" class="accordion-collapse collapse" aria-labelledby="headingSolution10" data-bs-parent="#accordionSolution10">
+<div id="collapseSolution10" class="accordion-collapse collapse" data-bs-parent="#accordionSolution10" aria-labelledby="headingSolution10">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6298,7 +6299,7 @@ Save this to a variable called <code>vec_enrich</code>.</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution11" class="accordion-collapse collapse" aria-labelledby="headingSolution11" data-bs-parent="#accordionSolution11">
+<div id="collapseSolution11" class="accordion-collapse collapse" data-bs-parent="#accordionSolution11" aria-labelledby="headingSolution11">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>

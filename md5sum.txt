@@ -14,6 +14,6 @@
 "episodes/git.Rmd" "82ab041c9a078674d49afe4689e48380" "site/built/git.md" "2022-11-29"
 "episodes/worked-example.Rmd" "063907bab2e94049b8803a04445151eb" "site/built/worked-example.md" "2022-11-29"
 "instructors/instructor-notes.md" "29677a6da95a3af74c6656782bcdc51b" "site/built/instructor-notes.md" "2022-11-29"
-"learners/setup.md" "4f19e26887378780c0965571b5ef0f33" "site/built/setup.md" "2022-11-29"
+"learners/setup.md" "0994fcd1e3fb48ecb3fe5b6558e0f891" "site/built/setup.md" "2022-11-29"
 "profiles/learner-profiles.md" "de62c9dfa92007a9ba4de959371d264d" "site/built/learner-profiles.md" "2022-11-29"
 "renv/profiles/lesson-requirements/renv.lock" "a54ef43fb7407dfc24e1775fe38225c1" "site/built/renv.lock" "2022-11-29"
