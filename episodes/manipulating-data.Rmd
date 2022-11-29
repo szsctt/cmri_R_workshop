@@ -18,11 +18,188 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+If you already have experience with `dplyr`, you can skip this lesson if you can answer all the following questions.
+
+1. Load in the weather data from the `readr` and `readxl` 'do I need to do this lesson' challenge.  In the process, create a column called `file` that contains the filename for each row.
+2. Create a column called `city` with the name of the city ('brisbane', or 'sydney').
+3. What is the median minimum (`min_temp_c`) and maximum (`max_temp_c`) temperature in the observations for each city?
+4. Count the number of days when there were more than 10 hours of sunshine (`sunshine_hours`) in each city.
+5. A cold cloudy day is one where there were fewer than 10 hours of sunshine, and the maximum temperature was less than 15 degrees.  A hot sunny day is one where there were more than 10 hours of sunshine, and the maximum temperature was more than than 25 degrees.  Calculate the the mean relative humidity at 9am (`rel_humid_9am_pc`) and 3pm (`rel_humid_3pm_pc`) on days that were hot and sunny, cold and cloudy, or neither.
+6. What is the mean maximum temperature on the 5 hottest days in each city?
+7. Add a column ranking the days by minimum temperature for each city, where the coldest day for each is rank 1, the next coldest is rank 2, etc.
+8. Generate a forecast for each city using the code below. If a cloudy day is one where there are 10 or fewer hours of sunshine, on how many days was the forecast accurate?
+
+
+```{r}
+library(lubridate)
+
+# generate days
+days <- seq(ymd('2022-11-01'),ymd('2022-11-29'), by = '1 day')
+
+# forecast is the same in each city - imagine it's a country-wide forecast
+forecast <- tibble(
+  date = rep(days)
+) %>% 
+  # toss a coin
+  mutate(forecast = sample(c("cloudy", "sunny"), size = n(), replace=TRUE))
+```
+
+
+::::::::::: solution
+
+```{r}
+# 1. Load in the weather data from the `readr` and `readxl` 'do I need to do this lesson' challenge
+
+library(tidyverse)
+
+wthr_path <- here::here("episodes", "data", c("weather_brisbane.csv", "weather_sydney.csv"))
+
+# column types
+col_types <- list(
+  date = col_date(format="%Y-%m-%d"),
+  min_temp_c = col_double(),
+  max_temp_c = col_double(),
+  rainfall_mm = col_double(),
+  evaporation_mm = col_double(),
+  sunshine_hours = col_double(),
+  dir_max_wind_gust = col_character(),
+  speed_max_wind_gust_kph = col_double(),
+  time_max_wind_gust = col_time(),
+  temp_9am_c = col_double(),
+  rel_humid_9am_pc = col_integer(),
+  cloud_amount_9am_oktas = col_double(),
+  wind_direction_9am = col_character(),
+  wind_speed_9am_kph = col_double(),
+  MSL_pressure_9am_hPa = col_double(),
+  temp_3pm_c = col_double(),
+  rel_humid_3pm_pc = col_double(),
+  cloud_amount_3pm_oktas = col_double(),
+  wind_direction_3pm = col_character(),
+  wind_speed_3pm_kph = col_double(),
+  MSL_pressure_3pm_hPa = col_double()
+)
+
+# read in data
+weather <- read_csv(wthr_path, skip=10, 
+                    col_types=col_types, col_names = names(col_types),
+                    id = "file"
+                    )
+
+glimpse(weather)
+
+```
+
+Nothing much new here if you already did the `readr` episode.
+
+```{r}
+# 2. Create a column with the name of the city ('brisbane', or 'sydney').
+
+weather <- weather %>% 
+  mutate(city = stringr::str_extract(file, "brisbane|sydney"))
+```
+
+
+
+```{r}
+# 3. What is the median minimum (`min_temp_c`) and maximum (`max_temp_c`) 
+# temperature in the observations for each city?
+
+weather %>% 
+  group_by(city) %>% 
+  summarise(median_min_temp = median(min_temp_c),
+            median_max_temp = median(max_temp_c, na.rm=TRUE))
+```
+
+We need `na.rm=TRUE` for the maximum column because this column contains `NA` values
+
+```{r}
+#4. Count the number of days when there were more than 10 hours of sunshine 
+# (`sunshine_hours`) in each city.
+
+weather %>% 
+  mutate(sunny = sunshine_hours > 10) %>% 
+  count(sunny, city)
+
+```
+
+Here I did `count()` as a shortcut for `group_by()` and `summarise()`, but the long way works too.
+
+
+```{r}
+#5. A cold cloudy day is one where there were fewer than 10 hours of sunshine, 
+# and the maximum temperature was less than 15 degrees.  
+# A hot sunny day is one where there were more than 10 hours of sunshine, 
+# and the maximum temperature was more than than 25 degrees.  
+# Calculate the the mean relative humidity at 9am (`rel_humid_9am_pc`) and 
+# 3pm (`rel_humid_3pm_pc`) on days that were hot and sunny, cold and cloudy, or neither.
+
+weather %>% 
+  mutate(day = case_when(
+    sunshine_hours > 10 & max_temp_c > 25 ~ "hot_sunny",
+    sunshine_hours <= 10 & max_temp_c < 15 ~ "cold_cloudy",
+    TRUE ~ "neither"
+  )) %>% 
+  group_by(day) %>% 
+  summarise(mean_humid_9am = mean(rel_humid_9am_pc),
+            mean_humid_3pm = mean(rel_humid_3pm_pc, na.rm=TRUE))
+```
+
+There were no cold cloudy days in this dataset.
+
+
+```{r}
+# 6. What is the mean maximum temperature on the 5 hottest days in each city?
+weather %>% 
+  group_by(city) %>% 
+  slice_max(order_by = max_temp_c, n = 5, with_ties=FALSE) %>% 
+  summarise(mean_max_temp = mean(max_temp_c, na.rm=TRUE))
+```
+
+Here I use `slice_max()`, but there are more complicated ways to solve this using other `dplyr` verbs.
+
+
+
+```{r}
+#7. Add a column ranking the days by minimum temperature for each city, 
+# where the coldest day for each is rank 1, the next coldest is rank 2, etc.
+
+weather %>% 
+  group_by(city) %>% 
+  arrange(min_temp_c) %>% 
+  mutate(rank = row_number())
+```
+
+I tend to use the combination of `arrange()`, `mutate()` and `row_number()` for adding ranks, but there are probably other ways of achieving the same end.
+
+
+```{r}
+# 8.  If a cloudy day is one where there are 10 or fewer hours of sunshine, 
+# on how many days was the forecast accurate?
+
+weather %>% 
+  left_join(forecast, by="date") %>% 
+  mutate(cloudy_or_sunny = ifelse(sunshine_hours > 10, "sunny", "cloudy")) %>% 
+  mutate(forecast_accurate = forecast == cloudy_or_sunny) %>% 
+  count(forecast_accurate)
+```
+
+See challenge 7 for an alternative way of solving this problem.
+
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
 ## Manipulating data with `dplyr`
 
 So once we have our data in a tidy format, what do we do with it?  For analysis, I often turn to the `dplyr` package, which contains several useful functions for manipulating tables of data.
 
-To illustrate the functions of this package, we'll use a dataset of weather observations in Brisbane and Sydney from [the Bureau of Meterology](http://www.bom.gov.au/climate/data/).
+To illustrate the functions of this package, we'll use a dataset of weather observations in [Brisbane](http://www.bom.gov.au/climate/dwo/IDCJDW4019.latest.shtml) and Sydney from [the Bureau of Meterology](http://www.bom.gov.au/climate/dwo/index.shtml).
 
 These files are called `weather_brisbane.csv` and `weather_sydney.csv`.
 
@@ -196,6 +373,8 @@ stringr::str_extract(data_files, "sydney|brisbane")
 
 ::::::::::: callout
 
+### Regular expressions for pattern matching in strings 
+
 The second argument to `str_extract()` is a regular expression, or *regex*.  Using regular expressions is a hugely flexible way to specify a pattern to match in a string, but it's a somewhat complicated topic that I won't go into here.  If you're interested in learning more, you can look at the [stringr documentation on regular expressions](https://stringr.tidyverse.org/articles/regular-expressions.html).
 
 ::::::::::::::::::
@@ -347,17 +526,9 @@ Notice that we didn't actually have any cold cloudy days, but hot sunny days see
 
 #### Filter within groups with `slice_xxx()`
 
-If you want to filter within groups, you could use `filter()` and `group_by()` together - for example if we wanted to know what the hottest day in each city was, 
-you might try this:
+There are three `slice` functions that you can use to filter your data: `slice_min()`, `slice_max()` and `slice_sample()`.  I usually use them together with `group_by()` to filter within groups.
 
-```{r}
-weather %>% 
-  group_by(city) %>% 
-  filter(max_temp_c == max(max_temp_c))
-```
-
-
-But it doesn't work!  The reasons why are somewhat technical, so here I'll sidestep them and just give you the solution instead: use `slice_max()`
+use `slice_max()`
 
 ```{r}
 weather %>% 
@@ -519,6 +690,12 @@ weather %>%
 ::::::::::::::::::
 
 :::::::::::::::::::::::
+
+## Working with large tables
+
+`dplyr` works well if you have small tables, but when they get large (millions of rows), you might start to notice that your code takes a while to execute.  If you start to notice this is an issue (and not before), I'd recommend you check out the `dtplyr` package](https://dtplyr.tidyverse.org/), which translates `dplyr` verbs into code used by another, faster package called `data.table`.
+
+Of course, you could also [just learn the `data.table` package](https://rdatatable.gitlab.io/data.table/) and use it directly.
 
 
 ## Resources and acknowlegements
