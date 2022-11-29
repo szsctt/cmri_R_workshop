@@ -98,7 +98,7 @@ weather %>%
 # A tibble: 1 × 2
   mean_min_temp mean_max_temp
           <dbl>         <dbl>
-1          15.5            NA
+1          16.0            NA
 ```
 
 Notice that the mean_max_temp is `NA`, because we had some `NA` values in this column.  In `R` we use `NA` for missing values.  So how does one take the mean of some numbers, some of which are missing?  We can't so the answer is also a missing value.  We can, however, tell the `mean()` function to ignore the missing values using `na.rm=TRUE`:
@@ -114,7 +114,7 @@ weather %>%
 # A tibble: 1 × 2
   mean_min_temp mean_max_temp
           <dbl>         <dbl>
-1          15.5          25.7
+1          16.0          26.2
 ```
 
 
@@ -142,7 +142,7 @@ weather %>%
 # A tibble: 1 × 2
   median_min_temp median_max_temp
             <dbl>           <dbl>
-1            15.5            24.9
+1            15.9            25.3
 ```
 ::::::::::::::
 
@@ -162,7 +162,7 @@ weather %>%
 # A tibble: 1 × 2
   n_days_observed n_wind_dir
             <int>      <int>
-1              43         14
+1              57         15
 ```
 
 #### Grouped summaries with `group_by()`
@@ -178,7 +178,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 22
+# A tibble: 57 × 22
 # Groups:   file [2]
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
@@ -192,7 +192,7 @@ weather %>%
  8 https://r… 2022-11-08    16      24.2     1.2     8      11   ENE          35
  9 https://r… 2022-11-09    14.9    24.2     0.2     8      10.3 E            33
 10 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
-# … with 33 more rows, 13 more variables: time_max_wind_gust <time>,
+# … with 47 more rows, 13 more variables: time_max_wind_gust <time>,
 #   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -215,8 +215,8 @@ weather %>%
 # A tibble: 2 × 3
   file                                                           media…¹ media…²
   <chr>                                                            <dbl>   <dbl>
-1 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    15.6    26.0
-2 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    14.9    24.2
+1 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    16.7    27.7
+2 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main…    15.4    24.2
 # … with abbreviated variable names ¹​median_min_temp, ²​median_max_temp
 ```
 
@@ -248,7 +248,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 21 × 3
+# A tibble: 24 × 3
 # Groups:   file [2]
    file                                                          dir_m…¹ max_m…²
    <chr>                                                         <chr>     <dbl>
@@ -258,11 +258,11 @@ weather %>%
  4 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NE           26
  5 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NNE          35
  6 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… NW           48
- 7 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… W            44
- 8 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WNW          33
- 9 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WSW          43
-10 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… <NA>         NA
-# … with 11 more rows, and abbreviated variable names ¹​dir_max_wind_gust,
+ 7 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… S            39
+ 8 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… W            44
+ 9 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WNW          33
+10 https://raw.githubusercontent.com/szsctt/cmri_R_workshop/mai… WSW          43
+# … with 14 more rows, and abbreviated variable names ¹​dir_max_wind_gust,
 #   ²​max_max_wind_gust
 ```
 ::::::::::::::
@@ -288,12 +288,12 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 2 × 15
-  file       E   ENE   ESE    NE   NNE    NW     W   WNW   WSW  `NA`   NNW     S
+# A tibble: 2 × 16
+  file       E   ENE   ESE    NE   NNE    NW     S     W   WNW   WSW  `NA`   NNW
   <chr>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-1 https…    35    37    35    26    35    48    44    33    43    NA    NA    NA
-2 https…    33    50    26    41    NA    NA    83    69    NA    NA    46    54
-# … with 2 more variables: SSE <dbl>, SW <dbl>
+1 https…    35    37    35    26    35    48    39    44    33    43    NA    NA
+2 https…    33    50    26    41    NA    NA    54    83    69    54    NA    46
+# … with 3 more variables: SSE <dbl>, SSW <dbl>, SW <dbl>
 ```
 
 Do you prefer the long or wide form of the table?
@@ -337,7 +337,7 @@ weather
 ```
 
 ```{.output}
-# A tibble: 43 × 23
+# A tibble: 57 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
@@ -350,7 +350,7 @@ weather
  8 https://r… 2022-11-08    16      24.2     1.2     8      11   ENE          35
  9 https://r… 2022-11-09    14.9    24.2     0.2     8      10.3 E            33
 10 https://r… 2022-11-10    14.9    24.4     0       7.8     9.3 ENE          43
-# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+# … with 47 more rows, 14 more variables: time_max_wind_gust <time>,
 #   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -373,8 +373,8 @@ weather %>%
 # A tibble: 2 × 3
   city     median_min_temp median_max_temp
   <chr>              <dbl>           <dbl>
-1 brisbane            15.6            26.0
-2 sydney              14.9            24.2
+1 brisbane            16.7            27.7
+2 sydney              15.4            24.2
 ```
 
 
@@ -392,7 +392,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 23
+# A tibble: 57 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
@@ -405,7 +405,7 @@ weather %>%
  8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
  9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
 10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
-# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+# … with 47 more rows, 14 more variables: time_max_wind_gust <time>,
 #   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -425,7 +425,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 23
+# A tibble: 57 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
@@ -438,7 +438,7 @@ weather %>%
  8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
  9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
 10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
-# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+# … with 47 more rows, 14 more variables: time_max_wind_gust <time>,
 #   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -458,7 +458,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 23
+# A tibble: 57 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-01    19.2    25       0.2     4.6     9.5 WNW          69
@@ -471,7 +471,7 @@ weather %>%
  8 https://r… 2022-11-08    17      25.2     1.2     8      11   ENE          35
  9 https://r… 2022-11-09    15.9    25.2     0.2     8      10.3 E            33
 10 https://r… 2022-11-10    15.9    25.4     0       7.8     9.3 ENE          43
-# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+# … with 47 more rows, 14 more variables: time_max_wind_gust <time>,
 #   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -494,7 +494,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 12 × 23
+# A tibble: 19 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-01    18.2    24       0.2     4.6     9.5 WNW          69
@@ -506,9 +506,16 @@ weather %>%
  7 https://r… 2022-11-13    18.9    25.6     0       6.4     1.7 NNW          46
  8 https://r… 2022-11-15    16.2    24.9     0.2     9.6     9.2 SW           33
  9 https://r… 2022-11-16    13      21.6     0.8     8       9.1 S            54
-10 https://r… 2022-11-08    14.7    25.2     0      10       9.9 ESE          33
-11 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
-12 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+10 https://r… 2022-11-27    17      26.8     0       8       3.7 WSW          54
+11 https://r… 2022-11-28    17.1    23.8     8.8     3.8     8.9 SSW          31
+12 https://r… 2022-11-08    14.7    25.2     0      10       9.9 ESE          33
+13 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
+14 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
+15 https://r… 2022-11-22    20.6    30.7     0      11.6     9.2 ENE          28
+16 https://r… 2022-11-23    18.4    27.6     0       8.8     4.4 WNW          22
+17 https://r… 2022-11-24    16.9    28.6     0       8       2.7 NE           20
+18 https://r… 2022-11-27    19.8    29.4     0       8.8     6.1 NW           24
+19 https://r… 2022-11-28    21.1    31      21.4     5.4     6.1 S            39
 # … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
 #   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
@@ -540,8 +547,8 @@ weather %>%
 # A tibble: 2 × 2
   city     n_days
   <chr>     <int>
-1 brisbane     17
-2 sydney       12
+1 brisbane     19
+2 sydney       17
 ```
 
 There were more days with more than 10 hours of sunlight in Brisbane than in Sydney.  I'll let you draw your own conclusions.
@@ -561,24 +568,28 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 15 × 23
+# A tibble: 19 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
  2 https://r… 2022-11-20    18      27.4     0.8     7.8    13.3 W            70
- 3 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
- 4 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
- 5 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
- 6 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
- 7 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
- 8 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
- 9 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
-10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
-11 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
-12 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
-13 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
-14 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
-15 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+ 3 https://r… 2022-11-23    13.7    28.3     0       8      12.4 W            54
+ 4 https://r… 2022-11-24    15.8    25.4     0      11.2    12   E            33
+ 5 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
+ 6 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
+ 7 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
+ 8 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
+ 9 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
+10 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
+11 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+12 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+13 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+14 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+15 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
+16 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+17 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+18 https://r… 2022-11-25    17.6    32.4     0       4.2    12.5 NE           26
+19 https://r… 2022-11-26    17.3    33.9     0       9.6    12.8 E            35
 # … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
 #   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
@@ -601,24 +612,28 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 15 × 23
+# A tibble: 19 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
  2 https://r… 2022-11-20    18      27.4     0.8     7.8    13.3 W            70
- 3 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
- 4 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
- 5 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
- 6 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
- 7 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
- 8 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
- 9 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
-10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
-11 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
-12 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
-13 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
-14 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
-15 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+ 3 https://r… 2022-11-23    13.7    28.3     0       8      12.4 W            54
+ 4 https://r… 2022-11-24    15.8    25.4     0      11.2    12   E            33
+ 5 https://r… 2022-11-05    15.5    25.1     0       8.6    12.2 E            30
+ 6 https://r… 2022-11-06    15.6    25.6     0       8.2    12.7 E            31
+ 7 https://r… 2022-11-07    15.5    25.7     0       7.4    12.6 ENE          37
+ 8 https://r… 2022-11-09    14.7    25.3     0       8.4    12.4 ESE          30
+ 9 https://r… 2022-11-10    15.9    25.7     0       8.6    12.5 E            35
+10 https://r… 2022-11-11    14.4    26.2     0       9.4    12.1 E            22
+11 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
+12 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
+13 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+14 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+15 https://r… 2022-11-18    13.7    27       0       7.4    12.7 ENE          24
+16 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
+17 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
+18 https://r… 2022-11-25    17.6    32.4     0       4.2    12.5 NE           26
+19 https://r… 2022-11-26    17.3    33.9     0       9.6    12.8 E            35
 # … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
 #   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
@@ -667,8 +682,8 @@ weather %>%
 # A tibble: 2 × 3
   day_type  mean_rel_humid_9am mean_rel_humid_3pm
   <chr>                  <dbl>              <dbl>
-1 hot_sunny               49.3               40.9
-2 neither                 57.0               47.1
+1 hot_sunny               48.3               41.2
+2 neither                 58.3               49.5
 ```
 
 Notice that we didn't actually have any cold cloudy days, but hot sunny days seem to be less humid.
@@ -713,13 +728,12 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 3 × 23
+# A tibble: 2 × 23
 # Groups:   city [2]
   file        date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
   <chr>       <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
-1 https://ra… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
-2 https://ra… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
-3 https://ra… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
+1 https://ra… 2022-11-20    20.8    34.5       0     8.8     5.7 NW           48
+2 https://ra… 2022-11-23    13.7    28.3       0     8      12.4 W            54
 # … with 14 more variables: time_max_wind_gust <time>, temp_9am_c <dbl>,
 #   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
@@ -758,8 +772,8 @@ weather %>%
 # A tibble: 2 × 2
   city     mean_temp
   <chr>        <dbl>
-1 brisbane      32.2
-2 sydney        26.7
+1 brisbane      33.7
+2 sydney        27.7
 ```
 
 Ooof, Brisbane was hot!  Maybe this changes your conclusion about which city is better.
@@ -785,7 +799,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 22
+# A tibble: 57 × 22
    date       min_temp_c max_t…¹ rainf…² evapo…³ sunsh…⁴ dir_m…⁵ speed…⁶ time_…⁷
    <date>          <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl> <time> 
  1 2022-11-01       18.2    24       0.2     4.6     9.5 WNW          69 06:50  
@@ -798,7 +812,7 @@ weather %>%
  8 2022-11-08       16      24.2     1.2     8      11   ENE          35 15:55  
  9 2022-11-09       14.9    24.2     0.2     8      10.3 E            33 12:37  
 10 2022-11-10       14.9    24.4     0       7.8     9.3 ENE          43 17:10  
-# … with 33 more rows, 13 more variables: temp_9am_c <dbl>,
+# … with 47 more rows, 13 more variables: temp_9am_c <dbl>,
 #   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -816,7 +830,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 8
+# A tibble: 57 × 8
    date       city   temp_3pm_c rel_humid_3pm_pc cloud…¹ wind_…² wind_…³ MSL_p…⁴
    <date>     <chr>       <dbl>            <dbl>   <dbl> <chr>     <dbl>   <dbl>
  1 2022-11-01 sydney       23.1               30       2 WNW          31    992 
@@ -829,7 +843,7 @@ weather %>%
  8 2022-11-08 sydney       24                 59       2 ENE          24   1020.
  9 2022-11-09 sydney       23.6               46       1 ENE          26   1022.
 10 2022-11-10 sydney       24.1               55       1 ENE          24   1019.
-# … with 33 more rows, and abbreviated variable names ¹​cloud_amount_3pm_oktas,
+# … with 47 more rows, and abbreviated variable names ¹​cloud_amount_3pm_oktas,
 #   ²​wind_direction_3pm, ³​wind_speed_3pm_kph, ⁴​MSL_pressure_3pm_hPa
 ```
 
@@ -848,20 +862,20 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 23
+# A tibble: 57 × 23
    file       date       min_t…¹ max_t…² rainf…³ evapo…⁴ sunsh…⁵ dir_m…⁶ speed…⁷
    <chr>      <date>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
  1 https://r… 2022-11-20    20.8    34.5     0       8.8     5.7 NW           48
  2 https://r… 2022-11-21    21.2    34.3     6.6    10.4    10.9 WNW          33
- 3 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
- 4 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
- 5 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
- 6 https://r… 2022-11-12    15.8    28.4     0       7.4    10.5 NE           26
- 7 https://r… 2022-11-19    15.1    28.3     0       8      12.5 NNE          35
- 8 https://r… 2022-11-12    16      27.9     0       7.8     9.5 ESE          26
- 9 https://r… 2022-11-14    18.1    27.9    37.6     4.2    10.8 W            67
-10 https://r… 2022-11-13    17.6    27.7     0       7.2    12.4 NNE          33
-# … with 33 more rows, 14 more variables: time_max_wind_gust <time>,
+ 3 https://r… 2022-11-26    17.3    33.9     0       9.6    12.8 E            35
+ 4 https://r… 2022-11-15    20      33.3     0       5.6    12.9 WNW          30
+ 5 https://r… 2022-11-25    17.6    32.4     0       4.2    12.5 NE           26
+ 6 https://r… 2022-11-28    21.1    31      21.4     5.4     6.1 S            39
+ 7 https://r… 2022-11-22    20.6    30.7     0      11.6     9.2 ENE          28
+ 8 https://r… 2022-11-16    16.6    30.1     0       8.2    12.5 WSW          43
+ 9 https://r… 2022-11-27    19.8    29.4     0       8.8     6.1 NW           24
+10 https://r… 2022-11-14    20.6    28.8     0       9.8     8.4 ENE          26
+# … with 47 more rows, 14 more variables: time_max_wind_gust <time>,
 #   temp_9am_c <dbl>, rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
 #   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
 #   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>,
@@ -894,7 +908,7 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 4
+# A tibble: 57 × 4
 # Groups:   city [2]
    city     date       min_temp_c  rank
    <chr>    <date>          <dbl> <int>
@@ -908,7 +922,7 @@ weather %>%
  8 sydney   2022-11-16       13       7
  9 sydney   2022-11-06       13.3     8
 10 sydney   2022-11-04       13.4     9
-# … with 33 more rows
+# … with 47 more rows
 ```
 
 ::::::::::::::::::
@@ -942,20 +956,20 @@ forecast
 ```
 
 ```{.output}
-# A tibble: 43 × 3
+# A tibble: 57 × 3
    date       city   forecast
    <date>     <chr>  <chr>   
  1 2022-11-01 sydney sunny   
- 2 2022-11-02 sydney cloudy  
+ 2 2022-11-02 sydney sunny   
  3 2022-11-03 sydney sunny   
  4 2022-11-04 sydney cloudy  
- 5 2022-11-05 sydney cloudy  
- 6 2022-11-06 sydney sunny   
+ 5 2022-11-05 sydney sunny   
+ 6 2022-11-06 sydney cloudy  
  7 2022-11-07 sydney sunny   
  8 2022-11-08 sydney cloudy  
- 9 2022-11-09 sydney cloudy  
-10 2022-11-10 sydney cloudy  
-# … with 33 more rows
+ 9 2022-11-09 sydney sunny   
+10 2022-11-10 sydney sunny   
+# … with 47 more rows
 ```
 
 Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.
@@ -968,20 +982,20 @@ weather %>%
 ```
 
 ```{.output}
-# A tibble: 43 × 4
+# A tibble: 57 × 4
    city   date       sunshine_hours forecast
    <chr>  <date>              <dbl> <chr>   
  1 sydney 2022-11-01            9.5 sunny   
- 2 sydney 2022-11-02           12.8 cloudy  
+ 2 sydney 2022-11-02           12.8 sunny   
  3 sydney 2022-11-03            8.9 sunny   
  4 sydney 2022-11-04            5.7 cloudy  
- 5 sydney 2022-11-05           11.8 cloudy  
- 6 sydney 2022-11-06           12.1 sunny   
+ 5 sydney 2022-11-05           11.8 sunny   
+ 6 sydney 2022-11-06           12.1 cloudy  
  7 sydney 2022-11-07           12.3 sunny   
  8 sydney 2022-11-08           11   cloudy  
- 9 sydney 2022-11-09           10.3 cloudy  
-10 sydney 2022-11-10            9.3 cloudy  
-# … with 33 more rows
+ 9 sydney 2022-11-09           10.3 sunny   
+10 sydney 2022-11-10            9.3 sunny   
+# … with 47 more rows
 ```
 
 
@@ -1016,8 +1030,8 @@ weather %>%
 # A tibble: 2 × 2
   forecast_accurate count
   <lgl>             <int>
-1 FALSE                16
-2 TRUE                 27
+1 FALSE                26
+2 TRUE                 31
 ```
 
 ::::::::::::::::::

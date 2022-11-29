@@ -96,7 +96,7 @@ glimpse(weather)
 ```
 
 ```{.output}
-Rows: 43
+Rows: 57
 Columns: 22
 $ date                    <date> 2022-11-01, 2022-11-02, 2022-11-03, 2022-11-0…
 $ min_temp_c              <dbl> 18.2, 11.1, 11.1, 13.4, 13.4, 13.3, 15.4, 16.0…
@@ -396,9 +396,13 @@ Groups with fewer than two data points have been dropped.
 Groups with fewer than two data points have been dropped.
 Groups with fewer than two data points have been dropped.
 Groups with fewer than two data points have been dropped.
+Groups with fewer than two data points have been dropped.
 ```
 
 ```{.warning}
+Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
+-Inf
+
 Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 -Inf
 

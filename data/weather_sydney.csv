@@ -1,5 +1,5 @@
 "Daily Weather Observations for Sydney, New South Wales for November 2022"
-"Prepared at 05:36 UTC on Tuesday 22 November 2022   IDCJDW2124.202211"
+"Prepared at 00:36 UTC on Tuesday 29 November 2022   IDCJDW2124.202211"
 "Copyright 2003 Commonwealth Bureau of Meteorology"
 "Most observations from Observatory Hill, but some from Fort Denison and Sydney Airport."
 "Sydney Airport is about 10 km to the south of Observatory Hill."
@@ -7,7 +7,7 @@
 "Pressure, cloud, evaporation and sunshine observations are from Sydney Airport AMO {station 066037}"
 "Wind observations are from Fort Denison {station 066022}"
 
-"Date","Minimum temperature (?C)","Maximum temperature (?C)","Rainfall (mm)","Evaporation (mm)","Sunshine (hours)","Direction of maximum wind gust ","Speed of maximum wind gust (km/h)","Time of maximum wind gust","9am Temperature (?C)","9am relative humidity (%)","9am cloud amount (oktas)","9am wind direction","9am wind speed (km/h)","9am MSL pressure (hPa)","3pm Temperature (?C)","3pm relative humidity (%)","3pm cloud amount (oktas)","3pm wind direction","3pm wind speed (km/h)","3pm MSL pressure (hPa)"
+"Date","Minimum temperature (°C)","Maximum temperature (°C)","Rainfall (mm)","Evaporation (mm)","Sunshine (hours)","Direction of maximum wind gust ","Speed of maximum wind gust (km/h)","Time of maximum wind gust","9am Temperature (°C)","9am relative humidity (%)","9am cloud amount (oktas)","9am wind direction","9am wind speed (km/h)","9am MSL pressure (hPa)","3pm Temperature (°C)","3pm relative humidity (%)","3pm cloud amount (oktas)","3pm wind direction","3pm wind speed (km/h)","3pm MSL pressure (hPa)"
 2022-11-1,18.2,24.0,0.2,4.6,9.5,WNW,69,06:50,19.2,45,2,WNW,35,992.9,23.1,30,2,WNW,31,992.0
 2022-11-2,11.1,20.5,0.6,13.0,12.8,W,67,12:54,14.0,44,1,W,31,1003.2,19.7,29,1,SW,22,1005.9
 2022-11-3,11.1,22.0,0,7.8,8.9,W,56,07:41,15.9,50,1,WSW,31,1014.7,20.0,42,7,SE,20,1016.6
@@ -29,4 +29,11 @@
 2022-11-19,12.9,23.9,0,7.6,12.3,ENE,50,15:05,19.0,69,3,NNW,13,1012.3,22.4,64,3,NE,30,1005.9
 2022-11-20,18.0,27.4,0.8,7.8,13.3,W,70,10:36,23.9,56,1,WNW,19,995.9,25.3,30,3,WNW,37,998.9
 2022-11-21,17.1,24.5,0,12.2,12.7,W,83,13:27,21.8,35,1,WNW,24,1002.3,22.3,31,2,WNW,43,1002.7
-2022-11-22,11.7,,0,12.0,,,,,15.3,42,1,WSW,37,1012.8,23.7,28,1,W,30,1011.1
+2022-11-22,11.7,24.0,0,12.0,13.0,W,63,06:50,15.3,42,1,WSW,37,1012.8,23.7,28,1,W,30,1011.1
+2022-11-23,13.7,28.3,0,8.0,12.4,W,54,08:27,18.8,48,1,W,28,1014.2,27.2,31,2,WNW,19,1012.5
+2022-11-24,15.8,25.4,0,11.2,12.0,E,33,15:17,20.7,49,1,W,13,1018.4,25.1,48,1,E,19,1016.7
+2022-11-25,16.6,24.1,0,7.8,12.7,E,31,11:28,20.0,77,3,NNE,7,1018.4,23.5,67,2,E,22,1015.3
+2022-11-26,17.0,23.3,0.6,6.2,11.1,SSE,41,07:03,19.1,70,5,SSW,15,1015.9,23.0,48,2,E,19,1012.5
+2022-11-27,17.0,26.8,0,8.0,3.7,WSW,54,18:51,19.7,74,7,NNE,6,1004.9,24.8,68,4,E,11,1001.1
+2022-11-28,17.1,23.8,8.8,3.8,8.9,SSW,31,03:28,20.1,82,6,SSW,19,1006.8,22.7,63,6,ESE,22,1005.5
+2022-11-29,15.9,,0,4.0,,,,,20.4,46,1,SW,20,1011.6,,,,,,
