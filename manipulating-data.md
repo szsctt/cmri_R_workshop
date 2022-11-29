@@ -18,19 +18,66 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Manipulating data with `dplyr`
 
-So once we have our data in a tidy format, what do we do with it?  For analysis, I often turn to the `dplyr` package, which contains several useful functions for manipulating tables of data.
+:::::::::::: challenge
 
-To illustrate the functions of this package, we'll use a dataset of weather observations in Brisbane and Sydney from [the Bureau of Meterology](http://www.bom.gov.au/climate/data/).
+## Do I need to do this lesson?
 
-These files are called `weather_brisbane.csv` and `weather_sydney.csv`.
+If you already have experience with `dplyr`, you can skip this lesson if you can answer all the following questions.
 
-First, we load both files using `readr`:
+1. Load in the weather data from the `readr` and `readxl` 'do I need to do this lesson' challenge.  In the process, create a column called `file` that contains the filename for each row.
+2. Create a column called `city` with the name of the city ('brisbane', or 'sydney').
+3. What is the median minimum (`min_temp_c`) and maximum (`max_temp_c`) temperature in the observations for each city?
+4. Count the number of days when there were more than 10 hours of sunshine (`sunshine_hours`) in each city.
+5. A cold cloudy day is one where there were fewer than 10 hours of sunshine, and the maximum temperature was less than 15 degrees.  A hot sunny day is one where there were more than 10 hours of sunshine, and the maximum temperature was more than than 25 degrees.  Calculate the the mean relative humidity at 9am (`rel_humid_9am_pc`) and 3pm (`rel_humid_3pm_pc`) on days that were hot and sunny, cold and cloudy, or neither.
+6. What is the mean maximum temperature on the 5 hottest days in each city?
+7. Add a column ranking the days by minimum temperature for each city, where the coldest day for each is rank 1, the next coldest is rank 2, etc.
+8. Generate a forecast for each city using the code below. If a cloudy day is one where there are 10 or fewer hours of sunshine, on how many days was the forecast accurate?
+
 
 
 ```r
-# load tidyverse
+library(lubridate)
+```
+
+```{.output}
+Loading required package: timechange
+```
+
+```{.output}
+
+Attaching package: 'lubridate'
+```
+
+```{.output}
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union
+```
+
+```r
+# generate days
+days <- seq(ymd('2022-11-01'),ymd('2022-11-29'), by = '1 day')
+
+# forecast is the same in each city - imagine it's a country-wide forecast
+forecast <- tibble(
+  date = rep(days)
+) %>% 
+  # toss a coin
+  mutate(forecast = sample(c("cloudy", "sunny"), size = n(), replace=TRUE))
+```
+
+```{.error}
+Error in tibble(date = rep(days)) %>% mutate(forecast = sample(c("cloudy", : could not find function "%>%"
+```
+
+
+::::::::::: solution
+
+
+```r
+# 1. Load in the weather data from the `readr` and `readxl` 'do I need to do this lesson' challenge
+
 library(tidyverse)
 ```
 
@@ -41,11 +88,212 @@ library(tidyverse)
 ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
 ✔ readr   2.1.3      ✔ forcats 0.5.2 
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
+✖ lubridate::as.difftime() masks base::as.difftime()
+✖ lubridate::date()        masks base::date()
+✖ dplyr::filter()          masks stats::filter()
+✖ lubridate::intersect()   masks base::intersect()
+✖ dplyr::lag()             masks stats::lag()
+✖ lubridate::setdiff()     masks base::setdiff()
+✖ lubridate::union()       masks base::union()
 ```
 
 ```r
+wthr_path <- here::here("episodes", "data", c("weather_brisbane.csv", "weather_sydney.csv"))
+
+# column types
+col_types <- list(
+  date = col_date(format="%Y-%m-%d"),
+  min_temp_c = col_double(),
+  max_temp_c = col_double(),
+  rainfall_mm = col_double(),
+  evaporation_mm = col_double(),
+  sunshine_hours = col_double(),
+  dir_max_wind_gust = col_character(),
+  speed_max_wind_gust_kph = col_double(),
+  time_max_wind_gust = col_time(),
+  temp_9am_c = col_double(),
+  rel_humid_9am_pc = col_integer(),
+  cloud_amount_9am_oktas = col_double(),
+  wind_direction_9am = col_character(),
+  wind_speed_9am_kph = col_double(),
+  MSL_pressure_9am_hPa = col_double(),
+  temp_3pm_c = col_double(),
+  rel_humid_3pm_pc = col_double(),
+  cloud_amount_3pm_oktas = col_double(),
+  wind_direction_3pm = col_character(),
+  wind_speed_3pm_kph = col_double(),
+  MSL_pressure_3pm_hPa = col_double()
+)
+
+# read in data
+weather <- read_csv(wthr_path, skip=10, 
+                    col_types=col_types, col_names = names(col_types),
+                    id = "file"
+                    )
+```
+
+```{.error}
+Error: '/home/runner/work/cmri_R_workshop/cmri_R_workshop/site/built/episodes/data/weather_brisbane.csv' does not exist.
+```
+
+```r
+glimpse(weather)
+```
+
+```{.error}
+Error in glimpse(weather): object 'weather' not found
+```
+
+Nothing much new here if you already did the `readr` episode.
+
+
+```r
+# 2. Create a column with the name of the city ('brisbane', or 'sydney').
+
+weather <- weather %>% 
+  mutate(city = stringr::str_extract(file, "brisbane|sydney"))
+```
+
+```{.error}
+Error in mutate(., city = stringr::str_extract(file, "brisbane|sydney")): object 'weather' not found
+```
+
+
+
+
+```r
+# 3. What is the median minimum (`min_temp_c`) and maximum (`max_temp_c`) 
+# temperature in the observations for each city?
+
+weather %>% 
+  group_by(city) %>% 
+  summarise(median_min_temp = median(min_temp_c),
+            median_max_temp = median(max_temp_c, na.rm=TRUE))
+```
+
+```{.error}
+Error in group_by(., city): object 'weather' not found
+```
+
+We need `na.rm=TRUE` for the maximum column because this column contains `NA` values
+
+
+```r
+#4. Count the number of days when there were more than 10 hours of sunshine 
+# (`sunshine_hours`) in each city.
+
+weather %>% 
+  mutate(sunny = sunshine_hours > 10) %>% 
+  count(sunny, city)
+```
+
+```{.error}
+Error in mutate(., sunny = sunshine_hours > 10): object 'weather' not found
+```
+
+Here I did `count()` as a shortcut for `group_by()` and `summarise()`, but the long way works too.
+
+
+
+```r
+#5. A cold cloudy day is one where there were fewer than 10 hours of sunshine, 
+# and the maximum temperature was less than 15 degrees.  
+# A hot sunny day is one where there were more than 10 hours of sunshine, 
+# and the maximum temperature was more than than 25 degrees.  
+# Calculate the the mean relative humidity at 9am (`rel_humid_9am_pc`) and 
+# 3pm (`rel_humid_3pm_pc`) on days that were hot and sunny, cold and cloudy, or neither.
+
+weather %>% 
+  mutate(day = case_when(
+    sunshine_hours > 10 & max_temp_c > 25 ~ "hot_sunny",
+    sunshine_hours <= 10 & max_temp_c < 15 ~ "cold_cloudy",
+    TRUE ~ "neither"
+  )) %>% 
+  group_by(day) %>% 
+  summarise(mean_humid_9am = mean(rel_humid_9am_pc),
+            mean_humid_3pm = mean(rel_humid_3pm_pc, na.rm=TRUE))
+```
+
+```{.error}
+Error in mutate(., day = case_when(sunshine_hours > 10 & max_temp_c > : object 'weather' not found
+```
+
+There were no cold cloudy days in this dataset.
+
+
+
+```r
+# 6. What is the mean maximum temperature on the 5 hottest days in each city?
+weather %>% 
+  group_by(city) %>% 
+  slice_max(order_by = max_temp_c, n = 5, with_ties=FALSE) %>% 
+  summarise(mean_max_temp = mean(max_temp_c, na.rm=TRUE))
+```
+
+```{.error}
+Error in group_by(., city): object 'weather' not found
+```
+
+Here I use `slice_max()`, but there are more complicated ways to solve this using other `dplyr` verbs.
+
+
+
+
+```r
+#7. Add a column ranking the days by minimum temperature for each city, 
+# where the coldest day for each is rank 1, the next coldest is rank 2, etc.
+
+weather %>% 
+  group_by(city) %>% 
+  arrange(min_temp_c) %>% 
+  mutate(rank = row_number())
+```
+
+```{.error}
+Error in group_by(., city): object 'weather' not found
+```
+
+I tend to use the combination of `arrange()`, `mutate()` and `row_number()` for adding ranks, but there are probably other ways of achieving the same end.
+
+
+
+```r
+# 8.  If a cloudy day is one where there are 10 or fewer hours of sunshine, 
+# on how many days was the forecast accurate?
+
+weather %>% 
+  left_join(forecast, by="date") %>% 
+  mutate(cloudy_or_sunny = ifelse(sunshine_hours > 10, "sunny", "cloudy")) %>% 
+  mutate(forecast_accurate = forecast == cloudy_or_sunny) %>% 
+  count(forecast_accurate)
+```
+
+```{.error}
+Error in left_join(., forecast, by = "date"): object 'weather' not found
+```
+
+See challenge 7 for an alternative way of solving this problem.
+
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+## Manipulating data with `dplyr`
+
+So once we have our data in a tidy format, what do we do with it?  For analysis, I often turn to the `dplyr` package, which contains several useful functions for manipulating tables of data.
+
+To illustrate the functions of this package, we'll use a dataset of weather observations in [Brisbane](http://www.bom.gov.au/climate/dwo/IDCJDW4019.latest.shtml) and Sydney from [the Bureau of Meterology](http://www.bom.gov.au/climate/dwo/index.shtml).
+
+These files are called `weather_brisbane.csv` and `weather_sydney.csv`.
+
+First, we load both files using `readr`:
+
+
+```r
+# load tidyverse
+library(tidyverse)
+
 # data files
 # data files - readr can also read data from the internet
 data_dir <- "https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"
@@ -321,6 +569,8 @@ stringr::str_extract(data_files, "sydney|brisbane")
 ```
 
 ::::::::::: callout
+
+### Regular expressions for pattern matching in strings 
 
 The second argument to `str_extract()` is a regular expression, or *regex*.  Using regular expressions is a hugely flexible way to specify a pattern to match in a string, but it's a somewhat complicated topic that I won't go into here.  If you're interested in learning more, you can look at the [stringr documentation on regular expressions](https://stringr.tidyverse.org/articles/regular-expressions.html).
 
@@ -695,30 +945,9 @@ Notice that we didn't actually have any cold cloudy days, but hot sunny days see
 
 #### Filter within groups with `slice_xxx()`
 
-If you want to filter within groups, you could use `filter()` and `group_by()` together - for example if we wanted to know what the hottest day in each city was, 
-you might try this:
+There are three `slice` functions that you can use to filter your data: `slice_min()`, `slice_max()` and `slice_sample()`.  I usually use them together with `group_by()` to filter within groups.
 
-
-```r
-weather %>% 
-  group_by(city) %>% 
-  filter(max_temp_c == max(max_temp_c))
-```
-
-```{.output}
-# A tibble: 0 × 23
-# Groups:   city [0]
-# … with 23 variables: file <chr>, date <date>, min_temp_c <dbl>,
-#   max_temp_c <dbl>, rainfall_mm <dbl>, evaporation_mm <dbl>,
-#   sunshine_hours <dbl>, dir_max_wind_gust <chr>,
-#   speed_max_wind_gust_kph <dbl>, time_max_wind_gust <time>, temp_9am_c <dbl>,
-#   rel_humid_9am_pc <int>, cloud_amount_9am_oktas <dbl>,
-#   wind_direction_9am <chr>, wind_speed_9am_kph <dbl>,
-#   MSL_pressure_9am_hPa <dbl>, temp_3pm_c <dbl>, rel_humid_3pm_pc <dbl>, …
-```
-
-
-But it doesn't work!  The reasons why are somewhat technical, so here I'll sidestep them and just give you the solution instead: use `slice_max()`
+use `slice_max()`
 
 
 ```r
@@ -959,16 +1188,16 @@ forecast
 # A tibble: 57 × 3
    date       city   forecast
    <date>     <chr>  <chr>   
- 1 2022-11-01 sydney sunny   
- 2 2022-11-02 sydney sunny   
+ 1 2022-11-01 sydney cloudy  
+ 2 2022-11-02 sydney cloudy  
  3 2022-11-03 sydney sunny   
- 4 2022-11-04 sydney cloudy  
- 5 2022-11-05 sydney sunny   
- 6 2022-11-06 sydney cloudy  
+ 4 2022-11-04 sydney sunny   
+ 5 2022-11-05 sydney cloudy  
+ 6 2022-11-06 sydney sunny   
  7 2022-11-07 sydney sunny   
- 8 2022-11-08 sydney cloudy  
+ 8 2022-11-08 sydney sunny   
  9 2022-11-09 sydney sunny   
-10 2022-11-10 sydney sunny   
+10 2022-11-10 sydney cloudy  
 # … with 47 more rows
 ```
 
@@ -985,16 +1214,16 @@ weather %>%
 # A tibble: 57 × 4
    city   date       sunshine_hours forecast
    <chr>  <date>              <dbl> <chr>   
- 1 sydney 2022-11-01            9.5 sunny   
- 2 sydney 2022-11-02           12.8 sunny   
+ 1 sydney 2022-11-01            9.5 cloudy  
+ 2 sydney 2022-11-02           12.8 cloudy  
  3 sydney 2022-11-03            8.9 sunny   
- 4 sydney 2022-11-04            5.7 cloudy  
- 5 sydney 2022-11-05           11.8 sunny   
- 6 sydney 2022-11-06           12.1 cloudy  
+ 4 sydney 2022-11-04            5.7 sunny   
+ 5 sydney 2022-11-05           11.8 cloudy  
+ 6 sydney 2022-11-06           12.1 sunny   
  7 sydney 2022-11-07           12.3 sunny   
- 8 sydney 2022-11-08           11   cloudy  
+ 8 sydney 2022-11-08           11   sunny   
  9 sydney 2022-11-09           10.3 sunny   
-10 sydney 2022-11-10            9.3 sunny   
+10 sydney 2022-11-10            9.3 cloudy  
 # … with 47 more rows
 ```
 
@@ -1030,13 +1259,19 @@ weather %>%
 # A tibble: 2 × 2
   forecast_accurate count
   <lgl>             <int>
-1 FALSE                26
-2 TRUE                 31
+1 FALSE                27
+2 TRUE                 30
 ```
 
 ::::::::::::::::::
 
 :::::::::::::::::::::::
+
+## Working with large tables
+
+`dplyr` works well if you have small tables, but when they get large (millions of rows), you might start to notice that your code takes a while to execute.  If you start to notice this is an issue (and not before), I'd recommend you check out the `dtplyr` package](https://dtplyr.tidyverse.org/), which translates `dplyr` verbs into code used by another, faster package called `data.table`.
+
+Of course, you could also [just learn the `data.table` package](https://rdatatable.gitlab.io/data.table/) and use it directly.
 
 
 ## Resources and acknowlegements

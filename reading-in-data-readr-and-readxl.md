@@ -1,6 +1,6 @@
 ---
-title: 'Reading in data: readr and readxl'
-teaching: 20
+title: 'Reading in data: `readr` and `readxl`'
+teaching: 30
 exercises: 2
 ---
 
@@ -19,10 +19,97 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
+
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+If you've already used `readr` and `readxl` and `here`, you'll probably already know the material covered in this section. If you can complete the following excercises, you can skip this lesson.
+
+#### Codon table
+
+Load in the data in `human_codon_table.xlsx` (the column names are `codon`, `frequency` and `count`).  
+
+Make sure to specify the column types and names. Make use of `here::here()` to generate the file path relative to the project root.
+
+#### Weather data
+
+Load the data in the two files `weather_brisbane.csv` and `weather_sydney.csv` into one data frame, creating a column called 'file' that contains the file from which each row originated.
+
+Make sure to specify the column types and names. Make use of `here::here()` to generate the file path relative to the project root.
+
+::::::::::: solution
+
+Loading the file `human_codon_table.xlsx`:
+
+
+```r
+# this might be different depending on where you saved the data
+cdn_path <- here::here("episodes", "data", "human_codon_table.xlsx")
+
+df <- readxl::read_xlsx(cdn_path, 
+                        col_names=c("codon", "frequency", "count"),
+                        col_types = c('text', "numeric", "numeric"))
+
+glimpse(df)
+```
+
+```{.error}
+Error in glimpse(df): could not find function "glimpse"
+```
+
+And the weather data:
+
+
+```r
+library(readr)
+
+wthr_path <- here::here("episodes", "data", c("weather_brisbane.csv", "weather_sydney.csv"))
+
+# column types
+col_types <- list(
+  date = col_date(format="%Y-%m-%d"),
+  min_temp_c = col_double(),
+  max_temp_c = col_double(),
+  rainfall_mm = col_double(),
+  evaporation_mm = col_double(),
+  sunshine_hours = col_double(),
+  dir_max_wind_gust = col_character(),
+  speed_max_wind_gust_kph = col_double(),
+  time_max_wind_gust = col_time(),
+  temp_9am_c = col_double(),
+  rel_humid_9am_pc = col_integer(),
+  cloud_amount_9am_oktas = col_double(),
+  wind_direction_9am = col_character(),
+  wind_speed_9am_kph = col_double(),
+  MSL_pressure_9am_hPa = col_double(),
+  temp_3pm_c = col_double(),
+  rel_humid_3pm_pc = col_double(),
+  cloud_amount_3pm_oktas = col_double(),
+  wind_direction_3pm = col_character(),
+  wind_speed_3pm_kph = col_double(),
+  MSL_pressure_3pm_hPa = col_double()
+)
+
+# read in data
+weather <- read_csv(wthr_path, skip=10, 
+                           col_types=col_types, col_names = names(col_types))
+
+glimpse(weather)
+```
+
+```{.error}
+Error in glimpse(weather): could not find function "glimpse"
+```
+
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
 ## Reading in data
-
-
-
 
 So you want to make some awesome plots using `R`.  The first step you'll need to take is to import your data.
 
@@ -38,12 +125,11 @@ This is a pretty convoluted way to do things! This weird process was part of the
  
 Luckily, in the meantime people worked out better ways of doing things.  This lesson will cover two awesome packages which can help you import your data: `readxl` for Excel files, and `readr` for text files.
 
-
 ## Reading in data from Excel: readxl
 
 If you've entered data into a digital format, chances are that you've used spreadsheet software like Microsoft Excel.  Excel makes data entry easy because it takes care of all of the formatting for you.  But at some point, you'll probably want to get your data out of Excel and into `R`. That's where the `readxl` package comes in!
 
-The workhorse of this package is the `read_xlsx()` function (or `read_xls` for older excel files).  It takes as input a path to the file you want to read.
+The workhorse of this package is the `read_xlsx()` function (or `read_xls()` for older excel files).  It takes as input a path to the file you want to read.
 
 
 ```r
@@ -98,7 +184,9 @@ Coming back to the output of the call to `readxl::read_xlsx()` - calls to this f
 
 The `tibble` object is a convenient way of storing rectangular data, where column has a type, (which is shown when you print the table).  Ideally, in a tibble each column should contain data from one variable, and each row consists of observations of each variables - this is known as 'tidy data' (more on this in the next lesson).
 
-If you don't specify the types (like character, integer, double) of each column, `readxl` will try to [guess them based on the types in the excel spreadhsheet](https://readxl.tidyverse.org/articles/cell-and-column-types.html).  This can lead to unexpected behaviour, especially if you mix numbers and strings in the same column.
+If you don't specify the types (like character, integer, double) of each column, `readxl` will try to [guess them based on the types in the excel spreadsheet](https://readxl.tidyverse.org/articles/cell-and-column-types.html).  This can lead to unexpected behaviour, especially if you mix numbers and strings in the same columns.
+
+Check [the documentation](https://readxl.tidyverse.org/articles/cell-and-column-types.html) to read more about how to specify column types in `readxl`.
 
 ::::::::::::::::::::::::::::::::::::: challenge 
 
@@ -223,7 +311,7 @@ Open the file `human_codon_table.xlsx` in Excel.  The columns of this table cont
 
 How do you think it should be imported?
 
-Import this data, including the `col_names`, `skip`, `col_types`, `sheet` and `range` named arguments.
+Import this data, including the `col_names`, `col_types`, `sheet` and `range` named arguments.
 
 :::::: solution
 
@@ -234,7 +322,6 @@ Import this data, including the `col_names`, `skip`, `col_types`, `sheet` and `r
 ```r
 readxl::read_xlsx(here::here("episodes", "data", "human_codon_table.xlsx"),
                   col_names = c("codon", "frequency", "count"),
-                  skip=0,
                   col_types = c('text', 'numeric', 'numeric'),
                   sheet = 'human_codon_table',
                   range = 'A2:C65' )

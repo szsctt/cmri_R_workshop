@@ -1,6 +1,6 @@
 ---
 title: "Introduction to R and Rstudio"
-teaching: 45
+teaching: 50
 exercises: 10
 ---
 
@@ -22,6 +22,8 @@ exercises: 10
 - Be aware of some good habits for writing R code
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 
 
 ## Why R?
@@ -52,8 +54,11 @@ However, if you stick with `R` long enough, you'll probably end up needing to le
 
 ## Do I need to do this lesson?
 
-This lesson teaches the very basics.  If you can predict what will happen after every section of the following script (and you known what a comment is), you can skip this lesson.
+Since we have a variety of skill levels and experiences in this course, every lesson will have a challenge at the start to check if the lesson contains anything new for you.  If you can solve it, then you can skip the lesson.
 
+Predict what will happen after every section of the following script (without running it in `R`).
+
+Also be able to answer the question: what is a comment?
 
 ```r
 # section 1
@@ -84,6 +89,8 @@ as.numeric(c("one", "two", "three"))
 
 ::::::::::: solution
 
+
+A comment is piece of text where each line starts with a hash (`#`).  These are used to annotate code.
 
 
 
@@ -180,6 +187,7 @@ This one is tricky!  Trying to coerce a string that isn't only digits just resul
 
 :::::::::::::::::::::::
 
+
 ## Introduction to RStudio
 
 `RStudio` is an [integrated development environment](https://en.wikipedia.org/wiki/Integrated_development_environment) that makes it much easier to work with the `R` language.  It's free, cross-platform and provides many benefits such as project management and version control integration.
@@ -195,13 +203,20 @@ The four main panes are:
  - Bottom left: console.  For running code
  - Top right: environment. Information about objects you create will appear here
  - Bottom right: plots (among other things). Some output (like plots) from the console appears here.  Also helpful for browsing files and getting help
+ 
+### Organizing your work into projects
 
+When you work in `Rstudio`, the program assumes that you're working in a project.  This is a directory that should contain all the files that you'll need for whatever project you're currently working.
 
+If you've made a fresh install then by default you won't be in a project.  Otherwise, the current project will be the last one you opened.
 
+Let's make a new project for working in for this course.  In the menu bar, click *File > New Project*, and decide if you'd like to start the new project in a *New Directory* or an *Existing Directory*, and then tell `Rstudio` where you want your project directory to be located.
  
 ### Using the editor
 
-Use the editor to write scripts and `Rmarkdown` documents.  Although you can also type commands directly into the console, keeping your commands together in a script helps organise your analysis.
+The editor pane won't appear in a new project, so open it up by making a new script.  In the menu bar, click *File > New File > R Script*.
+
+Although you can also type commands directly into the console pane (below), keeping your commands together in a script helps organise your analysis.
 
 
 The editor also helps you identify issues with your code by placing a cross where it doesn't understand something.
@@ -211,12 +226,24 @@ The editor also helps you identify issues with your code by placing a cross wher
 Hover over the cross to get more information
 
 ![](episodes/fig/rstudio3.png){alt='Mousing over the cross reveals the message "expected , after expression" and "unmatched opening bracket ('}
-
-
  
 ### Using the console
 
-The console is where you can type in `R` commands and see their output. You can type R commands directly in here, or press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> to 'send' them from the editor to the console.
+The console is where you can type in `R` commands and see their output. 
+
+You can type R commands directly in here after the prompt (`>`).  This prompt disappears while the code is running, and re-appears when it is done.  To see this, try typing the following line of code into your console:
+
+
+```r
+Sys.sleep(5)
+```
+
+
+The prompt disapers for five seconds, then comes back.
+
+Rather than typing directly into the console, you can 'send' a line of code from the editor to the console by pressing  <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.
+
+You can also run the whole script with <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd>.
 
 
 #### As a calculator
@@ -253,6 +280,7 @@ The order of operations is as you would expect:
  - Divide `/`
  - Add `+`
  - Subtract `-`
+ - Modulus `%%`
  
 
 ::::::::::::::::::::::::::::::::::::: challenge 
@@ -260,7 +288,7 @@ The order of operations is as you would expect:
 #### Challenge 1: Operators
 
 
-How would you use R to compute $\frac{9}{3 + 6}$?
+How would you use R to compute $\frac{3}{3 + 6}$?
 
 :::::::::::::::::::::::: solution 
 
@@ -279,7 +307,40 @@ How would you use R to compute $\frac{9}{3 + 6}$?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+You can also use R for logical expressions, like:
 
+
+```r
+3 > 5
+```
+
+```{.output}
+[1] FALSE
+```
+
+The logical operators you'll most likely use are
+
+- Equal `==` 
+- Less than `<`
+- Less than or equal to `<=`
+- Greater than `>`
+- Greater than or equal to `>=`
+
+You can also combine multiple logical statements, for example, 
+
+
+```r
+(3 > 5) | (4 < 5)
+```
+
+```{.output}
+[1] TRUE
+```
+
+For this, we use the operators:
+
+ - Logical or `|`
+ - Logical and `&`
 
 
 ## Writing R code
@@ -305,7 +366,11 @@ Anything that comes after a `#` character won't be executed. Use this to annotat
 
 ```r
 # the line below won't be executed
-# 1 + 1
+1 + 1
+```
+
+```{.output}
+[1] 2
 ```
 
 
@@ -339,7 +404,7 @@ print(my_var)
 
 #### Hello, operator?
 
-There are actually two assignment operators in `R`: `<-` and `=`.  They differ a little in their behaviour (you don't need to know all of the details of how they differ); in general you should use `<-` for assignment.
+There are actually three assignment operators in `R`: `<-`,  `=` and `->`.  They differ a little in their behaviour (you don't need to know all of the details of how they differ); in general you should use `<-` for assignment.
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
@@ -419,21 +484,23 @@ round(0.555555, digits=3)
 
 ```r
 # statistical analysis
-t.test(c(1, 2.5, 8, 1), c(1000, 1001, 3000, 5000))
+sample1 <- c(1, 2.5, 3, 1, 1.3, 4.6)
+sample2 <- c(1000, 1001, 3000, 5000, 2022, 4000)
+t.test(sample1, sample2)
 ```
 
 ```{.output}
 
 	Welch Two Sample t-test
 
-data:  c(1, 2.5, 8, 1) and c(1000, 1001, 3000, 5000)
-t = -2.6085, df = 3, p-value = 0.07979
+data:  sample1 and sample2
+t = -4.0073, df = 5, p-value = 0.01025
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -5543.6641   549.4141
+ -4379.9127  -956.6206
 sample estimates:
-mean of x mean of y 
-    3.125  2500.250 
+  mean of x   mean of y 
+   2.233333 2670.500000 
 ```
 
 You don't need to memorize all these functions: Google is your friend.
@@ -528,8 +595,81 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1]  2.3275333  3.0975730  0.2325383 -0.7798118 -1.2492116
+[1]  2.4912581 -2.0875783 -1.5008974 -0.2727968  2.0720432
 ```
+
+:::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+#### Nested function calls
+
+You can also nest function calls inside each other, for example:
+
+
+```r
+mean(c(1,2,3))
+```
+
+```{.output}
+[1] 2
+```
+
+This is equivalent to:
+
+
+```r
+nums <- c(1,2,3)
+mean(nums)
+```
+
+```{.output}
+[1] 2
+```
+
+
+::::::::::::::::::::::::::::::::::::: challenge 
+
+#### Challenge 4: Nested functions
+
+Earlier we saw this code to perform a t-test.  
+
+```r
+sample1 <- c(1, 2.5, 3, 1, 1.3, 4.6)
+sample2 <- c(1000, 1001, 3000, 5000, 2022, 4000)
+t.test(sample1, sample2)
+```
+
+Re-write this in one line of code.
+
+
+:::::::::::::::::::::::: solution 
+
+#### Show me the solution
+ 
+
+```r
+t.test( c(1, 2.5, 3, 1, 1.3, 4.6), 
+       c(1000, 1001, 3000, 5000, 2022, 4000)
+)
+```
+
+```{.output}
+
+	Welch Two Sample t-test
+
+data:  c(1, 2.5, 3, 1, 1.3, 4.6) and c(1000, 1001, 3000, 5000, 2022, 4000)
+t = -4.0073, df = 5, p-value = 0.01025
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -4379.9127  -956.6206
+sample estimates:
+  mean of x   mean of y 
+   2.233333 2670.500000 
+```
+
+Notice that we can spread one 'line' of code over multiple lines of text. This can help with readability, by visually separating the two samples we're comparing.
 
 :::::::::::::::::::::::::::::::::
 
@@ -551,7 +691,7 @@ Note the use of quotation marks around the library name - this tells `R` that th
 
 ::::::::::::::::::::: challenge
 
-#### Challenge 4: Installing a library
+#### Challenge 5: Installing a library
 
 What code would you use to install the `tidyverse` library?  Try it out!
 
@@ -616,7 +756,7 @@ stringr::str_length("testing")
 
 ::::::::::::::::::::: challenge
 
-#### Challenge 5: Using a library
+#### Challenge 6: Using a library
 
 What do you think will happen if we omit the `packagename::` part?
 
@@ -691,7 +831,7 @@ Not all packages warn you about conflicts, so be careful you're using the functi
 
 ::::::::::::::::::::::: challenge
 
-#### Challenge 6: Best practices
+#### Challenge 7: Best practices
 
 
 In which situations do you think it's best to use the `packagename::functionname()` syntax, and when should you use `library()`?
@@ -792,7 +932,7 @@ One way to think about this is that elements are always coerced into the type th
 
 ::::::::::::::::::::::::::::::::::::: challenge 
 
-#### Challenge 7: Types
+#### Challenge 8: Types
 
 
 What do you think will be the type of the following vector?
@@ -818,7 +958,7 @@ print(unknown_type)
 ```
 
 ```r
-print(typeof(unknown_type))
+typeof(unknown_type)
 ```
 
 ```{.output}
@@ -846,7 +986,8 @@ Having `NA` values can change the way that functions interact with your data.  F
 
 
 ```r
-mean(c(1, 2, NA))
+nums <- c(1, 2, NA)
+mean(nums)
 ```
 
 ```{.output}
@@ -859,10 +1000,10 @@ mean(c(1, 2, NA))
 ::::::::::::::::::::::::::::::::::::: challenge 
 
 
-#### Challenge 8: Removing NA
+#### Challenge 9: Removing NA
 
 
-Check the documentation of the `mean` function to find out how to ignore `NA` values when computing the mean of a vector.
+Check the documentation of the `mean()` function to find out how to ignore `NA` values when computing the mean of a vector.
 
 
 :::::::::::::::::::::::: solution 
@@ -872,11 +1013,11 @@ Check the documentation of the `mean` function to find out how to ignore `NA` va
 
 
 ```r
-mean(C(1,2, NA), na.rm=TRUE)
+mean(nums, na.rm=TRUE)
 ```
 
-```{.error}
-Error in C(1, 2, NA): object not interpretable as a factor
+```{.output}
+[1] 1.5
 ```
 
 Use the additional named argument `na.rm=TRUE`
@@ -908,7 +1049,19 @@ This covers things like:
 
 ### Don't copy/paste code
 
-Try to avoid copy-pasting blocks of code.  If you find you need to make a change to that code, you'll need to edit all the copies. If you do this, it's  easy to miss somewhere that you copied it, or make a mistake when you change it.  If you find yourself needing to do the same task many times, it's usually better to write a function instead.  
+In general, try to avoid copy-pasting blocks of code.  
+
+If you find you need to make a change to that code, you'll need to edit all the copies. If you do this, it's  easy to miss somewhere that you copied it, or make a mistake when you change it.  
+
+If you find yourself needing to do the same task many times, it's usually better to write a function instead.  
+
+### Fail fast
+
+This is a concept from the world of start-ups, in which it refers to the practice of trying things out at an early stage. 
+
+If it works already, great, but if it doesn't, then you can move on more quickly to something that might work better.
+
+![Fail fast [Image credit](https://www.linkedin.com/pulse/agile-fail-fast-cheap-pivot-quickly-kaushik-burman/) ](https://media-exp1.licdn.com/dms/image/C5112AQHF73FRDvyMKg/article-cover_image-shrink_423_752/0/1520095833109?e=1675296000&v=beta&t=1El6SuTeRWRXDkLelgFhywuEX6Y_WJXSrHTZ_jkauRo)
 
 
 ### Test your expectations
