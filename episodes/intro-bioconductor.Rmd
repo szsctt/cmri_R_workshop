@@ -10,7 +10,7 @@ here::i_am("episodes/intro-bioconductor.Rmd")
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
-BiocManager::install(c("Biostrings", "karyoploteR", "TxDb.Hsapiens.UCSC.hg38.knownGene"))
+BiocManager::install(c("Biostrings", "karyoploteR", "TxDb.Hsapiens.UCSC.hg38.knownGene", "org.Hs.eg.db"))
 ```
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -201,6 +201,10 @@ genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
                                     karyoplot=kp,
                                     plot.transcripts = TRUE, 
                                     plot.transcripts.structure = TRUE)
+
+# add gene names
+genes.data <- addGeneNames(genes.data)
+
 # merge overlapping transcripts
 genes.data <- mergeTranscripts(genes.data)
 
