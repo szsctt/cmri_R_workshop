@@ -1,7 +1,7 @@
 ---
 title: 'Data wrangling'
-teaching: 10
-exercises: 2
+teaching: 60
+exercises: 7
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -691,12 +691,28 @@ weather %>%
 
 :::::::::::::::::::::::
 
+## Statistical tests
+
+Chances are, you don't just want to compute means and medians of columns, but actually check if those means or medians are different between groups.  For performing statistical tests in `R`, I have found the [`rstatix` package](https://rpkgs.datanovia.com/rstatix/) to be easy to use and well-documented.
+
+For example, if we wanted to do a t-test to check if the maximum temperatures in Brisbane were higher than those in Sydney, we could do:
+
+```{r}
+library(rstatix)
+
+weather %>% 
+  t_test(max_temp_c ~ city, 
+         alternative="greater")
+```
+
+I won't go into any more detail now, but check out the [reference page](https://rpkgs.datanovia.com/rstatix/index.html) for the large list of statistical tests that `rstatix` can perform for you.
+
+
 ## Working with large tables
 
 `dplyr` works well if you have small tables, but when they get large (millions of rows), you might start to notice that your code takes a while to execute.  If you start to notice this is an issue (and not before), I'd recommend you check out the `dtplyr` package](https://dtplyr.tidyverse.org/), which translates `dplyr` verbs into code used by another, faster package called `data.table`.
 
-Of course, you could also [just learn the `data.table` package](https://rdatatable.gitlab.io/data.table/) and use it directly.
-
+Of course, you could also [just learn the `data.table` package](https://rdatatable.gitlab.io/data.table/) and use it directly, but I find the syntax a little more cryptic than `dplyr`.
 
 ## Resources and acknowlegements
 
