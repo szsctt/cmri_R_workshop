@@ -4,10 +4,6 @@ date: "27 November 2022"
 output: html_notebook
 ---
 
-
-
-
-
 ## Install + setup
 
 had to do updates!  Took ~ 15 minutes to get set up
@@ -89,12 +85,12 @@ Add dtplyr mention in dplyr epsiode - done
 
 Started at 5:34pm
 
-xUsing geom_freqpoly(), make frequency polynomials of the speed of the maximum wind gust on each day for each city, using 10 bins (you might need to check the documentation). - confusingly worded
+xUsing geom_freqpoly(), make frequency polynomials of the speed of the maximum wind gust on each day for each city, using 10 bins (you might need to check the documentation). - confusingly worded - done
 
 Challenge 1 is too early - or add section about how to add color
 
 
-Change proportion example to:
+Change proportion example to: - done
 
 weather %>% 
   group_by(city, wind_direction_9am) %>% 
@@ -103,15 +99,15 @@ weather %>%
   geom_col(position="fill")
   
   
-colors - hexadecimal value
+colors - hexadecimal value - done
 
-link to colorblind websites
+link to colorblind websites - done
 
-axes scales not separated from previous section on colors
+axes scales not separated from previous section on colors - done
 
-rstatix - mention???
+rstatix - mention??? - done
 
-theme light doesn't match theme classic
+theme light doesn't match theme classic - done
 
 Finished at 6:29
 
@@ -119,7 +115,7 @@ Finished at 6:29
 
 Started 11:30
 
-Problem with karyoploteR lesson
+Problem with karyoploteR lesson - done
 
 Finished at 11:50
 
@@ -127,21 +123,21 @@ Finished at 11:50
 
 Started at 11:50
 
-Exampler header with TOC doesn't work - issue with date?
+Exampler header with TOC doesn't work - issue with date? - done
 
 
-sp This is a paragph.
+sp This is a paragph. - done
 
-R code block shouldn't have r
+R code block shouldn't have r ??
 
-Shortcut to add new code chunk
+Shortcut to add new code chunk - done
 
 ![Caption for figure](https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png)
 
 
-Render figure caption wrong
+Render figure caption wrong - done
 
-Add inline code to chunk part
+Add inline code to chunk part - done
 
 Finished 12:24
 
@@ -150,9 +146,9 @@ Finished 12:24
 
 Started 12:30
 
-Tokens!!
+Tokens!! - done
 
-Gotacha headings - wrong size for second
+Gotacha headings - wrong size for second - done
 
 Finished 1pm
 
@@ -161,13 +157,13 @@ Finished 1pm
 
 Started 1:05pm
 
-File.path for loading data won't work on windows - use paste0 instead
+File.path for loading URL data won't work on windows - use paste0  instead - done
 
-For each peptide, calculate the fraction of counts within the library in a new column called frac. - clarify 'fraction of counts within the library '
+For each peptide, calculate the fraction of counts within the library in a new column called frac. - clarify 'fraction of counts within the library ' - done
 
-Bubble plot height=0
+Bubble plot height=0 - done
 
-Typo: Add column called rank with ranks within each library, with 1 for peptide with highest fraction, 2 for peptide with second highest, and so on. in result - 'count' instead of 'counts'
+Typo: Add column called rank with ranks within each library, with 1 for peptide with highest fraction, 2 for peptide with second highest, and so on. in result - 'count' instead of 'counts' - done
 
 Print out cheatsheets
 
