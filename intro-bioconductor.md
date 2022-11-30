@@ -1,6 +1,6 @@
 ---
 title: '`Bioconductor` and other bioinformatics packages'
-teaching: 10
+teaching: 20
 exercises: 2
 ---
 
@@ -19,6 +19,28 @@ exercises: 2
 - Be aware of some `Bioconductor packages`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+ If you can answer the following questions, you can skip this lesson.
+ 
+ 1. How do you install `Bioconductor` packages?
+ 2. How can you get help when using `Bioconductor` packages?
+
+::::::::::: solution
+
+
+1. Use `BiocManager::install()`.
+2. In the same way as other `R` packages.  All will have a `vignette` demonstrating how to use the package, and most will have some other guides demonstrating aspects of the package.
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
 
 ![Bioconductor logo](http://bioconductor.org/images/logo_bioconductor.gif)
 
@@ -142,7 +164,6 @@ attr(,"alt_init_codons")
 
 It has many more features which you can explore if you need to use this package.
 
-
 ## Plotting genomic information
 
 Another relatively common task for me is plotting genomic information.  There are a number of ways to do this, but here I'll just give one example - plotting the density of SNPs in the human albumin gene (ALB).
@@ -231,6 +252,9 @@ library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 # region to plot
 region <- "chr4:73,394,000-73,425,000"
 
+# draw axis
+kp <- plotKaryotype(zoom = region)
+
 # transcript information
 genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
                                     karyoplot=kp,
@@ -246,31 +270,12 @@ genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
   GRangesList object, or use suppressMessages() to suppress this message.
 ```
 
-```{.error}
-Error in makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene, karyoplot = kp, : object 'kp' not found
-```
-
 ```r
 # merge overlapping transcripts
 genes.data <- mergeTranscripts(genes.data)
-```
 
-```{.error}
-Error in methods::is(genes.data, "GenesData"): object 'genes.data' not found
-```
-
-```r
-# draw axis
-kp <- plotKaryotype(zoom = region)
 # draw genes
 kpPlotGenes(kp, data=genes.data, r0=0, r1=0.15)
-```
-
-```{.error}
-Error in methods::is(data, "TxDb"): object 'genes.data' not found
-```
-
-```r
 # draw SNP density
 kpPlotDensity(kp, data=alb_gr, window=100, r0=0.3, r1=1)
 ```

@@ -1,6 +1,6 @@
 ---
 title: 'Case study'
-teaching: 10
+teaching: 120
 exercises: 2
 ---
 
@@ -9,16 +9,29 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How do I analyse peptide count data in `R`?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Demonstrate some ways of analysing NGS peptide count data
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+The whole lesson is a challenge, so probably the answer to 'do I need to do this lesson?' is yes.  Feel free to work at your own pace.
+
+::::::::::: solution
+
+See the answers to each question for solutions.
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
 
 ## Peptide count data
 
@@ -166,7 +179,7 @@ counts %>%
 
 :::::::::::::::::::::::: challenge 
 
-For each peptide, calculate the fraction of counts within the library in a new column called `frac`.
+For each peptide, calculate the fraction of counts within the library ($\frac{\text{peptide count in library A}}{\text{sum of counts for library A}}$) in a new column called `frac`.
 
 :::::::::::::: solution
 
@@ -209,7 +222,7 @@ Reproduce this 'bubble plot' of the normalized counts.
 ```r
 counts %>% 
   ggplot(aes(x=lib, y=frac, size=frac, color=lib)) +
-  geom_jitter(alpha=0.5) +
+  geom_jitter(alpha=0.5, height=0) +
   scale_y_log10() +
   labs(x="Library", y="Fraction")
 ```
@@ -235,11 +248,18 @@ counts <- counts %>%
   group_by(lib) %>% 
   mutate(rank = row_number())
 
-glimpse(count)
+glimpse(counts)
 ```
 
 ```{.output}
-function (x, ..., wt = NULL, sort = FALSE, name = NULL)  
+Rows: 40,000
+Columns: 5
+Groups: lib [4]
+$ peptide <chr> "NKLAPNL", "DNPLDPY", "VEDTTFA", "HSCKITP", "RRRMETN", "DLGQGD…
+$ count   <int> 509, 339, 292, 232, 190, 166, 164, 161, 146, 137, 133, 131, 12…
+$ lib     <chr> "expression", "expression", "expression", "expression", "expre…
+$ frac    <dbl> 0.022756740, 0.015156257, 0.013054947, 0.010372424, 0.00849465…
+$ rank    <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1, 15, 16, 2, 3…
 ```
 :::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::
@@ -444,10 +464,7 @@ Error in is.data.frame(x): object 'good_peptides' not found
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- You can refer back to this lesson if you want to analyse peptide dat in `R`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

@@ -1,6 +1,6 @@
 ---
 title: 'Data visualization'
-teaching: 10
+teaching: 60
 exercises: 2
 ---
 
@@ -23,6 +23,56 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+If you've already used `ggplot2` for making plots, chances are you already know most of the material covered.  
+
+Load the weather data we used in the previous lesson, and then make a plot (with points and lines) of the temperature on each day.  Show both the minimum and maximum temperature on the same axes (using different colours for each), and facet on city.  Remove the x axis title, change the colours to something other than the default, set the y axis label and title manually, and use a custom theme.
+
+
+::::::::::: solution
+
+
+```r
+# pivot longer
+weather %>% 
+  select(city, date, max_temp_c, min_temp_c) %>% 
+  pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
+  # compare minimum and maximum temps in two cities
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
+  geom_point() +
+  geom_line() +
+  # facet on city
+  facet_wrap(vars(city)) +
+  # add label
+  labs(y="Temperature (°C)", title = "November temperatures") +
+  # change colour scale
+  scale_colour_discrete(type=c("coral", "deepskyblue"), name = "Type", labels=c("max", "min")) +
+  # custom theme
+  theme_minimal() +
+  # remove x axis label
+  theme(axis.title.x = element_blank()) 
+```
+
+```{.warning}
+Warning: Removed 2 rows containing missing values (`geom_point()`).
+```
+
+```{.warning}
+Warning: Removed 1 row containing missing values (`geom_line()`).
+```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
+
 After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables.  Using visualizations is essential for communicating your results, because [summary statistics can be misleading](https://ab604.github.io/docs/coding-together-2019/viz.html), and because large datasets don't display well in tables.
 
 I won't go into too much theory here about the best way of visually representing different kinds of datasets, but I'd recommend everyone take a look at [Claus Wilke's excellent book 'Fundamentals of data visualization'](https://clauswilke.com/dataviz/).
@@ -42,20 +92,7 @@ We'll again use the weather data for Brisbane and Sydney, so let's load this dat
 ```r
 # load tidyverse
 library(tidyverse)
-```
 
-```{.output}
-── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-```
-
-```r
 # data files - readr can also read data from the internet
 data_dir <- "https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"
 data_files <- file.path(data_dir, c("weather_sydney.csv", "weather_brisbane.csv"))
@@ -125,7 +162,7 @@ $ city                    <chr> "sydney", "sydney", "sydney", "sydney", "sydne�
  
 ## Data and aesthetic mappings
 
-Any graph has to start with a dataset - and in the case of `ggplot`, this has to be a data frame (or tibble).  We also start by specifying the aesthetic using `aes()`, which tells ggplot which columns should go on the x and y axes.
+Any graph has to start with a dataset - and in the case of `ggplot`, this has to be a data frame (or tibble).  We also start by specifying the aesthetic using `aes()`, which tells ggplot which columns should go on the x and y axes. 
 
 
 Let's say that we want to plot the daily maximum temperature over the month for both cities. You can pipe the data into `ggplot()`.
@@ -136,7 +173,7 @@ weather %>%
   ggplot(aes(x=date, y=max_temp_c))
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 But we just get a blank graph!  We have to tell ggplot how we want the data to be plotted (lines, points, violins, density, etc).
 
@@ -156,7 +193,7 @@ weather %>%
 Warning: Removed 2 rows containing missing values (`geom_point()`).
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 Note that we use a `+` to add layers to a ggplot, not the pipe (`%>%`).  The `ggplot2` package was developed before the `magrittr` package that contains `%>%`, so it uses the addition operator instead.
 
@@ -172,22 +209,41 @@ weather <- weather %>%
 
 There are a large number of `geoms` for displaying data in different ways - we will explore some here, but you can find more in the [`ggplot` documentation](https://ggplot2.tidyverse.org/).
 
+### Geoms and aesthetics
+
+There are also other aesthetics you can specify, including **colour** (e.g. the colour of lines), **fill** (e.g. the colour used to fill a boxplot), **size** (e.g. the size of a point) and **shape** (e.g. the shape of a point).  
+
+Not all aesthetics are used by all `geoms`. In the documentation for each `geom` there will always be a section that tells you which aesthetics a geom understands.  For example, the [reference page for `geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html) tells us that this `geom` understands:
+
+ - x
+ - y
+ - alpha (transparency)
+ - colour
+ - fill
+ - group
+ - shape
+ - size
+ - stroke
+ 
+
 :::::::::::::::::::::::: challenge
 
 #### Challenge 1: Wind speed
 
-Using `geom_freqpoly()`, make frequency polynomials of the speed of the maximum wind gust on each day for each city, using 10 bins (you might need to check the documentation).
+Using `geom_freqpoly()`, make frequency polynomials of the wind speed (`speed_max_wind_gust_kph`).  Use 10 bins for each frequency polynomial (you might need to check the documentation)
+
+Use the `colour` aesthetic to colour by city.
 
 :::::::::::solution
 
 
 ```r
 weather %>% 
-  ggplot(aes(x=speed_max_wind_gust_kph, color=city)) +
+  ggplot(aes(x=speed_max_wind_gust_kph, colour=city)) +
   geom_freqpoly(bins=10)
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::
@@ -197,18 +253,18 @@ weather %>%
 
 ### Layering geoms
 
-Our initial graph looks OK, but we might want to know which temperature belongs to which city.  Let's add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
+Our initial graph looks OK, but we might want to know which temperature belongs to which city.  Let's add some colour to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.
 
 
 ```r
 # plot temp over time with lines and points
 weather %>% 
-  ggplot(aes(x=date, y=max_temp_c, color=city)) +
+  ggplot(aes(x=date, y=max_temp_c, colour=city)) +
   geom_point() +
   geom_line()
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 If we didn't care about the time aspect and just wanted to compare the distribution of temperatures instead, we could plot city on the x axis, temperature on the y axis.  To avoid points being on top of each other when the temperature is the same , I use `geom_jitter()` instead of `geom_point()`, which adds random jitter to each point before plotting.
 
@@ -216,12 +272,12 @@ If we didn't care about the time aspect and just wanted to compare the distribut
 ```r
 # show differences between temps in Brisbane and Sydney
 weather %>% 
-  ggplot(aes(x=city, y=max_temp_c, color=city)) +
+  ggplot(aes(x=city, y=max_temp_c, colour=city)) +
   geom_violin() +
   geom_jitter(height=0, width=0.1)
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 
 Notice that the `geoms` can also take arguments - for example, I've used ` geom_jitter(height=0, width=0.1` to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).
@@ -230,7 +286,7 @@ Notice that the `geoms` can also take arguments - for example, I've used ` geom_
 
 #### Challenge 2: Density and rug
 
-Use `geom_density()` and `geom_rug()` to show the difference in maximum temperatures between Brisbane and Sydney (with different colors for the two cities).
+Use `geom_density()` and `geom_rug()` to show the difference in maximum temperatures between Brisbane and Sydney (with different colours for the two cities).
 
 Do you prefer this representation to the violin plot above?
 
@@ -240,12 +296,12 @@ Do you prefer this representation to the violin plot above?
 
 ```r
 weather %>% 
-  ggplot(aes(x = max_temp_c, color=city)) +
+  ggplot(aes(x = max_temp_c, colour=city)) +
   geom_density() +
   geom_rug()
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 
 :::::::::::::::::::
@@ -264,7 +320,7 @@ weather %>%
   summarise(count = n()) %>% 
   # make plot
   ggplot(aes(x=city, y = count, fill=wind_direction_9am)) +
-  geom_bar(position="fill", stat="identity")
+  geom_col(position="fill")
 ```
 
 ```{.output}
@@ -272,9 +328,45 @@ weather %>%
 `.groups` argument.
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 Notice that although we summarized the *count* of observations of each direction (i.e. number of days), ggplot plots the *proportion* of observations.
+
+
+
+:::::::::::::::::::::: challenge
+
+#### Challenge 3: Stats
+
+Try removing the `position='fill'` argument from the code to generate the above plot.  What difference does it make?
+
+:::::::::: solution
+
+
+
+```r
+# count number of observation of each direction in each city
+weather %>% 
+  group_by(city, wind_direction_9am) %>% 
+  summarise(count = n()) %>% 
+  # make plot
+  ggplot(aes(x=city, y = count, fill=wind_direction_9am)) +
+  geom_col()
+```
+
+```{.output}
+`summarise()` has grouped output by 'city'. You can override using the
+`.groups` argument.
+```
+
+<img src="fig/visualizing-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+
+Now we get a **count** rather than a **proportion** - the y axis has a different scale and the bars are different heights.
+
+:::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::
 
 ### Using multiple datasets
 
@@ -289,15 +381,15 @@ mean_temps <- weather %>%
 
 # make plot
 weather %>% 
-  ggplot(aes(x=date, y=max_temp_c, color=city)) +
+  ggplot(aes(x=date, y=max_temp_c, colour=city)) +
   # data and aesthetics are inherited from ggplot call
   geom_point() +
   geom_line() +
   # add horizontal line with different data and aesthetic
-  geom_hline(data = mean_temps, mapping = aes(yintercept=mean_temp, color=city))
+  geom_hline(data = mean_temps, mapping = aes(yintercept=mean_temp, colour=city))
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
  
 
 ### Non-gglot geoms
@@ -308,9 +400,9 @@ I won't go into any detail about these, but a few that I've used include `ggforc
 
 ## Facets
 
-Let' say we want to compare the minimum and maximum temperatures for the two cities over time.  We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.
+Let' say we want to compare the minimum and maximum temperatures for the two cities over time.  We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the colour indicates whether the temperature was minimum or maximum.
 
-However, currently our temperature data is spread out over two columns: `mean_temp_c` and `max_temp_c`, but in `ggplot` we need to assign the color using `color=temp_type`.  So in order to make this plot, we need to rearrange the data a little using `dplyr` functions.
+However, currently our temperature data is spread out over two columns: `mean_temp_c` and `max_temp_c`, but in `ggplot` we need to assign the colour using `colour=temp_type`.  So in order to make this plot, we need to rearrange the data a little using `dplyr` functions.
 
 
 ```r
@@ -319,12 +411,12 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, shape=city, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, shape=city, colour=temp_type)) +
   geom_point() +
   geom_line()
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 This works, but it's a little difficult to tell the circles and the triangles apart.  Instead, we can use facets to plot the data from each city side by side.
 
@@ -335,14 +427,14 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city))
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 You can facet on multiple variables, for example:
 
@@ -353,14 +445,14 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_grid(cols=vars(city), rows=vars(temp_type), scales="free_y") 
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 The `scales="free_y"` argument allows the y-axis scales on each row to be different. 
 
@@ -370,10 +462,10 @@ In this case I think the comparison is clearer without the extra faceting variab
  
 :::::::::::::::::::::::: challenge
 
-#### Challenge 3: Facets
+#### Challenge 4: Facets
 
 
-Use facets to show the difference in wind speeds by direction in each city.  Facet on city, and color the density for wind speed (`speed_max_wind_gust_kph`) by direction (`dir_max_wind_gust`).  Show each city in a different row, with different y axes.
+Use facets to show the difference in wind speeds by direction in each city.  Facet on city, and colour the density for wind speed (`speed_max_wind_gust_kph`) by direction (`dir_max_wind_gust`).  Show each city in a different row, with different y axes.
 
 
 :::::::::::solution
@@ -381,7 +473,7 @@ Use facets to show the difference in wind speeds by direction in each city.  Fac
 
 ```r
 weather %>% 
-  ggplot(aes(x=speed_max_wind_gust_kph, color=dir_max_wind_gust)) +
+  ggplot(aes(x=speed_max_wind_gust_kph, colour=dir_max_wind_gust)) +
   geom_density() +
   facet_grid(rows = vars(city), scales="free")
 ```
@@ -431,7 +523,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 -Inf
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 This is not a particularly informative graphs because there are so few points for each direction.
 
@@ -447,7 +539,7 @@ There are a number of other customization that you can use to display your data 
 
 It's important to always label your x and y axes - `ggplot` does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.
 
-Use the `labs()` function to add labels, and `scale_color_discrete()` to change the title and label for the legend.
+Use the `labs()` function to add labels, and `scale_colour_discrete()` to change the title and label for the legend.
 
 
 
@@ -457,7 +549,7 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
@@ -465,22 +557,22 @@ weather %>%
   # add label
   labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
   # change legend
-  scale_color_discrete(name = "Type", labels=c("max", "min"))
+  scale_colour_discrete(name = "Type", labels=c("max", "min"))
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
-Note that when changing the legend, you have to match the function to the aesthetic.  So `scale_color_disrete()` acts on a discrete color scale, `scale_color_continuous()` acts on a continuous color scale, `scale_fill_discrete()` acts on a discrete fill scale, etc.  
+Note that when changing the legend, you have to match the function to the aesthetic.  So `scale_colour_disrete()` acts on a discrete colour scale, `scale_colour_continuous()` acts on a continuous colour scale, `scale_fill_discrete()` acts on a discrete fill scale, etc.  
 
 If you're trying to change a legend but it doesn't seem to be working, check that you used the correct function for your data type and aesthetic!
 
 ### Scales
 
-We used `scale_color_disrete()` to change the labels in the legend earlier, but there are a number of scale functions in `ggplot2` that can be used to change many other aspects of graphs.
+We used `scale_colour_disrete()` to change the labels in the legend earlier, but there are a number of scale functions in `ggplot2` that can be used to change many other aspects of graphs.
 
-#### Color scales
+#### Colour scales
 
-If you are unhappy with the default color scale that `ggplot` provides, you can change it using an appropriate scaling function - for example, `scale_color_discrete()` for discrete color scales, `scale_fill_continuous` for continuous fill scales, etc.
+If you are unhappy with the default colour scale that `ggplot` provides, you can change it using an appropriate scaling function - for example, `scale_colour_discrete()` for discrete colour scales, `scale_fill_continuous` for continuous fill scales, etc.
 
 
 ```r
@@ -489,22 +581,30 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city)) +
   # add label
   labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
-  # change color scale
-  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min"))
+  # change colour scale
+  scale_colour_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min"))
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
 
-There are a number of different ways you can specify colors to use.  One is to use color names, as above, although this requires you to know what the allowed color names are.  I tend to use [this list of color names for R](https://r-graph-gallery.com/42-colors-names.html).
+#### Specifying colors
 
-Another is to use a package to generate color names for you.  For example, I tend to use [`virids`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) for continuous scales because it's colorblind-friendly.  Another favourite is [`wesanderson`](https://github.com/karthik/wesanderson), which makes palettes from Wes Anderson movies.
+There are a number of different ways you can specify colours to use.  One is to use colour names, as above, although this requires you to know what the allowed colour names are.  I tend to use [this list of colour names for R](https://r-graph-gallery.com/42-colours-names.html).
+
+Another is to use a package to generate colour names for you.  For example, I tend to use [`virids`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) for continuous scales because it's colourblind-friendly.  Another favourite is [`wesanderson`](https://github.com/karthik/wesanderson), which makes palettes from Wes Anderson movies.
+
+Finally, you can also use RGB hexidecimal values to specify colours (as a string, e.g. '#52934D').  There are several websites you can use to create colours and find their codes, for example [htmlcolorcodes.com](https://htmlcolorcodes.com/color-picker/).
+
+When choosing colors, it's worth thinking about how colour blind people might see your plot.  There are lots of resources on the internet about [colourblind-friendly palettes](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40), and you can upload your plot to [coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) to see how it might appear to people with various kinds of colorblindness.
+
+#### Applying logarithmic scales
 
 Let's say we now have exponentially distributed data.  None of our weather data really is, so let's simulate some by drawing from two different exponential distributions with different rates.
 
@@ -526,7 +626,7 @@ exp_data %>%
   geom_jitter(height = 0, width=0.1)
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 This plot isn't so nice because the two groups are on different scales.  Changing the scale on your plot to logarithmic is easy with `ggplot`.  Just add `scale_x_log10()`, `scale_y_log10()`, etc:
 
@@ -540,7 +640,7 @@ exp_data %>%
   scale_y_log10()
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 ### Themes 
 
@@ -553,24 +653,24 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # plot lines and points
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city)) +
   # add label
   labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
-  # change color scale
-  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
+  # change colour scale
+  scale_colour_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
   # remove x axis label
   theme(axis.title.x = element_blank())
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
  
 There are many aspects of the plot you can customize this way: check the [`ggplot2` documentation](https://ggplot2.tidyverse.org/reference/theme.html) for more information.
 
-You can also change many aspects of the plot at once with pre-configured themes, for example `theme_classic()`.
+You can also change many aspects of the plot at once with pre-configured themes, for example `theme_light()`.
 
 
 ```r
@@ -579,22 +679,22 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # plot lines and points
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city)) +
   # add label
   labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
-  # change color scale
-  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
+  # change colour scale
+  scale_colour_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
   # change to theme classic
   theme_light() +
   # remove x axis label
   theme(axis.title.x = element_blank()) 
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
 
 
 Note that we have to do this **before** we remove the x axis label, because in `theme_light()`, the `axis.title.x` parameter is set to something other than `element_blank()`, so this would overwrite our call to `theme()`.
@@ -604,10 +704,10 @@ You can find out more about the other available themes [in the `ggplot2` documen
 
 ::::::::::::::::::::::: challenge
 
-#### Challenge 4: Themes and colors
+#### Challenge 5: Themes and colours
 
 
-Make the same plot as above, but add a different theme from the `ggplot` documentation, and different colors for the minimum and maximum.
+Make the same plot as above, but add a different theme from the `ggplot` documentation, and different colours for the minimum and maximum.
 
 
 :::::::::::solution
@@ -621,21 +721,22 @@ weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city)) +
   # add label
   labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
-  # change color scale
-  scale_color_discrete(type=c("coral", "deepskyblue"), name = "Type", labels=c("max", "min")) +
+  # change colour scale
+  scale_colour_discrete(type=c("coral", "deepskyblue"), name = "Type", labels=c("max", "min")) +
+  # add minimal theme
   theme_minimal() +
   # remove x axis label
   theme(axis.title.x = element_blank()) 
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-24-1.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::
 
@@ -658,15 +759,15 @@ It works with a variety of formats - I usually use `.pdf` as a vector format (e.
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # plot lines and points
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city)) +
   # add label
   labs(x="Date", y="Temperature (°C)", title = "November temperatures") +
-  # change color scale
-  scale_color_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
+  # change colour scale
+  scale_colour_discrete(type=c("red", "blue"), name = "Type", labels=c("max", "min")) +
   # change to theme classic
   theme_light() +
   # remove x axis label
@@ -693,15 +794,15 @@ p1 <- weather %>%
   select(city, date, max_temp_c, min_temp_c) %>% 
   pivot_longer(contains("temp"), names_to = "temp_type", values_to="temp") %>% 
   # compare minimum and maximum temps in two cities
-  ggplot(aes(x=date, y=temp, color=temp_type)) +
+  ggplot(aes(x=date, y=temp, colour=temp_type)) +
   geom_point() +
   geom_line() +
   # facet on city
   facet_wrap(vars(city)) +
   # add label
   labs(x="Date", y="Temperature (°C)") +
-  # change color scale
-  scale_color_discrete(name = "Type", labels=c("max", "min"))
+  # change colour scale
+  scale_colour_discrete(name = "Type", labels=c("max", "min"))
 
 # plot wind directions
 p2 <- weather %>% 
@@ -719,11 +820,11 @@ p2 <- weather %>%
 # plot temperatures
 p3 <- weather %>% 
   #  compare max temps between cities
-  ggplot(aes(x=city, y=max_temp_c, color=city)) +
+  ggplot(aes(x=city, y=max_temp_c, colour=city)) +
   geom_violin() +
   geom_jitter(height=0, width=0.1) +
-  # change colors to avoid confusion with p1
-  scale_color_discrete(type=wesanderson::wes_palette("GrandBudapest1", n=2)) +
+  # change colours to avoid confusion with p1
+  scale_colour_discrete(type=wesanderson::wes_palette("GrandBudapest1", n=2)) +
   # axis labels
   labs(x = "City", y="Max. temperature (°C)")
 
@@ -731,7 +832,7 @@ combined_plot <- p1 / (p2 + p3)
 combined_plot
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-26-1.png" style="display: block; margin: auto;" />
 
 Patchwork also [allows you to add annotation](https://patchwork.data-imaginist.com/articles/guides/annotation.html) to your combined plot, for example labels 'A', 'B', 'C'.
 
@@ -741,7 +842,7 @@ combined_plot +
   plot_annotation(tag_levels = 'A')
 ```
 
-<img src="fig/visualizing-data-rendered-unnamed-chunk-24-1.png" style="display: block; margin: auto;" />
+<img src="fig/visualizing-data-rendered-unnamed-chunk-27-1.png" style="display: block; margin: auto;" />
 
 There are many more features of `patchwork` which I will leave you to explore - the documentation is linked in the resources section.  For example, `patchwork` will combine things other than `ggplot`s if you can convert them to a form that it understands using `ggplotify::as_ggplot()`.
 

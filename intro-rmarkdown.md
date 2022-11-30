@@ -1,6 +1,6 @@
 ---
 title: 'Using `R markdown` for notebooks and documents'
-teaching: 10
+teaching: 25
 exercises: 2
 ---
 
@@ -19,21 +19,66 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+ If you can answer the following questions, you can skip this lesson.
+ 
+ 1. What does a R markdown header look like?
+ 2. How do you insert headings in an R markdown file?
+ 3. How do you insert chunks in an R markdown file, and what do they look like?
+ 4. What is the difference between an R markdown document and notebook?
+ 5. How do you render an R markdown file?
+
+::::::::::: solution
+
+
+1. It looks something like this
+
+```yaml
+---
+title: "Habits"
+author: Jane Doe
+date: March 22, 2005
+output: html_document
+---
+```
+
+2. Use one two four hashes (`#`) at the start of the line.
+3. Insert code blocks by typing them manually, in the menu bar under *Code > Insert Chunk*, or with the shortcut <kbd>Cmd/Ctrl</kbd> + <kbd>Option</kbd> + <kbd>i</kbd>.  They look like this:
+
+````markdown
+```{r chunk-name}
+y <- 2
+print(y)
+```
+````
+
+4. For a notebook, an output is generated every time you save it.  A document is only rendered when you Knit it.
+5. Use the *Knit* or *Preview* buttons, or use the function `rmarkdown::render()`.  For notebooks, just save the file to automatically render the file with any outputs that currently appear in Rstudio. 
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
 ## `Rmarkdown` for reproducible, documented analyis
 
 For a long time, most `R` code was written in *scripts*.  These are just plain old text files, usually with the file extension `.R`, which contain `R` code.  Any documentation in these scripts was in the form of comments, and any graphic generated had to be saved to file (or viewed in a window, then closed).
 
 This paradigm worked, but it was lacking an integrated view of the results of the analysis.  This is the problem that `knitr` and R markdown were developed to address.
 
-R markdown allows the user to create notebooks and documents that contain text elements (formatted using markdown), and `R` code. If I've ever sent you a `.html` document containing some results, this is what I used to generate it.  Other formats are possible for data export, including `.pdf`, but I tend to always use `.html` for it's interactive elements.
+R markdown allows the user to create notebooks and documents that contain text elements (formatted using markdown), and `R` code. If I've ever sent you a `.html` file containing some results, this is how I generated it.  Other formats are possible for data export, including `.pdf`, but I tend to always use `.html` for it's interactive elements.
 
 Documents you create are *rendered* into the final output format that you've specified, by running all the code and combining the outputs it with your markdown text.
 
-Although simple, this approach is powerful; I wrote all the content on this website using R markdown documents.
+Although simple, this approach is powerful; I wrote all the content on this website using R markdown files.
 
 ### Rmarkdown header
 
-R markdown documents always start with a header, which is formatted in [`YAML`](https://yaml.org/spec/1.2.2/), and at it's most basic looks something like this:
+R markdown files always start with a header, which is formatted in [`YAML`](https://yaml.org/spec/1.2.2/), and at it's most basic looks something like this:
 
 ```yaml
 ---
@@ -60,7 +105,7 @@ If you want, you can add an author and a date, for example:
 ---
 title: "Habits"
 author: Jane Doe
-date: March 22, 2005
+date: "22 November 2022"
 output: html_document
 ---
 ```
@@ -71,7 +116,7 @@ Sometimes I want the date to be updated every time I render the document.  You c
 ---
 title: "Habits"
 author: Jane Doe
-date: `r Sys.Date()`
+date: "`r Sys.Date()`"
 output: html_document
 ---
 ```
@@ -82,7 +127,7 @@ There are also lots of options for html documents and notebooks.  I often use:
 ---
 title: "Habits"
 author: Jane Doe
-date: `r Sys.Date()`
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: true
@@ -102,7 +147,7 @@ You can also add parameters in your header that you can use throughout your code
 ---
 title: "Habits"
 author: Jane Doe
-date: `r Sys.Date()`
+date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: true
@@ -122,7 +167,7 @@ You can then refer to these parameters using the syntax `params$test` and `param
 
 ### Markdown
 
-Writing markdown documents are pretty simple.  Use `#` for headings.
+Writing the markdown part of the file is are pretty simple.  Use `#` for headings.
 
 ```markdown
 # Largest heading
@@ -134,7 +179,7 @@ Writing markdown documents are pretty simple.  Use `#` for headings.
 To create paragraphs, leave at least one blank line between text.
 
 ```markdown
-This is a paragph.
+This is a paragraph.
 
 This is a different paragraph.
 ```
@@ -210,7 +255,10 @@ You can read more in the [documentation](https://www.markdownguide.org/basic-syn
 
 ### Adding code
 
-Adding code blocks is also easy.
+Adding code blocks is also easy.  Use the shortcut <kbd>Cmd/ctrl</kbd> + <kbd>Option</kbd> + <kbd>i</kbd>.  You can also check what the shortcut is on your machine in the menu bar under *Code > Insert Chunk*.
+
+Code blocks look like this:
+
 
 ````markdown
 ```{r chunk-name}
@@ -222,13 +270,13 @@ print(y)
 There are lots of options to control how the code block and it's output is displayed. For example:
 
 ````markdown
-```{r chunk-name, echo=FALSE}
+```{r chunk-name2, echo=FALSE}
 print("this code block won't appear in the output, but its output will")
 ```
 ````
 
 ````markdown
-```{r chunk-name, include=FALSE}
+```{r chunk-name3, include=FALSE}
 print("this code block won't appear in the output, and neither will it's output")
 ```
 ````
@@ -236,7 +284,7 @@ print("this code block won't appear in the output, and neither will it's output"
 If your code block produces a plot, the plot will appear in the report.  You can change the size of the plot with options as well.
 
 ````markdown
-```{r chunk-name, fig.width=8, fig.height=8}
+```{r chunk-name4, fig.width=8, fig.height=8}
 tibble(
   group = c("A", "A", "B", "B"),
   y = runif(4)
@@ -257,6 +305,23 @@ knitr::opts_chunk$set(
 ```
 ````
 
+
+:::::::::::::: callout
+
+#### Code block names
+
+Code blocks can be named or unnamed. If they have a name, it'll be the first argument in the curly braces (`{}`) after the three backticks that enclose the block.
+
+Make sure that you don't have two code blocks with the same name in your file, otherwise you won't be able to render it!
+
+::::::::::::::::::::::
+
+#### Inline code
+
+You can also insert inline code in R markdown by using the syntax `r my_expression`.  However, I don't tend to do this much in documents because every time I re-open the file, using variables in these code blocks cause problems (because they don't exist yet).  
+
+If you're going to use inline code a lot, I'd recommend you stick to using R markdown documents instead of notebooks.
+
 ### Running code blocks
 
 Run individual lines of code in a chunk by pressing <kbd>Ctrl</kbd> + <kbd>Enter</kbd>, or run the whole chunk using <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> (or the 'play' symbol at the top right).  You can also highlight particular pieces of a line that you want to run, and use <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run them.
@@ -265,28 +330,28 @@ Run individual lines of code in a chunk by pressing <kbd>Ctrl</kbd> + <kbd>Enter
 
 
 
-There are a few different ways you can render your R markdown document.  The easiest is to use the dedicated button in Rstudio.  For documents, it' at the top of your document  looks like this:
+There are a few different ways you can render your R markdown file.  The easiest is to use the dedicated button in Rstudio.  For documents, it' at the top of your document and looks like this:
 
 ![Button for knitting documents](episodes/fig/knit.png)
 
 For notebooks, you don't need to manually render - every time you save the file, R will knit it for you.  But if you want to see what the notebook will look like, you can press the preview button:
 
-![Button for knitting documents](episodes/fig/preview.png)
+![Button for knitting noteooks](episodes/fig/preview.png)
 
 You can also render your notebook using code:
 
 ```r
-rmarkdown::render("/path/to/document.Rmd")
+rmarkdown::render("/path/to/file.Rmd")
 ```
 
 If you set parameters, you can change them when you render the notebook:
 
 
 ```r
-rmarkdown::render("/path/to/document.Rmd", params = list(test=FALSE, speces="macaque"))
+rmarkdown::render("/path/to/file.Rmd", params = list(test=FALSE, speces="macaque"))
 ```
 
-## Other document types
+## Other file types
 
 There are also a number of other outputs you can produce from your R markdown other than html notebooks and documents.  In particular, I've been playing around with slides using `Quatro` and `ioslides`.  They can be a little tricky compared to power point, and a bit slow to render if your analysis is compute-heavy, but I think they're worth considering!  
 

@@ -1,7 +1,7 @@
 ---
 title: 'Data wrangling'
-teaching: 10
-exercises: 2
+teaching: 60
+exercises: 7
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -1188,16 +1188,16 @@ forecast
 # A tibble: 57 × 3
    date       city   forecast
    <date>     <chr>  <chr>   
- 1 2022-11-01 sydney cloudy  
+ 1 2022-11-01 sydney sunny   
  2 2022-11-02 sydney sunny   
  3 2022-11-03 sydney sunny   
  4 2022-11-04 sydney cloudy  
  5 2022-11-05 sydney sunny   
- 6 2022-11-06 sydney sunny   
+ 6 2022-11-06 sydney cloudy  
  7 2022-11-07 sydney sunny   
- 8 2022-11-08 sydney sunny   
+ 8 2022-11-08 sydney cloudy  
  9 2022-11-09 sydney cloudy  
-10 2022-11-10 sydney cloudy  
+10 2022-11-10 sydney sunny   
 # … with 47 more rows
 ```
 
@@ -1214,16 +1214,16 @@ weather %>%
 # A tibble: 57 × 4
    city   date       sunshine_hours forecast
    <chr>  <date>              <dbl> <chr>   
- 1 sydney 2022-11-01            9.5 cloudy  
+ 1 sydney 2022-11-01            9.5 sunny   
  2 sydney 2022-11-02           12.8 sunny   
  3 sydney 2022-11-03            8.9 sunny   
  4 sydney 2022-11-04            5.7 cloudy  
  5 sydney 2022-11-05           11.8 sunny   
- 6 sydney 2022-11-06           12.1 sunny   
+ 6 sydney 2022-11-06           12.1 cloudy  
  7 sydney 2022-11-07           12.3 sunny   
- 8 sydney 2022-11-08           11   sunny   
+ 8 sydney 2022-11-08           11   cloudy  
  9 sydney 2022-11-09           10.3 cloudy  
-10 sydney 2022-11-10            9.3 cloudy  
+10 sydney 2022-11-10            9.3 sunny   
 # … with 47 more rows
 ```
 
@@ -1259,20 +1259,57 @@ weather %>%
 # A tibble: 2 × 2
   forecast_accurate count
   <lgl>             <int>
-1 FALSE                28
-2 TRUE                 29
+1 FALSE                31
+2 TRUE                 26
 ```
 
 ::::::::::::::::::
 
 :::::::::::::::::::::::
 
+## Statistical tests
+
+Chances are, you don't just want to compute means and medians of columns, but actually check if those means or medians are different between groups.  For performing statistical tests in `R`, I have found the [`rstatix` package](https://rpkgs.datanovia.com/rstatix/) to be easy to use and well-documented.
+
+For example, if we wanted to do a t-test to check if the maximum temperatures in Brisbane were higher than those in Sydney, we could do:
+
+
+```r
+library(rstatix)
+```
+
+```{.output}
+
+Attaching package: 'rstatix'
+```
+
+```{.output}
+The following object is masked from 'package:stats':
+
+    filter
+```
+
+```r
+weather %>% 
+  t_test(max_temp_c ~ city, 
+         alternative="greater")
+```
+
+```{.output}
+# A tibble: 1 × 8
+  .y.        group1   group2    n1    n2 statistic    df          p
+* <chr>      <chr>    <chr>  <int> <int>     <dbl> <dbl>      <dbl>
+1 max_temp_c brisbane sydney    27    28      5.28  43.1 0.00000203
+```
+
+I won't go into any more detail now, but check out the [reference page](https://rpkgs.datanovia.com/rstatix/index.html) for the large list of statistical tests that `rstatix` can perform for you.
+
+
 ## Working with large tables
 
 `dplyr` works well if you have small tables, but when they get large (millions of rows), you might start to notice that your code takes a while to execute.  If you start to notice this is an issue (and not before), I'd recommend you check out the `dtplyr` package](https://dtplyr.tidyverse.org/), which translates `dplyr` verbs into code used by another, faster package called `data.table`.
 
-Of course, you could also [just learn the `data.table` package](https://rdatatable.gitlab.io/data.table/) and use it directly.
-
+Of course, you could also [just learn the `data.table` package](https://rdatatable.gitlab.io/data.table/) and use it directly, but I find the syntax a little more cryptic than `dplyr`.
 
 ## Resources and acknowlegements
 
