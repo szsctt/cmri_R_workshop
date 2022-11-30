@@ -153,7 +153,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data: <code>readr</code> and <code>readxl</code></a>
+        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -210,7 +210,7 @@
       <div class="accordion-body">
         <ul><li><a href="#rmarkdown-for-reproducible-documented-analyis"><code>Rmarkdown</code> for reproducible, documented analyis</a></li>
 <li><a href="#rendering-notebooks">Rendering notebooks</a></li>
-<li><a href="#other-document-types">Other document types</a></li>
+<li><a href="#other-file-types">Other file types</a></li>
 <li><a href="#references">References</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -287,7 +287,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using <code>R markdown</code> for notebooks and documents</h1>
-        <p> Last updated on 2022-11-29 | 
+        <p> Last updated on 2022-11-30 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/intro-rmarkdown.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -322,24 +322,77 @@
 </div>
 </div>
 </div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="do-i-need-to-do-this-lesson" class="callout-inner">
+<h3 class="callout-title">Do I need to do this lesson?<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>If you can answer the following questions, you can skip this lesson.</p>
+<ol style="list-style-type: decimal"><li>What does a R markdown header look like?</li>
+<li>How do you insert headings in an R markdown file?</li>
+<li>How do you insert chunks in an R markdown file, and what do they look like?</li>
+<li>What is the difference between an R markdown document and notebook?</li>
+<li>How do you render an R markdown file?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>It looks something like this</li>
+</ol><div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> March 22, 2005</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
+</div>
+<ol start="2" style="list-style-type: decimal"><li>Use one two four hashes (<code>#</code>) at the start of the line.</li>
+<li>Insert code blocks by typing them manually, in the menu bar under <em>Code &gt; Insert Chunk</em>, or with the shortcut <kbd>Cmd/Ctrl</kbd> + <kbd>Option</kbd> + <kbd>i</kbd>. They look like this:</li>
+</ol><div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">y &lt;- 2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">print(y)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+</div>
+<ol start="4" style="list-style-type: decimal"><li>For a notebook, an output is generated every time you save it. A document is only rendered when you Knit it.</li>
+<li>Use the <em>Knit</em> or <em>Preview</em> buttons, or use the function <code>rmarkdown::render()</code>. For notebooks, just save the file to automatically render the file with any outputs that currently appear in Rstudio.</li>
+</ol></div>
+</div>
+</div>
+</div>
 <section id="rmarkdown-for-reproducible-documented-analyis"><h2 class="section-heading">
 <code>Rmarkdown</code> for reproducible, documented analyis<a class="anchor" aria-label="anchor" href="#rmarkdown-for-reproducible-documented-analyis"></a>
 </h2>
 <hr class="half-width"><p>For a long time, most <code>R</code> code was written in <em>scripts</em>. These are just plain old text files, usually with the file extension <code>.R</code>, which contain <code>R</code> code. Any documentation in these scripts was in the form of comments, and any graphic generated had to be saved to file (or viewed in a window, then closed).</p>
 <p>This paradigm worked, but it was lacking an integrated view of the results of the analysis. This is the problem that <code>knitr</code> and R markdown were developed to address.</p>
-<p>R markdown allows the user to create notebooks and documents that contain text elements (formatted using markdown), and <code>R</code> code. If I’ve ever sent you a <code>.html</code> document containing some results, this is what I used to generate it. Other formats are possible for data export, including <code>.pdf</code>, but I tend to always use <code>.html</code> for it’s interactive elements.</p>
+<p>R markdown allows the user to create notebooks and documents that contain text elements (formatted using markdown), and <code>R</code> code. If I’ve ever sent you a <code>.html</code> file containing some results, this is how I generated it. Other formats are possible for data export, including <code>.pdf</code>, but I tend to always use <code>.html</code> for it’s interactive elements.</p>
 <p>Documents you create are <em>rendered</em> into the final output format that you’ve specified, by running all the code and combining the outputs it with your markdown text.</p>
-<p>Although simple, this approach is powerful; I wrote all the content on this website using R markdown documents.</p>
+<p>Although simple, this approach is powerful; I wrote all the content on this website using R markdown files.</p>
 <div class="section level3">
 <h3 id="rmarkdown-header">Rmarkdown header<a class="anchor" aria-label="anchor" href="#rmarkdown-header"></a></h3>
-<p>R markdown documents always start with a header, which is formatted in <a href="https://yaml.org/spec/1.2.2/" class="external-link"><code>YAML</code></a>, and at it’s most basic looks something like this:</p>
-<div class="codewrapper sourceCode" id="cb1">
+<p>R markdown files always start with a header, which is formatted in <a href="https://yaml.org/spec/1.2.2/" class="external-link"><code>YAML</code></a>, and at it’s most basic looks something like this:</p>
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"R Notebook"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_notebook</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"R Notebook"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_notebook</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
 </div>
 <p>That’s it: just a title and an output.</p>
 <div id="callout1" class="callout callout">
@@ -356,205 +409,224 @@
 </div>
 </div>
 <p>If you want, you can add an author and a date, for example:</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> March 22, 2005</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
-</div>
-<p>Sometimes I want the date to be updated every time I render the document. You can do this by replacing the date with some <code>R</code> code.</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> `r Sys.Date()`</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
-</div>
-<p>There are also lots of options for html documents and notebooks. I often use:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> `r Sys.Date()`</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">keep_md</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">df_print</span><span class="kw">:</span><span class="at"> paged</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">collapsed</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smooth_scroll</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"22 November 2022"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
 </div>
-<p>You can also add parameters in your header that you can use throughout your code:</p>
+<p>Sometimes I want the date to be updated every time I render the document. You can do this by replacing the date with some <code>R</code> code.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> `r Sys.Date()`</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">keep_md</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">df_print</span><span class="kw">:</span><span class="at"> paged</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">collapsed</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smooth_scroll</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">params</span><span class="kw">:</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">test</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">species</span><span class="kw">:</span><span class="at"> </span><span class="st">"human"</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"`r Sys.Date()`"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
+</div>
+<p>There are also lots of options for html documents and notebooks. I often use:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"`r Sys.Date()`"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">keep_md</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">df_print</span><span class="kw">:</span><span class="at"> paged</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">collapsed</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smooth_scroll</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
+</div>
+<p>You can also add parameters in your header that you can use throughout your code:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Habits"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> Jane Doe</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"`r Sys.Date()`"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">keep_md</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">df_print</span><span class="kw">:</span><span class="at"> paged</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">collapsed</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smooth_scroll</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">params</span><span class="kw">:</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">test</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">species</span><span class="kw">:</span><span class="at"> </span><span class="st">"human"</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre>
 </div>
 <p>You can then refer to these parameters using the syntax <code>params$test</code> and <code>params$species</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="markdown">Markdown<a class="anchor" aria-label="anchor" href="#markdown"></a></h3>
-<p>Writing markdown documents are pretty simple. Use <code>#</code> for headings.</p>
-<div class="codewrapper sourceCode" id="cb6">
-<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Largest heading</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Large heading</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medium heading</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Small heading</span></span></code></pre>
-</div>
-<p>To create paragraphs, leave at least one blank line between text.</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>This is a paragph.</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>This is a different paragraph.</span></code></pre>
-</div>
-<p>To add a line break (to prevent sentences from running on from one another), add two spaces at the end of the line.</p>
+<p>Writing the markdown part of the file is are pretty simple. Use <code>#</code> for headings.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>This is a line.  </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>This is another line.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Largest heading</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Large heading</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Medium heading</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Small heading</span></span></code></pre>
 </div>
-<p>To add emphasis, use <code>*</code> or <code>_</code>.</p>
+<p>To create paragraphs, leave at least one blank line between text.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>This text is **bold**.</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>This text is __also bold__.</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>This text is in *italics*.</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>This text is also in _italics_.</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>This text is both ***bold and in italics***.</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>___Same here___.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>This is a paragraph.</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>This is a different paragraph.</span></code></pre>
 </div>
-<p>To create a block quote, add <code>&gt;</code> to the start of each line.</p>
+<p>To add a line break (to prevent sentences from running on from one another), add two spaces at the end of the line.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; This will be a quote</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; that's all in the same block</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>This is a line.  </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>This is another line.</span></code></pre>
 </div>
-<p>To make a list, use numbers or dashes.</p>
+<p>To add emphasis, use <code>*</code> or <code>_</code>.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="an">This is an unordered list:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>element a</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>element b</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>element c</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>This is an ordered list:</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>element 1</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>element 2</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>element 3</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a> </span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>This text is **bold**.</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>This text is __also bold__.</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>This text is in *italics*.</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>This text is also in _italics_.</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>This text is both ***bold and in italics***.</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>___Same here___.</span></code></pre>
 </div>
-<p>If you want to display code, use backticks:</p>
+<p>To create a block quote, add <code>&gt;</code> to the start of each line.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>This is <span class="in">`inline`</span> code.</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"this is an R code block"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; This will be a quote</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; that's all in the same block</span></span></code></pre>
 </div>
-<p>To add images, use this syntax:</p>
+<p>To make a list, use numbers or dashes.</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="al">![Caption for figure](/path/to/figure.png)</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="an">This is an unordered list:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>element a</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>element b</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ss"> - </span>element c</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>This is an ordered list:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>element 1</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>element 2</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>element 3</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a> </span></code></pre>
 </div>
-<p>You can add links using parentheses and brackets:</p>
+<p>If you want to display code, use backticks:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>You can read more in the <span class="co">[</span><span class="ot">documentation</span><span class="co">](https://www.markdownguide.org/basic-syntax/)</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>This is <span class="in">`inline`</span> code.</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"this is an R code block"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+</div>
+<p>To add images, use this syntax:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="al">![Caption for figure](/path/to/figure.png)</span></span></code></pre>
+</div>
+<p>You can add links using parentheses and brackets:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>You can read more in the <span class="co">[</span><span class="ot">documentation</span><span class="co">](https://www.markdownguide.org/basic-syntax/)</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="adding-code">Adding code<a class="anchor" aria-label="anchor" href="#adding-code"></a></h3>
-<p>Adding code blocks is also easy.</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name}</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="in">y &lt;- 2</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="in">print(y)</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
-</div>
-<p>There are lots of options to control how the code block and it’s output is displayed. For example:</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name, echo=FALSE}</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="in">print("this code block won't appear in the output, but its output will")</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
-</div>
+<p>Adding code blocks is also easy. Use the shortcut <kbd>Cmd/ctrl</kbd> + <kbd>Option</kbd> + <kbd>i</kbd>. You can also check what the shortcut is on your machine in the menu bar under <em>Code &gt; Insert Chunk</em>.</p>
+<p>Code blocks look like this:</p>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name, include=FALSE}</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="in">print("this code block won't appear in the output, and neither will it's output")</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name}</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="in">y &lt;- 2</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="in">print(y)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
 </div>
-<p>If your code block produces a plot, the plot will appear in the report. You can change the size of the plot with options as well.</p>
+<p>There are lots of options to control how the code block and it’s output is displayed. For example:</p>
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name, fig.width=8, fig.height=8}</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="in">  group = c("A", "A", "B", "B"),</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="in">  y = runif(4)</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="in">) %&gt;% </span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x=group, y = y)) +</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point()</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name2, echo=FALSE}</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="in">print("this code block won't appear in the output, but its output will")</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name3, include=FALSE}</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="in">print("this code block won't appear in the output, and neither will it's output")</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+</div>
+<p>If your code block produces a plot, the plot will appear in the report. You can change the size of the plot with options as well.</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r chunk-name4, fig.width=8, fig.height=8}</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="in">  group = c("A", "A", "B", "B"),</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="in">  y = runif(4)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="in">) %&gt;% </span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot(aes(x=group, y = y)) +</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_point()</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
 </div>
 <p>You can also apply options to all chunks using <code>knitr::set_opts()</code> at the top of your file.</p>
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">MD<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode md" tabindex="0"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo=</span><span class="cn">FALSE</span>, <span class="at">fig.width =</span> <span class="dv">6</span>, <span class="at">fig.height =</span> <span class="dv">6</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+<pre class="sourceCode md" tabindex="0"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo=</span><span class="cn">FALSE</span>, <span class="at">fig.width =</span> <span class="dv">6</span>, <span class="at">fig.height =</span> <span class="dv">6</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre>
+</div>
+<div id="callout2" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="code-block-names" class="callout-inner">
+<h3 class="callout-title">Code block names<a class="anchor" aria-label="anchor" href="#callout2"></a>
+</h3>
+<div class="callout-content">
+<p>Code blocks can be named or unnamed. If they have a name, it’ll be the first argument in the curly braces (<code>{}</code>) after the three backticks that enclose the block.</p>
+<p>Make sure that you don’t have two code blocks with the same name in your file, otherwise you won’t be able to render it!</p>
+</div>
+</div>
+</div>
+<div class="section level4">
+<h4 id="inline-code">Inline code<a class="anchor" aria-label="anchor" href="#inline-code"></a></h4>
+<p>You can also insert inline code in R markdown by using the syntax <code>r my_expression</code>. However, I don’t tend to do this much in documents because every time I re-open the file, using variables in these code blocks cause problems (because they don’t exist yet).</p>
+<p>If you’re going to use inline code a lot, I’d recommend you stick to using R markdown documents instead of notebooks.</p>
 </div>
 </div>
 <div class="section level3">
@@ -563,23 +635,23 @@
 </div>
 </section><section id="rendering-notebooks"><h2 class="section-heading">Rendering notebooks<a class="anchor" aria-label="anchor" href="#rendering-notebooks"></a>
 </h2>
-<hr class="half-width"><p>There are a few different ways you can render your R markdown document. The easiest is to use the dedicated button in Rstudio. For documents, it’ at the top of your document looks like this:</p>
+<hr class="half-width"><p>There are a few different ways you can render your R markdown file. The easiest is to use the dedicated button in Rstudio. For documents, it’ at the top of your document and looks like this:</p>
 <figure><img src="fig/knit.png" alt="" class="figure mx-auto d-block"><figcaption>Button for knitting documents</figcaption></figure><p>For notebooks, you don’t need to manually render - every time you save the file, R will knit it for you. But if you want to see what the notebook will look like, you can press the preview button:</p>
-<figure><img src="fig/preview.png" alt="" class="figure mx-auto d-block"><figcaption>Button for knitting documents</figcaption></figure><p>You can also render your notebook using code:</p>
-<div class="codewrapper sourceCode" id="cb20">
+<figure><img src="fig/preview.png" alt="" class="figure mx-auto d-block"><figcaption>Button for knitting noteooks</figcaption></figure><p>You can also render your notebook using code:</p>
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu">render</span><span class="op">(</span><span class="st">"/path/to/document.Rmd"</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu">render</span><span class="op">(</span><span class="st">"/path/to/file.Rmd"</span><span class="op">)</span></span></code></pre>
 </div>
 <p>If you set parameters, you can change them when you render the notebook:</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu">render</span><span class="op">(</span><span class="st">"/path/to/document.Rmd"</span>, params <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>test<span class="op">=</span><span class="cn">FALSE</span>, speces<span class="op">=</span><span class="st">"macaque"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu">render</span><span class="op">(</span><span class="st">"/path/to/file.Rmd"</span>, params <span class="op">=</span> <span class="fu">list</span><span class="op">(</span>test<span class="op">=</span><span class="cn">FALSE</span>, speces<span class="op">=</span><span class="st">"macaque"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-</section><section id="other-document-types"><h2 class="section-heading">Other document types<a class="anchor" aria-label="anchor" href="#other-document-types"></a>
+</section><section id="other-file-types"><h2 class="section-heading">Other file types<a class="anchor" aria-label="anchor" href="#other-file-types"></a>
 </h2>
 <hr class="half-width"><p>There are also a number of other outputs you can produce from your R markdown other than html notebooks and documents. In particular, I’ve been playing around with slides using <code>Quatro</code> and <code>ioslides</code>. They can be a little tricky compared to power point, and a bit slow to render if your analysis is compute-heavy, but I think they’re worth considering!</p>
 <p>This area is actively being developed, so it’s worth trying out new technologies when they are available.</p>
@@ -661,9 +733,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/intro-rmarkdown.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/intro-rmarkdown.html",
-  "dateCreated": "2022-11-29",
-  "dateModified": "2022-11-29",
-  "datePublished": "2022-11-29"
+  "dateCreated": "2022-11-30",
+  "dateModified": "2022-11-30",
+  "datePublished": "2022-11-30"
 }
 
   </script><script>

@@ -165,7 +165,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data: <code>readr</code> and <code>readxl</code></a>
+        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -327,7 +327,7 @@ How do I use the RStudio IDE?<br>What are the basics of R?<br>What are the best 
 <span class="visually-hidden">Duration: </span>01h 00m
 </td>
 <td>
- 2. <a href="reading-in-data-readr-and-readxl.html">Reading in data: <code>readr</code> and <code>readxl</code></a>
+ 2. <a href="reading-in-data-readr-and-readxl.html">Reading in data</a>
 </td>
 <td>
 How can we get data into <code>R</code>?
@@ -351,7 +351,7 @@ What is tidy data?<br>How can we pivot data frames to make them tidy?
 What are the main <code>dplyr</code> verbs?<br>How can I analyse data within groups?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 06m
+<span class="visually-hidden">Duration: </span>03h 01m
 </td>
 <td>
  5. <a href="visualizing-data.html">Data visualization</a>
@@ -360,7 +360,7 @@ What are the main <code>dplyr</code> verbs?<br>How can I analyse data within gro
 How do you visualize data using <code>ggplot2</code>?<br>How can you combine individual plots?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 18m
+<span class="visually-hidden">Duration: </span>04h 03m
 </td>
 <td>
  6. <a href="intro-bioconductor.html"><code>Bioconductor</code> and other bioinformatics packages</a>
@@ -369,7 +369,7 @@ How do you visualize data using <code>ggplot2</code>?<br>How can you combine ind
 What is bioconductor?<br>What are some bioconductor packages?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 30m
+<span class="visually-hidden">Duration: </span>04h 25m
 </td>
 <td>
  7. <a href="intro-rmarkdown.html">Using <code>R markdown</code> for notebooks and documents</a>
@@ -378,7 +378,7 @@ What is bioconductor?<br>What are some bioconductor packages?
 How do you write a notebook or document using R Markdown?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 42m
+<span class="visually-hidden">Duration: </span>04h 52m
 </td>
 <td>
  8. <a href="git.html">Version control with <code>git</code></a>
@@ -387,16 +387,16 @@ How do you write a notebook or document using R Markdown?
 What is version control?<br>How to use git in Rstudio?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 54m
+<span class="visually-hidden">Duration: </span>05h 04m
 </td>
 <td>
  9. <a href="worked-example.html">Case study</a>
 </td>
 <td>
-How do you write a lesson using R Markdown and <a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?
+How do I analyse peptide count data in <code>R</code>?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>03h 06m
+<span class="visually-hidden">Duration: </span>07h 06m
 </td>
 <td>
 Finish
@@ -434,7 +434,7 @@ any links that you are not going to use.
   Windows
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>You will need to ask IT to install <code>R</code>, <code>Rstudio</code> and <code>git</code>:</p>
 <ul><li><a href="https://cran.r-project.org/bin/windows/base/" class="external-link">R</a></li>
@@ -451,7 +451,7 @@ any links that you are not going to use.
   MacOS
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Please install:</p>
 <ul><li><a href="https://cran.r-project.org/bin/macosx/" class="external-link">R</a></li>
@@ -473,7 +473,7 @@ any links that you are not going to use.
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">install.packages</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"patchwork"</span>, <span class="st">"wesanderson"</span>, <span class="st">"here"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">install.packages</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"patchwork"</span>, <span class="st">"wesanderson"</span>, <span class="st">"here"</span>, <span class="st">"rstatix"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <!-- 
 Place links that you need to refer to multiple times across pages here. Delete
@@ -530,9 +530,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/instructor/index.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/instructor/index.html",
-  "dateCreated": "2022-11-29",
-  "dateModified": "2022-11-29",
-  "datePublished": "2022-11-29"
+  "dateCreated": "2022-11-30",
+  "dateModified": "2022-11-30",
+  "datePublished": "2022-11-30"
 }
 
   </script><script>

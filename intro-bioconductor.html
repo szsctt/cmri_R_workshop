@@ -153,7 +153,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data: <code>readr</code> and <code>readxl</code></a>
+        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -288,7 +288,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1><code>Bioconductor</code> and other bioinformatics packages</h1>
-        <p> Last updated on 2022-11-29 | 
+        <p> Last updated on 2022-11-30 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/intro-bioconductor.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -322,6 +322,35 @@
 </li>
 </ul></div>
 </div>
+</div>
+</div>
+</div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="do-i-need-to-do-this-lesson" class="callout-inner">
+<h3 class="callout-title">Do I need to do this lesson?<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>If you can answer the following questions, you can skip this lesson.</p>
+<ol style="list-style-type: decimal"><li>How do you install <code>Bioconductor</code> packages?</li>
+<li>How can you get help when using <code>Bioconductor</code> packages?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<ol style="list-style-type: decimal"><li>Use <code>BiocManager::install()</code>.</li>
+<li>In the same way as other <code>R</code> packages. All will have a <code>vignette</code> demonstrating how to use the package, and most will have some other guides demonstrating aspects of the package.</li>
+</ol></div>
 </div>
 </div>
 </div>
@@ -534,6 +563,9 @@ Attaching package: 'magrittr'</code></pre>
 <code class="sourceCode R"><span><span class="co"># region to plot</span></span>
 <span><span class="va">region</span> <span class="op">&lt;-</span> <span class="st">"chr4:73,394,000-73,425,000"</span></span>
 <span></span>
+<span><span class="co"># draw axis</span></span>
+<span><span class="va">kp</span> <span class="op">&lt;-</span> <span class="fu">plotKaryotype</span><span class="op">(</span>zoom <span class="op">=</span> <span class="va">region</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># transcript information</span></span>
 <span><span class="va">genes.data</span> <span class="op">&lt;-</span> <span class="fu">makeGenesDataFromTxDb</span><span class="op">(</span><span class="va">TxDb.Hsapiens.UCSC.hg38.knownGene</span>,</span>
 <span>                                    karyoplot<span class="op">=</span><span class="va">kp</span>,</span>
@@ -549,42 +581,16 @@ Attaching package: 'magrittr'</code></pre>
   Use 'single.strand.genes.only=FALSE' to get all the genes in a
   GRangesList object, or use suppressMessages() to suppress this message.</code></pre>
 </div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene, karyoplot = kp, : object 'kp' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># merge overlapping transcripts</span></span>
-<span><span class="va">genes.data</span> <span class="op">&lt;-</span> <span class="fu">mergeTranscripts</span><span class="op">(</span><span class="va">genes.data</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in methods::is(genes.data, "GenesData"): object 'genes.data' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb26">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># draw axis</span></span>
-<span><span class="va">kp</span> <span class="op">&lt;-</span> <span class="fu">plotKaryotype</span><span class="op">(</span>zoom <span class="op">=</span> <span class="va">region</span><span class="op">)</span></span>
+<span><span class="va">genes.data</span> <span class="op">&lt;-</span> <span class="fu">mergeTranscripts</span><span class="op">(</span><span class="va">genes.data</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># draw genes</span></span>
-<span><span class="fu">kpPlotGenes</span><span class="op">(</span><span class="va">kp</span>, data<span class="op">=</span><span class="va">genes.data</span>, r0<span class="op">=</span><span class="fl">0</span>, r1<span class="op">=</span><span class="fl">0.15</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in methods::is(data, "TxDb"): object 'genes.data' not found</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb28">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># draw SNP density</span></span>
+<span><span class="fu">kpPlotGenes</span><span class="op">(</span><span class="va">kp</span>, data<span class="op">=</span><span class="va">genes.data</span>, r0<span class="op">=</span><span class="fl">0</span>, r1<span class="op">=</span><span class="fl">0.15</span><span class="op">)</span></span>
+<span><span class="co"># draw SNP density</span></span>
 <span><span class="fu">kpPlotDensity</span><span class="op">(</span><span class="va">kp</span>, data<span class="op">=</span><span class="va">alb_gr</span>, window<span class="op">=</span><span class="fl">100</span>, r0<span class="op">=</span><span class="fl">0.3</span>, r1<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre>
 </div>
 <figure><img src="fig/intro-bioconductor-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
@@ -701,9 +707,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/intro-bioconductor.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/intro-bioconductor.html",
-  "dateCreated": "2022-11-29",
-  "dateModified": "2022-11-29",
-  "datePublished": "2022-11-29"
+  "dateCreated": "2022-11-30",
+  "dateModified": "2022-11-30",
+  "datePublished": "2022-11-30"
 }
 
   </script><script>

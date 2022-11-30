@@ -153,7 +153,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data: <code>readr</code> and <code>readxl</code></a>
+        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -223,7 +223,6 @@
 <li><a href="#branches">Branches</a></li>
 <li><a href="#command-line-git">Command line git</a></li>
 <li><a href="#git-gotchas">Git gotchas</a></li>
-<li><a href="#keep-other-backups">Keep other backups</a></li>
 <li><a href="#resources">Resources</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -291,7 +290,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Version control with <code>git</code></h1>
-        <p> Last updated on 2022-11-29 | 
+        <p> Last updated on 2022-11-30 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/git.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -323,6 +322,32 @@
 <li>Demonstrate how stage and commit files</li>
 <li>Demonstrate pulls and pushes from a remote repository</li>
 </ul></div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="do-i-need-to-do-this-lesson" class="callout-inner">
+<h3 class="callout-title">Do I need to do this lesson?<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>If you’ve used <code>git</code> and <code>github</code> before, and are comfortable staging, committing, pushing and pulling changes, then you can skip this lesson.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>Read the rest of the lesson if you don’t know how to stage, commit, push or pull changes!</p>
 </div>
 </div>
 </div>
@@ -383,6 +408,20 @@
 <p>So far all the changes we’ve made have been to the <em>local</em> repository (that exists only on your computer). After you’ve made some commits, you should <strong>push</strong> the changes to your remote repository so that your collaborators can see them, and they’re backed up in the cloud. If someone else has made changes to the same branch, you might need to <strong>pull</strong> and <strong>merge</strong> any changes that are in the repository but not on your local computer first.</p>
 <figure><img src="https://www.janbasktraining.com/blog/uploads/images/image_750x_5d76346f0fbf8.jpg" alt="" class="figure mx-auto d-block"><figcaption>Working with remotes</figcaption></figure><p>You can push and pull from the same pop-up panel you get when you click <em>Commit</em>, or int the <em>Git</em> tab in the top-right pane.</p>
 <figure><img src="fig/git-pane-push-pull.png" alt="" class="figure mx-auto d-block"><figcaption>Pulling and pushing</figcaption></figure><p>Your first push should be pretty straightforward.</p>
+<div id="callout1" class="callout callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="generating-a-token" class="callout-inner">
+<h3 class="callout-title">Generating a token<a class="anchor" aria-label="anchor" href="#callout1"></a>
+</h3>
+<div class="callout-content">
+<p>The first time you try to push to a remote repo, you will be prompted for your password. This is somewhat misleading, because this git isn’t asking your account password, but <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" class="external-link">a token that you’ll need to generate</a>.</p>
+<p>To generate a token, head to <code>github</code>, log in and click the circle icon with a down arrow next to it in the top right hand corner of your screen. Select <em>Settings</em>, and from the left-hand menu select <em>Developer Settings</em>. On the left-hand menu on the new page, select <em>Personal Access Tokens &gt; Tokens (classic)</em> . On the right hand side, click <em>Generate new token &gt; Generate new token (classic)</em>. Fill in a name for the token in the <em>Note</em> box, select an Expiration period (I usually use 90 days, and I don’t recommend ‘No expiration’), and tick the <em>repo</em> box.</p>
+<p>This will generate a token that you’ll only be able to see once. Save it to a password manager in case you need it again, and then use it as your password if prompted.</p>
+</div>
+</div>
+</div>
 <p>If there are changes in the remote repository that you don’t have in your local repository, you’ll need to pull them before you can push any changes.</p>
 <figure><img src="fig/git-failed-push.png" alt="" class="figure mx-auto d-block"><figcaption>A failed push</figcaption></figure><p>The first time you try a pull like this, you might get this message:</p>
 <figure><img src="fig/git-failed-pull.png" alt="" class="figure mx-auto d-block"><figcaption>A failed push</figcaption></figure><p>This just means that you have to open a terminal and type in one of those options. I won’t go into details about what they all mean, but I usually use <code>git config pull.rebase false</code>. You’ll have to open a shell from the menu with <em>Tools &gt; Shell</em> (on Mac you can just use the terminal pane at the bottom left), type this command and press enter.</p>
@@ -422,9 +461,10 @@
 <p>Git was designed for working with source code (text files), not binaries or large datasets. Every time you check the status of your repository with <code>git status</code>, it looks at all the files that you’ve committed. If you have added large files, like NGS data, large images, or compiled binaries, git has to look through those files for changes, which can really slow things down.</p>
 <p>I tend to avoid adding any of the data that I’m working with to version control, unless it’s a very small text file or image. Github also limits the size of individual files, and the total size of each repository, so avoid hitting those limits by keeping large files separate. You can still keep them in the same directory as your code, but avoid doing <code>git add</code> on them.</p>
 </div>
-</section><section id="keep-other-backups"><h2 class="section-heading">Keep other backups<a class="anchor" aria-label="anchor" href="#keep-other-backups"></a>
-</h2>
-<hr class="half-width"><p>Although your code is pretty safe in the cloud, it’s good practice to keep other backups of your code elsewhere. Since your data shouldn’t be in your repository, you’ll need to think about other backups anyway. So keep your code and data backed up somewhere else, like other clouds (e.g. One Drive), CMRI shared folders and portable hard drives (but never <em>only</em> on a portable hard drive).</p>
+<div class="section level3">
+<h3 id="keep-other-backups">Keep other backups<a class="anchor" aria-label="anchor" href="#keep-other-backups"></a></h3>
+<p>Although your code is pretty safe in the cloud, it’s good practice to keep other backups of your code elsewhere. Since your data shouldn’t be in your repository, you’ll need to think about other backups anyway. So keep your code and data backed up somewhere else, like other clouds (e.g. One Drive), CMRI shared folders and portable hard drives (but never <em>only</em> on a portable hard drive).</p>
+</div>
 </section><section id="resources"><h2 class="section-heading">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
 <hr class="half-width"><ul><li><a href="https://git-scm.com/book/en/v2" class="external-link">Git documentation</a></li>
@@ -502,9 +542,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/git.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/git.html",
-  "dateCreated": "2022-11-29",
-  "dateModified": "2022-11-29",
-  "datePublished": "2022-11-29"
+  "dateCreated": "2022-11-30",
+  "dateModified": "2022-11-30",
+  "datePublished": "2022-11-30"
 }
 
   </script><script>

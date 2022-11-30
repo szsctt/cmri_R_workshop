@@ -153,7 +153,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data: <code>readr</code> and <code>readxl</code></a>
+        <a href="reading-in-data-readr-and-readxl.html">2. Reading in data</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -290,7 +290,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data visualization</h1>
-        <p> Last updated on 2022-11-29 | 
+        <p> Last updated on 2022-11-30 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/visualizing-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -329,6 +329,65 @@
 </div>
 </div>
 </div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="do-i-need-to-do-this-lesson" class="callout-inner">
+<h3 class="callout-title">Do I need to do this lesson?<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+</h3>
+<div class="callout-content">
+<p>If you’ve already used <code>ggplot2</code> for making plots, chances are you already know most of the material covered.</p>
+<p>Load the weather data we used in the previous lesson, and then make a plot (with points and lines) of the temperature on each day. Show both the minimum and maximum temperature on the same axes (using different colours for each), and facet on city. Remove the x axis title, change the colours to something other than the default, set the y axis label and title manually, and use a custom theme.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add label</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"coral"</span>, <span class="st">"deepskyblue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># custom theme</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># remove x axis label</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="warning" tabindex="0"><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="warning" tabindex="0"><code>Warning: Removed 1 row containing missing values (`geom_line()`).</code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+</div>
+</div>
+</div>
 <p>After all of that data manipulation perhaps you, like me, are a bit sick of looking at tables. Using visualizations is essential for communicating your results, because <a href="https://ab604.github.io/docs/coding-together-2019/viz.html" class="external-link">summary statistics can be misleading</a>, and because large datasets don’t display well in tables.</p>
 <p>I won’t go into too much theory here about the best way of visually representing different kinds of datasets, but I’d recommend everyone take a look at <a href="https://clauswilke.com/dataviz/" class="external-link">Claus Wilke’s excellent book ‘Fundamentals of data visualization’</a>.</p>
 <p>One popular framework for generating plots is the <a href="http://vita.had.co.nz/papers/layered-grammar.pdf" class="external-link">‘grammar of graphics’ approach</a>. The idea here is to build up a graphic from multiple layers of components, including:</p>
@@ -338,30 +397,14 @@
 <li>facets</li>
 </ul><p>In this lesson we explore how to use these elements to make informative and visually appealing graphs.</p>
 <p>We’ll again use the weather data for Brisbane and Sydney, so let’s load this dataset.</p>
-<div class="codewrapper sourceCode" id="cb1">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load tidyverse</span></span>
-<span><span class="kw">library</span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># data files - readr can also read data from the internet</span></span>
+<span><span class="kw">library</span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># data files - readr can also read data from the internet</span></span>
 <span><span class="va">data_dir</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/szsctt/cmri_R_workshop/main/episodes/data/"</span></span>
 <span><span class="va">data_files</span> <span class="op">&lt;-</span> <span class="fu">file.path</span><span class="op">(</span><span class="va">data_dir</span>, <span class="fu">c</span><span class="op">(</span><span class="st">"weather_sydney.csv"</span>, <span class="st">"weather_brisbane.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -431,18 +474,18 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
 </h2>
 <hr class="half-width"><p>Any graph has to start with a dataset - and in the case of <code>ggplot</code>, this has to be a data frame (or tibble). We also start by specifying the aesthetic using <code>aes()</code>, which tells ggplot which columns should go on the x and y axes.</p>
 <p>Let’s say that we want to plot the daily maximum temperature over the month for both cities. You can pipe the data into <code>ggplot()</code>.</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">max_temp_c</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>But we just get a blank graph! We have to tell ggplot how we want the data to be plotted (lines, points, violins, density, etc).</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>But we just get a blank graph! We have to tell ggplot how we want the data to be plotted (lines, points, violins, density, etc).</p>
 </section><section id="geoms"><h2 class="section-heading">geoms<a class="anchor" aria-label="anchor" href="#geoms"></a>
 </h2>
 <hr class="half-width"><p>We use <code>geoms</code> to tell ggplot how we want to plot the data. In this case, we can use points:</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -455,9 +498,9 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
 </h3>
 <pre class="warning" tabindex="0"><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Note that we use a <code>+</code> to add layers to a ggplot, not the pipe (<code>%&gt;%</code>). The <code>ggplot2</code> package was developed before the <code>magrittr</code> package that contains <code>%&gt;%</code>, so it uses the addition operator instead.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Note that we use a <code>+</code> to add layers to a ggplot, not the pipe (<code>%&gt;%</code>). The <code>ggplot2</code> package was developed before the <code>magrittr</code> package that contains <code>%&gt;%</code>, so it uses the addition operator instead.</p>
 <p><code>ggplot</code> doesn’t know how to plot missing values, so it removes those rows and warns you that it’s doing so. Those warnings about missing values are going to get annoying, so I use a <code>tidyr</code> function to remove rows with <code>NA</code> in any column.</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -466,74 +509,29 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
 <span>  <span class="fu">drop_na</span><span class="op">(</span><span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <p>There are a large number of <code>geoms</code> for displaying data in different ways - we will explore some here, but you can find more in the <a href="https://ggplot2.tidyverse.org/" class="external-link"><code>ggplot</code> documentation</a>.</p>
-<div id="challenge1" class="callout challenge">
+<div class="section level3">
+<h3 id="geoms-and-aesthetics">Geoms and aesthetics<a class="anchor" aria-label="anchor" href="#geoms-and-aesthetics"></a></h3>
+<p>There are also other aesthetics you can specify, including <strong>colour</strong> (e.g. the colour of lines), <strong>fill</strong> (e.g. the colour used to fill a boxplot), <strong>size</strong> (e.g. the size of a point) and <strong>shape</strong> (e.g. the shape of a point).</p>
+<p>Not all aesthetics are used by all <code>geoms</code>. In the documentation for each <code>geom</code> there will always be a section that tells you which aesthetics a geom understands. For example, the <a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">reference page for <code>geom_point()</code></a> tells us that this <code>geom</code> understands:</p>
+<ul><li>x</li>
+<li>y</li>
+<li>alpha (transparency)</li>
+<li>colour</li>
+<li>fill</li>
+<li>group</li>
+<li>shape</li>
+<li>size</li>
+<li>stroke</li>
+</ul><div id="challenge2" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="challenge-1-wind-speed" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Wind speed<a class="anchor" aria-label="anchor" href="#challenge1"></a>
+<h3 class="callout-title">Challenge 1: Wind speed<a class="anchor" aria-label="anchor" href="#challenge2"></a>
 </h3>
 <div class="callout-content">
-<p>Using <code>geom_freqpoly()</code>, make frequency polynomials of the speed of the maximum wind gust on each day for each city, using 10 bins (you might need to check the documentation).</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  Show me the solution
-  </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">speed_max_wind_gust_kph</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_freqpoly</span><span class="op">(</span>bins<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
-</div>
-</div>
-</div>
-<div class="section level3">
-<h3 id="layering-geoms">Layering geoms<a class="anchor" aria-label="anchor" href="#layering-geoms"></a></h3>
-<p>Our initial graph looks OK, but we might want to know which temperature belongs to which city. Let’s add some color to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.</p>
-<div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot temp over time with lines and points</span></span>
-<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>If we didn’t care about the time aspect and just wanted to compare the distribution of temperatures instead, we could plot city on the x axis, temperature on the y axis. To avoid points being on top of each other when the temperature is the same , I use <code>geom_jitter()</code> instead of <code>geom_point()</code>, which adds random jitter to each point before plotting.</p>
-<div class="codewrapper sourceCode" id="cb11">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># show differences between temps in Brisbane and Sydney</span></span>
-<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_jitter</span><span class="op">(</span>height<span class="op">=</span><span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Notice that the <code>geoms</code> can also take arguments - for example, I’ve used <code>geom_jitter(height=0, width=0.1</code> to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).</p>
-<div id="challenge2" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="challenge-2-density-and-rug" class="callout-inner">
-<h3 class="callout-title">Challenge 2: Density and rug<a class="anchor" aria-label="anchor" href="#challenge2"></a>
-</h3>
-<div class="callout-content">
-<p>Use <code>geom_density()</code> and <code>geom_rug()</code> to show the difference in maximum temperatures between Brisbane and Sydney (with different colors for the two cities).</p>
-<p>Do you prefer this representation to the violin plot above?</p>
+<p>Using <code>geom_freqpoly()</code>, make frequency polynomials of the wind speed (<code>speed_max_wind_gust_kph</code>). Use 10 bins for each frequency polynomial (you might need to check the documentation)</p>
+<p>Use the <code>colour</code> aesthetic to colour by city.</p>
 </div>
 </div>
 </div>
@@ -544,132 +542,56 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">max_temp_c</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_rug</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">speed_max_wind_gust_kph</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_freqpoly</span><span class="op">(</span>bins<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="summary-statistics">Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a></h3>
-<p>Also notice that <code>ggplot</code> automatically calculates the density for us when it plots the violins. There are a number of other statistical transformations that <code>ggplot</code> can calculate for us. For example, we can plot the proportion of wind directions at 9am for each city:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<h3 id="layering-geoms">Layering geoms<a class="anchor" aria-label="anchor" href="#layering-geoms"></a></h3>
+<p>Our initial graph looks OK, but we might want to know which temperature belongs to which city. Let’s add some colour to the aesthetic so we can compare the temperatures, as well as some lines to make it easier to see the change in temperature over time.</p>
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># count number of observation of each direction in each city</span></span>
+<code class="sourceCode R"><span><span class="co"># plot temp over time with lines and points</span></span>
 <span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span>, <span class="va">wind_direction_9am</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>count <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="co"># make plot</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y <span class="op">=</span> <span class="va">count</span>, fill<span class="op">=</span><span class="va">wind_direction_9am</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_bar</span><span class="op">(</span>position<span class="op">=</span><span class="st">"fill"</span>, stat<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'city'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Notice that although we summarized the <em>count</em> of observations of each direction (i.e. number of days), ggplot plots the <em>proportion</em> of observations.</p>
-</div>
-<div class="section level3">
-<h3 id="using-multiple-datasets">Using multiple datasets<a class="anchor" aria-label="anchor" href="#using-multiple-datasets"></a></h3>
-<p>You can also use independent data and aesthetics for different <code>geoms</code>. For example, returning to our plot of temperature over time, we could add a horizontal line for each city to show the mean temperature.</p>
-<div class="codewrapper sourceCode" id="cb15">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># get mean temp for each city</span></span>
-<span><span class="va">mean_temps</span> <span class="op">&lt;-</span> <span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">summarise</span><span class="op">(</span>mean_temp <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">max_temp_c</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># make plot</span></span>
-<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># data and aesthetics are inherited from ggplot call</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># add horizontal line with different data and aesthetic</span></span>
-<span>  <span class="fu">geom_hline</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mean_temps</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>yintercept<span class="op">=</span><span class="va">mean_temp</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span></span></code></pre>
-</div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
-<div class="section level3">
-<h3 id="non-gglot-geoms">Non-gglot geoms<a class="anchor" aria-label="anchor" href="#non-gglot-geoms"></a></h3>
-<p>With the popularity of <code>ggplot2</code>, there are a number of other packages that provide <code>geoms</code> that you can use in your <code>ggplot</code>.</p>
-<p>I won’t go into any detail about these, but a few that I’ve used include <code>ggforce::geom_sina()</code>, <code>ggbeeswarm::geom_beeswarm()</code> and <code>ggwordcloud::geom_wordcloud()</code>. If you want to make a particular kind of graph, somebody has probably made a <code>geom</code> for it.</p>
-</div>
-</section><section id="facets"><h2 class="section-heading">Facets<a class="anchor" aria-label="anchor" href="#facets"></a>
-</h2>
-<hr class="half-width"><p>Let’ say we want to compare the minimum and maximum temperatures for the two cities over time. We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the color indicates whether the temperature was minimum or maximum.</p>
-<p>However, currently our temperature data is spread out over two columns: <code>mean_temp_c</code> and <code>max_temp_c</code>, but in <code>ggplot</code> we need to assign the color using <code>color=temp_type</code>. So in order to make this plot, we need to rearrange the data a little using <code>dplyr</code> functions.</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># pivot longer to facilitate plotting</span></span>
-<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, shape<span class="op">=</span><span class="va">city</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This works, but it’s a little difficult to tell the circles and the triangles apart. Instead, we can use facets to plot the data from each city side by side.</p>
-<div class="codewrapper sourceCode" id="cb17">
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-8-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>If we didn’t care about the time aspect and just wanted to compare the distribution of temperatures instead, we could plot city on the x axis, temperature on the y axis. To avoid points being on top of each other when the temperature is the same , I use <code>geom_jitter()</code> instead of <code>geom_point()</code>, which adds random jitter to each point before plotting.</p>
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<code class="sourceCode R"><span><span class="co"># show differences between temps in Brisbane and Sydney</span></span>
 <span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># facet on city</span></span>
-<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_jitter</span><span class="op">(</span>height<span class="op">=</span><span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>You can facet on multiple variables, for example:</p>
-<div class="codewrapper sourceCode" id="cb18">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
-<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># facet on city</span></span>
-<span>  <span class="fu">facet_grid</span><span class="op">(</span>cols<span class="op">=</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span>, rows<span class="op">=</span><span class="fu">vars</span><span class="op">(</span><span class="va">temp_type</span><span class="op">)</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span> </span></code></pre>
-</div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>The <code>scales="free_y"</code> argument allows the y-axis scales on each row to be different.</p>
-<p>In this case I think the comparison is clearer without the extra faceting variable. Don’t go too crazy with your faceting, but instead think about what story you are trying to tell.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Notice that the <code>geoms</code> can also take arguments - for example, I’ve used <code>geom_jitter(height=0, width=0.1</code> to control the amount of jitter added to each point (none in the y direction, a little bit in the x direction).</p>
 <div id="challenge3" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
-<div id="challenge-3-facets" class="callout-inner">
-<h3 class="callout-title">Challenge 3: Facets<a class="anchor" aria-label="anchor" href="#challenge3"></a>
+<div id="challenge-2-density-and-rug" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Density and rug<a class="anchor" aria-label="anchor" href="#challenge3"></a>
 </h3>
 <div class="callout-content">
-<p>Use facets to show the difference in wind speeds by direction in each city. Facet on city, and color the density for wind speed (<code>speed_max_wind_gust_kph</code>) by direction (<code>dir_max_wind_gust</code>). Show each city in a different row, with different y axes.</p>
+<p>Use <code>geom_density()</code> and <code>geom_rug()</code> to show the difference in maximum temperatures between Brisbane and Sydney (with different colours for the two cities).</p>
+<p>Do you prefer this representation to the violin plot above?</p>
 </div>
 </div>
 </div>
@@ -680,14 +602,194 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb19">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">speed_max_wind_gust_kph</span>, color<span class="op">=</span><span class="va">dir_max_wind_gust</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">max_temp_c</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_rug</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="summary-statistics">Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"></a></h3>
+<p>Also notice that <code>ggplot</code> automatically calculates the density for us when it plots the violins. There are a number of other statistical transformations that <code>ggplot</code> can calculate for us. For example, we can plot the proportion of wind directions at 9am for each city:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># count number of observation of each direction in each city</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span>, <span class="va">wind_direction_9am</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>count <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># make plot</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y <span class="op">=</span> <span class="va">count</span>, fill<span class="op">=</span><span class="va">wind_direction_9am</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span>position<span class="op">=</span><span class="st">"fill"</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'city'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-11-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Notice that although we summarized the <em>count</em> of observations of each direction (i.e. number of days), ggplot plots the <em>proportion</em> of observations.</p>
+<div id="challenge4" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="challenge-3-stats" class="callout-inner">
+<h3 class="callout-title">Challenge 3: Stats<a class="anchor" aria-label="anchor" href="#challenge4"></a>
+</h3>
+<div class="callout-content">
+<p>Try removing the <code>position='fill'</code> argument from the code to generate the above plot. What difference does it make?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># count number of observation of each direction in each city</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span>, <span class="va">wind_direction_9am</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>count <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># make plot</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y <span class="op">=</span> <span class="va">count</span>, fill<span class="op">=</span><span class="va">wind_direction_9am</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>`summarise()` has grouped output by 'city'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-12-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Now we get a <strong>count</strong> rather than a <strong>proportion</strong> - the y axis has a different scale and the bars are different heights.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="using-multiple-datasets">Using multiple datasets<a class="anchor" aria-label="anchor" href="#using-multiple-datasets"></a></h3>
+<p>You can also use independent data and aesthetics for different <code>geoms</code>. For example, returning to our plot of temperature over time, we could add a horizontal line for each city to show the mean temperature.</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get mean temp for each city</span></span>
+<span><span class="va">mean_temps</span> <span class="op">&lt;-</span> <span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>mean_temp <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">max_temp_c</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># make plot</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># data and aesthetics are inherited from ggplot call</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add horizontal line with different data and aesthetic</span></span>
+<span>  <span class="fu">geom_hline</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mean_temps</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>yintercept<span class="op">=</span><span class="va">mean_temp</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-13-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<div class="section level3">
+<h3 id="non-gglot-geoms">Non-gglot geoms<a class="anchor" aria-label="anchor" href="#non-gglot-geoms"></a></h3>
+<p>With the popularity of <code>ggplot2</code>, there are a number of other packages that provide <code>geoms</code> that you can use in your <code>ggplot</code>.</p>
+<p>I won’t go into any detail about these, but a few that I’ve used include <code>ggforce::geom_sina()</code>, <code>ggbeeswarm::geom_beeswarm()</code> and <code>ggwordcloud::geom_wordcloud()</code>. If you want to make a particular kind of graph, somebody has probably made a <code>geom</code> for it.</p>
+</div>
+</section><section id="facets"><h2 class="section-heading">Facets<a class="anchor" aria-label="anchor" href="#facets"></a>
+</h2>
+<hr class="half-width"><p>Let’ say we want to compare the minimum and maximum temperatures for the two cities over time. We could make a plot with time on the x axis and temperature on the y axis, where the shape of the point indicates the city and the colour indicates whether the temperature was minimum or maximum.</p>
+<p>However, currently our temperature data is spread out over two columns: <code>mean_temp_c</code> and <code>max_temp_c</code>, but in <code>ggplot</code> we need to assign the colour using <code>colour=temp_type</code>. So in order to make this plot, we need to rearrange the data a little using <code>dplyr</code> functions.</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer to facilitate plotting</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, shape<span class="op">=</span><span class="va">city</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This works, but it’s a little difficult to tell the circles and the triangles apart. Instead, we can use facets to plot the data from each city side by side.</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>You can facet on multiple variables, for example:</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># pivot longer</span></span>
+<span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># facet on city</span></span>
+<span>  <span class="fu">facet_grid</span><span class="op">(</span>cols<span class="op">=</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span>, rows<span class="op">=</span><span class="fu">vars</span><span class="op">(</span><span class="va">temp_type</span><span class="op">)</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span> </span></code></pre>
+</div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>The <code>scales="free_y"</code> argument allows the y-axis scales on each row to be different.</p>
+<p>In this case I think the comparison is clearer without the extra faceting variable. Don’t go too crazy with your faceting, but instead think about what story you are trying to tell.</p>
+<div id="challenge5" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="challenge-4-facets" class="callout-inner">
+<h3 class="callout-title">Challenge 4: Facets<a class="anchor" aria-label="anchor" href="#challenge5"></a>
+</h3>
+<div class="callout-content">
+<p>Use facets to show the difference in wind speeds by direction in each city. Facet on city, and colour the density for wind speed (<code>speed_max_wind_gust_kph</code>) by direction (<code>dir_max_wind_gust</code>). Show each city in a different row, with different y axes.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution5" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution5" aria-expanded="false" aria-controls="collapseSolution5">
+  <h4 class="accordion-header" id="headingSolution5">
+  Show me the solution
+  </h4>
+</button>
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weather</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">speed_max_wind_gust_kph</span>, colour<span class="op">=</span><span class="va">dir_max_wind_gust</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">facet_grid</span><span class="op">(</span>rows <span class="op">=</span> <span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span></span></code></pre>
 </div>
@@ -738,7 +840,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 -Inf</code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This is not a particularly informative graphs because there are so few points for each direction.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This is not a particularly informative graphs because there are so few points for each direction.</p>
 </div>
 </div>
 </div>
@@ -749,8 +851,8 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <div class="section level3">
 <h3 id="axes-labels">Axes labels<a class="anchor" aria-label="anchor" href="#axes-labels"></a></h3>
 <p>It’s important to always label your x and y axes - <code>ggplot</code> does this for you using the column names, but usually the column names are short for ease of coding but you want your labels to be more informative/pretty.</p>
-<p>Use the <code>labs()</code> function to add labels, and <code>scale_color_discrete()</code> to change the title and label for the legend.</p>
-<div class="codewrapper sourceCode" id="cb22">
+<p>Use the <code>labs()</code> function to add labels, and <code>scale_colour_discrete()</code> to change the title and label for the legend.</p>
+<div class="codewrapper sourceCode" id="cb25">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -759,7 +861,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
@@ -767,18 +869,18 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># change legend</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Note that when changing the legend, you have to match the function to the aesthetic. So <code>scale_color_disrete()</code> acts on a discrete color scale, <code>scale_color_continuous()</code> acts on a continuous color scale, <code>scale_fill_discrete()</code> acts on a discrete fill scale, etc.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Note that when changing the legend, you have to match the function to the aesthetic. So <code>scale_colour_disrete()</code> acts on a discrete colour scale, <code>scale_colour_continuous()</code> acts on a continuous colour scale, <code>scale_fill_discrete()</code> acts on a discrete fill scale, etc.</p>
 <p>If you’re trying to change a legend but it doesn’t seem to be working, check that you used the correct function for your data type and aesthetic!</p>
 </div>
 <div class="section level3">
 <h3 id="scales">Scales<a class="anchor" aria-label="anchor" href="#scales"></a></h3>
-<p>We used <code>scale_color_disrete()</code> to change the labels in the legend earlier, but there are a number of scale functions in <code>ggplot2</code> that can be used to change many other aspects of graphs.</p>
+<p>We used <code>scale_colour_disrete()</code> to change the labels in the legend earlier, but there are a number of scale functions in <code>ggplot2</code> that can be used to change many other aspects of graphs.</p>
 <div class="section level4">
-<h4 id="color-scales">Color scales<a class="anchor" aria-label="anchor" href="#color-scales"></a></h4>
-<p>If you are unhappy with the default color scale that <code>ggplot</code> provides, you can change it using an appropriate scaling function - for example, <code>scale_color_discrete()</code> for discrete color scales, <code>scale_fill_continuous</code> for continuous fill scales, etc.</p>
-<div class="codewrapper sourceCode" id="cb23">
+<h4 id="colour-scales">Colour scales<a class="anchor" aria-label="anchor" href="#colour-scales"></a></h4>
+<p>If you are unhappy with the default colour scale that <code>ggplot</code> provides, you can change it using an appropriate scaling function - for example, <code>scale_colour_discrete()</code> for discrete colour scales, <code>scale_fill_continuous</code> for continuous fill scales, etc.</p>
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -787,20 +889,28 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change color scale</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>There are a number of different ways you can specify colors to use. One is to use color names, as above, although this requires you to know what the allowed color names are. I tend to use <a href="https://r-graph-gallery.com/42-colors-names.html" class="external-link">this list of color names for R</a>.</p>
-<p>Another is to use a package to generate color names for you. For example, I tend to use <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html" class="external-link"><code>virids</code></a> for continuous scales because it’s colorblind-friendly. Another favourite is <a href="https://github.com/karthik/wesanderson" class="external-link"><code>wesanderson</code></a>, which makes palettes from Wes Anderson movies.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<div class="section level4">
+<h4 id="specifying-colors">Specifying colors<a class="anchor" aria-label="anchor" href="#specifying-colors"></a></h4>
+<p>There are a number of different ways you can specify colours to use. One is to use colour names, as above, although this requires you to know what the allowed colour names are. I tend to use <a href="https://r-graph-gallery.com/42-colours-names.html" class="external-link">this list of colour names for R</a>.</p>
+<p>Another is to use a package to generate colour names for you. For example, I tend to use <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html" class="external-link"><code>virids</code></a> for continuous scales because it’s colourblind-friendly. Another favourite is <a href="https://github.com/karthik/wesanderson" class="external-link"><code>wesanderson</code></a>, which makes palettes from Wes Anderson movies.</p>
+<p>Finally, you can also use RGB hexidecimal values to specify colours (as a string, e.g. ‘#52934D’). There are several websites you can use to create colours and find their codes, for example <a href="https://htmlcolorcodes.com/color-picker/" class="external-link">htmlcolorcodes.com</a>.</p>
+<p>When choosing colors, it’s worth thinking about how colour blind people might see your plot. There are lots of resources on the internet about <a href="https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40" class="external-link">colourblind-friendly palettes</a>, and you can upload your plot to <a href="https://www.color-blindness.com/coblis-color-blindness-simulator/" class="external-link">coblis</a> to see how it might appear to people with various kinds of colorblindness.</p>
+</div>
+<div class="section level4">
+<h4 id="applying-logarithmic-scales">Applying logarithmic scales<a class="anchor" aria-label="anchor" href="#applying-logarithmic-scales"></a></h4>
 <p>Let’s say we now have exponentially distributed data. None of our weather data really is, so let’s simulate some by drawing from two different exponential distributions with different rates.</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -819,8 +929,8 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_jitter</span><span class="op">(</span>height <span class="op">=</span> <span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This plot isn’t so nice because the two groups are on different scales. Changing the scale on your plot to logarithmic is easy with <code>ggplot</code>. Just add <code>scale_x_log10()</code>, <code>scale_y_log10()</code>, etc:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This plot isn’t so nice because the two groups are on different scales. Changing the scale on your plot to logarithmic is easy with <code>ggplot</code>. Just add <code>scale_x_log10()</code>, <code>scale_y_log10()</code>, etc:</p>
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -831,12 +941,12 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">geom_jitter</span><span class="op">(</span>height <span class="op">=</span> <span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-18-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 <div class="section level3">
 <h3 id="themes">Themes<a class="anchor" aria-label="anchor" href="#themes"></a></h3>
 <p><code>ggplot</code> also allows you to customize the appearance of the plot in other ways. Getting back to our weather example, if you wanted to remove the x axis labels because you decided that it’s already clear what is on that axis, you can do that with <code>theme()</code>.</p>
-<div class="codewrapper sourceCode" id="cb26">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -845,21 +955,21 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># plot lines and points</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change color scale</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># remove x axis label</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-19-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>There are many aspects of the plot you can customize this way: check the <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link"><code>ggplot2</code> documentation</a> for more information.</p>
-<p>You can also change many aspects of the plot at once with pre-configured themes, for example <code>theme_classic()</code>.</p>
-<div class="codewrapper sourceCode" id="cb27">
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-22-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>There are many aspects of the plot you can customize this way: check the <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link"><code>ggplot2</code> documentation</a> for more information.</p>
+<p>You can also change many aspects of the plot at once with pre-configured themes, for example <code>theme_light()</code>.</p>
+<div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -868,45 +978,45 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># plot lines and points</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change color scale</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># change to theme classic</span></span>
 <span>  <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># remove x axis label</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Note that we have to do this <strong>before</strong> we remove the x axis label, because in <code>theme_light()</code>, the <code>axis.title.x</code> parameter is set to something other than <code>element_blank()</code>, so this would overwrite our call to <code>theme()</code>.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-23-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Note that we have to do this <strong>before</strong> we remove the x axis label, because in <code>theme_light()</code>, the <code>axis.title.x</code> parameter is set to something other than <code>element_blank()</code>, so this would overwrite our call to <code>theme()</code>.</p>
 <p>You can find out more about the other available themes <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html?q=complete%20themes" class="external-link">in the <code>ggplot2</code> documentation</a>.</p>
-<div id="challenge4" class="callout challenge">
+<div id="challenge6" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
-<div id="challenge-4-themes-and-colors" class="callout-inner">
-<h3 class="callout-title">Challenge 4: Themes and colors<a class="anchor" aria-label="anchor" href="#challenge4"></a>
+<div id="challenge-5-themes-and-colours" class="callout-inner">
+<h3 class="callout-title">Challenge 5: Themes and colours<a class="anchor" aria-label="anchor" href="#challenge6"></a>
 </h3>
 <div class="callout-content">
-<p>Make the same plot as above, but add a different theme from the <code>ggplot</code> documentation, and different colors for the minimum and maximum.</p>
+<p>Make the same plot as above, but add a different theme from the <code>ggplot</code> documentation, and different colours for the minimum and maximum.</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution6" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
-  <h4 class="accordion-header" id="headingSolution4">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution6" aria-expanded="false" aria-controls="collapseSolution6">
+  <h4 class="accordion-header" id="headingSolution6">
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
 <div class="accordion-body">
 <p>This is open-ended, but one solution is:</p>
-<div class="codewrapper sourceCode" id="cb28">
+<div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -915,20 +1025,21 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change color scale</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"coral"</span>, <span class="st">"deepskyblue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"coral"</span>, <span class="st">"deepskyblue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># add minimal theme</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># remove x axis label</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-21-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-24-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
 </div>
@@ -940,7 +1051,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 </h2>
 <hr class="half-width"><p>Saving plots with <code>ggplot</code> is easy - just use <code>ggsave()</code>. This will either save the last plot you generated, or you can assign the plot to a variable and use that to tell the function while plot to save.</p>
 <p>It works with a variety of formats - I usually use <code>.pdf</code> as a vector format (e.g. for publications) and <code>.png</code> as a raster format (e.g. for slides). The function will infer the format you want from the file name you provide. You can also specify the <code>width</code> and <code>height</code> of the output file (you’ll probably want <code>units="cm"</code>).</p>
-<div class="codewrapper sourceCode" id="cb29">
+<div class="codewrapper sourceCode" id="cb32">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -950,15 +1061,15 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># plot lines and points</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span>, title <span class="op">=</span> <span class="st">"November temperatures"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change color scale</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># change to theme classic</span></span>
 <span>  <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># remove x axis label</span></span>
@@ -973,7 +1084,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <p>I think figures should be autogenerated as part of the data analysis pipeline (which should also be automated), and they should come out of the pipeline ready to be sent to the printer, no manual post-processing needed. I see a lot of trainees autogenerate rough drafts of their figures, which they then import into Illustrator for sprucing up. There are several reasons why this is a bad idea. First, the moment you manually edit a figure, your final figure becomes irreproducible. A third party cannot generate the exact same figure you did. While this may not matter much if all you did was change the font of the axis labels, the lines are blurry, and it’s easy to cross over into territory where things are less clear cut. As an example, let’s say you want to manually replace cryptic labels with more readable ones. A third party may not be able to verify that the label replacement was appropriate. Second, if you add a lot of manual post-processing to your figure-preparation pipeline then you will be more reluctant to make any changes or redo your work. Thus, you may ignore reasonable requests for change made by collaborators or colleagues, or you may be tempted to re-use an old figure even though you actually regenerated all the data. These are not made-up examples. I’ve seen all of them play out with real people and real papers. Third, you may yourself forget what exactly you did to prepare a given figure, or you may not be able to generate a future figure on new data that exactly visually matches your earlier figure.</p>
 </blockquote>
 <p>To combine plots together, I often use the <code>patchwork</code> package (although there are also good alternatives, such as <code>cowplot</code> for the aforementioned Claus Wilke). In this package, we can combine plots using the <code>+</code> and <code>/</code> operators.</p>
-<div class="codewrapper sourceCode" id="cb30">
+<div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -985,15 +1096,15 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">city</span>, <span class="va">date</span>, <span class="va">max_temp_c</span>, <span class="va">min_temp_c</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"temp"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"temp_type"</span>, values_to<span class="op">=</span><span class="st">"temp"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co"># compare minimum and maximum temps in two cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, color<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">date</span>, y<span class="op">=</span><span class="va">temp</span>, colour<span class="op">=</span><span class="va">temp_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># facet on city</span></span>
 <span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu">vars</span><span class="op">(</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># add label</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Date"</span>, y<span class="op">=</span><span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change color scale</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="co"># change colour scale</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Type"</span>, labels<span class="op">=</span><span class="fu">c</span><span class="op">(</span><span class="st">"max"</span>, <span class="st">"min"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plot wind directions</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">weather</span> <span class="op">%&gt;%</span> </span>
@@ -1011,26 +1122,26 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 <span><span class="co"># plot temperatures</span></span>
 <span><span class="va">p3</span> <span class="op">&lt;-</span> <span class="va">weather</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="co">#  compare max temps between cities</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">city</span>, y<span class="op">=</span><span class="va">max_temp_c</span>, colour<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_violin</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_jitter</span><span class="op">(</span>height<span class="op">=</span><span class="fl">0</span>, width<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># change colors to avoid confusion with p1</span></span>
-<span>  <span class="fu">scale_color_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">wesanderson</span><span class="fu">::</span><span class="fu">wes_palette</span><span class="op">(</span><span class="st">"GrandBudapest1"</span>, n<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># change colours to avoid confusion with p1</span></span>
+<span>  <span class="fu">scale_colour_discrete</span><span class="op">(</span>type<span class="op">=</span><span class="fu">wesanderson</span><span class="fu">::</span><span class="fu">wes_palette</span><span class="op">(</span><span class="st">"GrandBudapest1"</span>, n<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># axis labels</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"City"</span>, y<span class="op">=</span><span class="st">"Max. temperature (°C)"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">combined_plot</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">/</span> <span class="op">(</span><span class="va">p2</span> <span class="op">+</span> <span class="va">p3</span><span class="op">)</span></span>
 <span><span class="va">combined_plot</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-23-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Patchwork also <a href="https://patchwork.data-imaginist.com/articles/guides/annotation.html" class="external-link">allows you to add annotation</a> to your combined plot, for example labels ‘A’, ‘B’, ‘C’.</p>
-<div class="codewrapper sourceCode" id="cb31">
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-26-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Patchwork also <a href="https://patchwork.data-imaginist.com/articles/guides/annotation.html" class="external-link">allows you to add annotation</a> to your combined plot, for example labels ‘A’, ‘B’, ‘C’.</p>
+<div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_plot</span> <span class="op">+</span></span>
 <span>  <span class="fu">plot_annotation</span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">'A'</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-24-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>There are many more features of <code>patchwork</code> which I will leave you to explore - the documentation is linked in the resources section. For example, <code>patchwork</code> will combine things other than <code>ggplot</code>s if you can convert them to a form that it understands using <code>ggplotify::as_ggplot()</code>.</p>
+<figure><img src="fig/visualizing-data-rendered-unnamed-chunk-27-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>There are many more features of <code>patchwork</code> which I will leave you to explore - the documentation is linked in the resources section. For example, <code>patchwork</code> will combine things other than <code>ggplot</code>s if you can convert them to a form that it understands using <code>ggplotify::as_ggplot()</code>.</p>
 </section><section id="resources"><h2 class="section-heading">Resources<a class="anchor" aria-label="anchor" href="#resources"></a>
 </h2>
 <hr class="half-width"><ul><li>
@@ -1113,9 +1224,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/visualizing-data.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/visualizing-data.html",
-  "dateCreated": "2022-11-29",
-  "dateModified": "2022-11-29",
-  "datePublished": "2022-11-29"
+  "dateCreated": "2022-11-30",
+  "dateModified": "2022-11-30",
+  "datePublished": "2022-11-30"
 }
 
   </script><script>
