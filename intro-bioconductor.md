@@ -271,6 +271,19 @@ genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
 ```
 
 ```r
+# add gene names
+genes.data <- addGeneNames(genes.data)
+```
+
+```{.output}
+Loading required package: org.Hs.eg.db
+```
+
+```{.output}
+
+```
+
+```r
 # merge overlapping transcripts
 genes.data <- mergeTranscripts(genes.data)
 
