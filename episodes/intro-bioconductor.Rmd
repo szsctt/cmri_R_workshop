@@ -1,6 +1,6 @@
 ---
 title: '`Bioconductor` and other bioinformatics packages'
-teaching: 10
+teaching: 20
 exercises: 2
 ---
 
@@ -26,6 +26,28 @@ BiocManager::install(c("Biostrings", "karyoploteR", "TxDb.Hsapiens.UCSC.hg38.kno
 - Be aware of some `Bioconductor packages`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+ If you can answer the following questions, you can skip this lesson.
+ 
+ 1. How do you install `Bioconductor` packages?
+ 2. How can you get help when using `Bioconductor` packages?
+
+::::::::::: solution
+
+
+1. Use `BiocManager::install()`.
+2. In the same way as other `R` packages.  All will have a `vignette` demonstrating how to use the package, and most will have some other guides demonstrating aspects of the package.
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
+
 
 ![Bioconductor logo](http://bioconductor.org/images/logo_bioconductor.gif)
 
@@ -116,7 +138,6 @@ GENETIC_CODE
 
 It has many more features which you can explore if you need to use this package.
 
-
 ## Plotting genomic information
 
 Another relatively common task for me is plotting genomic information.  There are a number of ways to do this, but here I'll just give one example - plotting the density of SNPs in the human albumin gene (ALB).
@@ -172,6 +193,9 @@ library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 # region to plot
 region <- "chr4:73,394,000-73,425,000"
 
+# draw axis
+kp <- plotKaryotype(zoom = region)
+
 # transcript information
 genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
                                     karyoplot=kp,
@@ -180,8 +204,6 @@ genes.data <- makeGenesDataFromTxDb(TxDb.Hsapiens.UCSC.hg38.knownGene,
 # merge overlapping transcripts
 genes.data <- mergeTranscripts(genes.data)
 
-# draw axis
-kp <- plotKaryotype(zoom = region)
 # draw genes
 kpPlotGenes(kp, data=genes.data, r0=0, r1=0.15)
 # draw SNP density
