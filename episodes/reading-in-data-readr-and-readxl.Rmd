@@ -1,5 +1,5 @@
 ---
-title: 'Reading in data: `readr` and `readxl`'
+title: 'Reading in data'
 teaching: 30
 exercises: 2
 ---
