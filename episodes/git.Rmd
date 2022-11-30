@@ -19,6 +19,20 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+:::::::::::: challenge
+
+## Do I need to do this lesson?
+
+If you've used `git` and `github` before, and are comfortable staging, committing, pushing and pulling changes, then you can skip this lesson.
+
+::::::::::: solution
+
+Read the rest of the lesson if you don't know how to stage, commit, push or pull changes!
+
+::::::::::::::::::
+
+:::::::::::::::::::::::
+
 
 ## Version control with `git`
 
@@ -123,6 +137,19 @@ You can push and pull from the same pop-up panel you get when you click *Commit*
 
 Your first push should be pretty straightforward.
 
+
+:::::::::::::::::::: callout
+
+#### Generating a token
+
+The first time you try to push to a remote repo, you will be prompted for your password.  This is somewhat misleading, because this git isn't asking your account password, but [a token that you'll need to generate](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+
+To generate a token, head to `github`, log in and click the circle icon with a down arrow next to it in the top right hand corner of your screen.  Select *Settings*, and from the left-hand menu select *Developer Settings*.  On the left-hand menu on the new page, select *Personal Access Tokens > Tokens (classic)* .  On the right hand side, click *Generate new token > Generate new token (classic)*.  Fill in a name for the token in the *Note* box, select an Expiration period (I usually use 90 days, and I don't recommend 'No expiration'), and tick the *repo* box.
+
+This will generate a token that you'll only be able to see once. Save it to a password manager in case you need it again, and then use it as your password if prompted.
+
+::::::::::::::::::::::::::::
+
 If there are changes in the remote repository that you don't have in your local repository, you'll need to pull them before you can push any changes.
 
 ![A failed push](episodes/fig/git-failed-push.png)
@@ -175,7 +202,7 @@ Git was designed for working with source code (text files), not binaries or larg
 
 I tend to avoid adding any of the data that I'm working with to version control, unless it's a very small text file or image.  Github also limits the size of individual files, and the total size of each repository, so avoid hitting those limits by keeping large files separate.  You can still keep them in the same directory as your code, but avoid doing `git add` on them.
 
-## Keep other backups
+### Keep other backups
 
 Although your code is pretty safe in the cloud, it's good practice to keep other backups of your code elsewhere.  Since your data shouldn't be in your repository, you'll need to think about other backups anyway. So keep your code and data backed up somewhere else, like other clouds (e.g. One Drive), CMRI shared folders and portable hard drives (but never *only* on a portable hard drive).
 
