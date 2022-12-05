@@ -211,6 +211,7 @@ Although your code is pretty safe in the cloud, it's good practice to keep other
  - [Git documentation](https://git-scm.com/book/en/v2)
  - [Git basics](https://dev.to/milu_franz/git-explained-the-basics-igc)
  - [Posit/Rstudio support article on git](https://support.posit.co/hc/en-us/articles/200532077)
+ - [git cheatsheet](https://wac-cdn.atlassian.com/dam/jcr:e7e22f25-bba2-4ef1-a197-53f46b6df4a5/SWTM-2088_Atlassian-Git-Cheatsheet.pdf?cdnVersion=649)
  
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
