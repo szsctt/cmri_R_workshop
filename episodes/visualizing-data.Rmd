@@ -727,6 +727,7 @@ There are many more features of `patchwork` which I will leave you to explore - 
 
 ## Resources
 
+ - [ggplot2 cheatsheet](https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf)
  - [Fundamentals of data vizualization](https://clauswilke.com/dataviz/) by Claus Wilke
  - [ggplot documentation](https://ggplot2.tidyverse.org/index.html)
  - [patchwork documentation](https://patchwork.data-imaginist.com/index.html)
