@@ -276,9 +276,9 @@ df %>%
 
 ## Resources and acknowledgments
 
+ - [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
  - [Tidy data vignette](https://cloud.r-project.org/web/packages/tidyr/vignettes/tidy-data.html)
  - [Tidy data paper](https://vita.had.co.nz/papers/tidy-data.pdf)
- - [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
  - I've borrowed figures (and inspiration) from the excellent [coding togetheR course material](https://ab604.github.io/docs/coding-together-2019/data-wrangle-1.html)
 
 
