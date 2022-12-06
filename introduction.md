@@ -595,7 +595,7 @@ rnorm(5, mean=1, sd=2)
 ```
 
 ```{.output}
-[1]  1.4442437  2.8785341 -0.8217984 -0.2754008  0.3573178
+[1]  1.471173  2.490099  1.949222  1.529605 -1.679152
 ```
 
 :::::::::::::::::::::::::::::::::
@@ -1141,7 +1141,7 @@ my_great_project
 
 As you begin your journey with `R`, you might find it helpful to refer to one-page summaries (or 'cheat sheets') that other people have compiled.  For example, there are cheat sheets for:
 
-
+- [Base R](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 - [Commonly used functions](https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view)
 - [RStudio IDE](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf)
 

@@ -359,8 +359,9 @@ This area is actively being developed, so it's worth trying out new technologies
 
 ## References
 
-- [Rmarkdown guide](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
-- [Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+- [R markdown cheetsheet](https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf)
+- [R markdown guide](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+- [R markdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
 - [Markdown guide](https://www.markdownguide.org/basic-syntax/)
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
