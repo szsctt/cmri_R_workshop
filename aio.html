@@ -337,7 +337,7 @@
         
 <section id="aio-introduction"><p>Content from <a href="introduction.html">Introduction to R and Rstudio</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1020,7 +1020,7 @@ sample estimates:
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1]  1.4442437  2.8785341 -0.8217984 -0.2754008  0.3573178</code></pre>
+<pre class="output" tabindex="0"><code>[1]  1.471173  2.490099  1.949222  1.529605 -1.679152</code></pre>
 </div>
 </div>
 </div>
@@ -1628,6 +1628,7 @@ sample estimates:
 <hr class="half-width">
 <p>As you begin your journey with <code>R</code>, you might find it helpful to refer to one-page summaries (or ‘cheat sheets’) that other people have compiled. For example, there are cheat sheets for:</p>
 <ul>
+<li><a href="https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf" class="external-link">Base R</a></li>
 <li><a href="https://drive.google.com/file/d/1bo8vMXeeiRy8l89eIjOALezO3V5oaewY/view" class="external-link">Commonly used functions</a></li>
 <li><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf" class="external-link">RStudio IDE</a></li>
 </ul>
@@ -1666,7 +1667,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-reading-in-data-readr-and-readxl"><p>Content from <a href="reading-in-data-readr-and-readxl.html">Reading in data</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/reading-in-data-readr-and-readxl.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2152,7 +2153,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-tidying-data"><p>Content from <a href="tidying-data.html">Tidy data</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/tidying-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2205,7 +2206,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Check Challenge 1 for the solution!</p>
 </div>
@@ -2223,8 +2224,8 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1      800   422   790   433   102   396
-2 lib2       97    92   818    96   411   822</code></pre>
+1 lib1      797   385   101   111   427   404
+2 lib2      387   101   796    96   808   800</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -2234,23 +2235,22 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        800    97
-2 b2        422    92
-3 b3        790   818
-4 b4        433    96
-5 b5        102   411
-6 b6        396   822</code></pre>
+1 b1        797   387
+2 b2        385   101
+3 b3        101   796
+4 b4        111    96
+5 b5        427   808
+6 b6        404   800</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code># A tibble: 2 × 13
-  library `800` `422` `790` `433` `102` `396` `97`  `92`  `818` `96`  `411`
+<pre class="output" tabindex="0"><code># A tibble: 2 × 12
+  library `797` `385` `101` `111` `427` `404` `387` `796` `96`  `808` `800`
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
-2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
-# … with 1 more variable: `822` &lt;chr&gt;</code></pre>
+2 lib2    &lt;NA&gt;  &lt;NA&gt;  b2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b3    b4    b5    b6   </code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -2273,18 +2273,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        800
- 2 lib1    b2        422
- 3 lib1    b3        790
- 4 lib1    b4        433
- 5 lib1    b5        102
- 6 lib1    b6        396
- 7 lib2    b1         97
- 8 lib2    b2         92
- 9 lib2    b3        818
+ 1 lib1    b1        797
+ 2 lib1    b2        385
+ 3 lib1    b3        101
+ 4 lib1    b4        111
+ 5 lib1    b5        427
+ 6 lib1    b6        404
+ 7 lib2    b1        387
+ 8 lib2    b2        101
+ 9 lib2    b3        796
 10 lib2    b4         96
-11 lib2    b5        411
-12 lib2    b6        822</code></pre>
+11 lib2    b5        808
+12 lib2    b6        800</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -2328,12 +2328,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        800    97
-2 b2        422    92
-3 b3        790   818
-4 b4        433    96
-5 b5        102   411
-6 b6        396   822</code></pre>
+1 b1        797   387
+2 b2        385   101
+3 b3        101   796
+4 b4        111    96
+5 b5        427   808
+6 b6        404   800</code></pre>
 </div>
 <p>Another way to think about tidiness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -2357,18 +2357,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1      800
- 2 b1      lib2       97
- 3 b2      lib1      422
- 4 b2      lib2       92
- 5 b3      lib1      790
- 6 b3      lib2      818
- 7 b4      lib1      433
+ 1 b1      lib1      797
+ 2 b1      lib2      387
+ 3 b2      lib1      385
+ 4 b2      lib2      101
+ 5 b3      lib1      101
+ 6 b3      lib2      796
+ 7 b4      lib1      111
  8 b4      lib2       96
- 9 b5      lib1      102
-10 b5      lib2      411
-11 b6      lib1      396
-12 b6      lib2      822</code></pre>
+ 9 b5      lib1      427
+10 b5      lib2      808
+11 b6      lib1      404
+12 b6      lib2      800</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <div id="callout1" class="callout callout">
@@ -2437,18 +2437,18 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1        800
- 2 lib1    b2        422
- 3 lib1    b3        790
- 4 lib1    b4        433
- 5 lib1    b5        102
- 6 lib1    b6        396
- 7 lib2    b1         97
- 8 lib2    b2         92
- 9 lib2    b3        818
+ 1 lib1    b1        797
+ 2 lib1    b2        385
+ 3 lib1    b3        101
+ 4 lib1    b4        111
+ 5 lib1    b5        427
+ 6 lib1    b6        404
+ 7 lib2    b1        387
+ 8 lib2    b2        101
+ 9 lib2    b3        796
 10 lib2    b4         96
-11 lib2    b5        411
-12 lib2    b6        822</code></pre>
+11 lib2    b5        808
+12 lib2    b6        800</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -2464,12 +2464,12 @@ any links that you are not going to use.
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1        800    97
-2 b2        422    92
-3 b3        790   818
-4 b4        433    96
-5 b5        102   411
-6 b6        396   822</code></pre>
+1 b1        797   387
+2 b2        385   101
+3 b3        101   796
+4 b4        111    96
+5 b5        427   808
+6 b6        404   800</code></pre>
 </div>
 </div>
 </div>
@@ -2497,7 +2497,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2535,9 +2535,9 @@ any links that you are not going to use.
 </h2>
 <hr class="half-width">
 <ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf" class="external-link">tidyr cheatsheet</a></li>
 <li><a href="https://cloud.r-project.org/web/packages/tidyr/vignettes/tidy-data.html" class="external-link">Tidy data vignette</a></li>
 <li><a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">Tidy data paper</a></li>
-<li><a href="https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf" class="external-link">tidyr cheatsheet</a></li>
 <li>I’ve borrowed figures (and inspiration) from the excellent <a href="https://ab604.github.io/docs/coding-together-2019/data-wrangle-1.html" class="external-link">coding togetheR course material</a>
 </li>
 </ul>
@@ -2565,7 +2565,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-manipulating-data"><p>Content from <a href="manipulating-data.html">Data wrangling</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/manipulating-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3898,15 +3898,15 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 57 × 3
    date       city   forecast
    &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;   
- 1 2022-11-01 sydney cloudy  
+ 1 2022-11-01 sydney sunny   
  2 2022-11-02 sydney sunny   
- 3 2022-11-03 sydney sunny   
+ 3 2022-11-03 sydney cloudy  
  4 2022-11-04 sydney sunny   
- 5 2022-11-05 sydney cloudy  
- 6 2022-11-06 sydney cloudy  
- 7 2022-11-07 sydney sunny   
- 8 2022-11-08 sydney cloudy  
- 9 2022-11-09 sydney sunny   
+ 5 2022-11-05 sydney sunny   
+ 6 2022-11-06 sydney sunny   
+ 7 2022-11-07 sydney cloudy  
+ 8 2022-11-08 sydney sunny   
+ 9 2022-11-09 sydney cloudy  
 10 2022-11-10 sydney cloudy  
 # … with 47 more rows</code></pre>
 </div>
@@ -3925,15 +3925,15 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 57 × 4
    city   date       sunshine_hours forecast
    &lt;chr&gt;  &lt;date&gt;              &lt;dbl&gt; &lt;chr&gt;   
- 1 sydney 2022-11-01            9.5 cloudy  
+ 1 sydney 2022-11-01            9.5 sunny   
  2 sydney 2022-11-02           12.8 sunny   
- 3 sydney 2022-11-03            8.9 sunny   
+ 3 sydney 2022-11-03            8.9 cloudy  
  4 sydney 2022-11-04            5.7 sunny   
- 5 sydney 2022-11-05           11.8 cloudy  
- 6 sydney 2022-11-06           12.1 cloudy  
- 7 sydney 2022-11-07           12.3 sunny   
- 8 sydney 2022-11-08           11   cloudy  
- 9 sydney 2022-11-09           10.3 sunny   
+ 5 sydney 2022-11-05           11.8 sunny   
+ 6 sydney 2022-11-06           12.1 sunny   
+ 7 sydney 2022-11-07           12.3 cloudy  
+ 8 sydney 2022-11-08           11   sunny   
+ 9 sydney 2022-11-09           10.3 cloudy  
 10 sydney 2022-11-10            9.3 cloudy  
 # … with 47 more rows</code></pre>
 </div>
@@ -3981,8 +3981,8 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 2 × 2
   forecast_accurate count
   &lt;lgl&gt;             &lt;int&gt;
-1 FALSE                29
-2 TRUE                 28</code></pre>
+1 FALSE                27
+2 TRUE                 30</code></pre>
 </div>
 </div>
 </div>
@@ -4071,7 +4071,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-visualizing-data"><p>Content from <a href="visualizing-data.html">Data visualization</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/visualizing-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -4128,7 +4128,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4329,7 +4329,7 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4391,7 +4391,7 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4450,7 +4450,7 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4577,7 +4577,7 @@ $ city                    &lt;chr&gt; "sydney", "sydney", "sydney", "sydney", "s
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4817,7 +4817,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
 <div class="accordion-body">
 <p>This is open-ended, but one solution is:</p>
 <div class="codewrapper sourceCode" id="cb31">
@@ -4954,6 +4954,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 </h2>
 <hr class="half-width">
 <ul>
+<li><a href="https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf" class="external-link">ggplot2 cheatsheet</a></li>
 <li>
 <a href="https://clauswilke.com/dataviz/" class="external-link">Fundamentals of data vizualization</a> by Claus Wilke</li>
 <li><a href="https://ggplot2.tidyverse.org/index.html" class="external-link">ggplot documentation</a></li>
@@ -4986,7 +4987,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-intro-bioconductor"><p>Content from <a href="intro-bioconductor.html">Bioconductor and other bioinformatics packages</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/intro-bioconductor.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -5391,7 +5392,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-intro-rmarkdown"><p>Content from <a href="intro-rmarkdown.html">Using R markdown for notebooks and documents</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/intro-rmarkdown.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -5777,8 +5778,9 @@ any links that you are not going to use.
 </h2>
 <hr class="half-width">
 <ul>
-<li><a href="https://bookdown.org/yihui/rmarkdown/pdf-document.html" class="external-link">Rmarkdown guide</a></li>
-<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/" class="external-link">Rmarkdown cookbook</a></li>
+<li><a href="https://posit.co/wp-content/uploads/2022/10/rmarkdown-1.pdf" class="external-link">R markdown cheetsheet</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/pdf-document.html" class="external-link">R markdown guide</a></li>
+<li><a href="https://bookdown.org/yihui/rmarkdown-cookbook/" class="external-link">R markdown cookbook</a></li>
 <li><a href="https://www.markdownguide.org/basic-syntax/" class="external-link">Markdown guide</a></li>
 </ul>
 <div id="keypoints1" class="callout keypoints">
@@ -5805,7 +5807,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-git"><p>Content from <a href="git.html">Version control with git</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/git.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -5858,7 +5860,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Read the rest of the lesson if you don’t know how to stage, commit, push or pull changes!</p>
 </div>
@@ -6009,6 +6011,7 @@ any links that you are not going to use.
 <li><a href="https://git-scm.com/book/en/v2" class="external-link">Git documentation</a></li>
 <li><a href="https://dev.to/milu_franz/git-explained-the-basics-igc" class="external-link">Git basics</a></li>
 <li><a href="https://support.posit.co/hc/en-us/articles/200532077" class="external-link">Posit/Rstudio support article on git</a></li>
+<li><a href="https://wac-cdn.atlassian.com/dam/jcr:e7e22f25-bba2-4ef1-a197-53f46b6df4a5/SWTM-2088_Atlassian-Git-Cheatsheet.pdf?cdnVersion=649" class="external-link">git cheatsheet</a></li>
 </ul>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -6033,7 +6036,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-worked-example"><p>Content from <a href="worked-example.html">Case study</a></p>
 <hr>
-<p> Last updated on 2022-11-30 | 
+<p> Last updated on 2022-12-06 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/worked-example.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -6083,7 +6086,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>See the answers to each question for solutions.</p>
 </div>
@@ -6120,7 +6123,7 @@ any links that you are not going to use.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6193,7 +6196,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6241,7 +6244,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6293,7 +6296,7 @@ $ lib     &lt;chr&gt; "plasmid", "plasmid", "plasmid", "plasmid", "plasmid", "pl
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution5" class="accordion-collapse collapse" aria-labelledby="headingSolution5" data-bs-parent="#accordionSolution5">
+<div id="collapseSolution5" class="accordion-collapse collapse" data-bs-parent="#accordionSolution5" aria-labelledby="headingSolution5">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6340,7 +6343,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution6" class="accordion-collapse collapse" aria-labelledby="headingSolution6" data-bs-parent="#accordionSolution6">
+<div id="collapseSolution6" class="accordion-collapse collapse" data-bs-parent="#accordionSolution6" aria-labelledby="headingSolution6">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6376,7 +6379,7 @@ $ frac    &lt;dbl&gt; 1.005126e-04, 7.538446e-05, 5.025631e-05, 2.512815e-05, 1.
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
+<div id="collapseSolution7" class="accordion-collapse collapse" data-bs-parent="#accordionSolution7" aria-labelledby="headingSolution7">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6427,7 +6430,7 @@ $ rank    &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1, 15, 16, 
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution8" class="accordion-collapse collapse" aria-labelledby="headingSolution8" data-bs-parent="#accordionSolution8">
+<div id="collapseSolution8" class="accordion-collapse collapse" data-bs-parent="#accordionSolution8" aria-labelledby="headingSolution8">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6483,7 +6486,7 @@ $ rank    &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1, 15, 16, 
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution9" class="accordion-collapse collapse" aria-labelledby="headingSolution9" data-bs-parent="#accordionSolution9">
+<div id="collapseSolution9" class="accordion-collapse collapse" data-bs-parent="#accordionSolution9" aria-labelledby="headingSolution9">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6520,7 +6523,7 @@ $ rank    &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 1, 15, 16, 
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution10" class="accordion-collapse collapse" aria-labelledby="headingSolution10" data-bs-parent="#accordionSolution10">
+<div id="collapseSolution10" class="accordion-collapse collapse" data-bs-parent="#accordionSolution10" aria-labelledby="headingSolution10">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6579,7 +6582,7 @@ Save this to a variable called <code>vec_enrich</code>.</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution11" class="accordion-collapse collapse" aria-labelledby="headingSolution11" data-bs-parent="#accordionSolution11">
+<div id="collapseSolution11" class="accordion-collapse collapse" data-bs-parent="#accordionSolution11" aria-labelledby="headingSolution11">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb18">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6639,7 +6642,7 @@ Save this to a variable called <code>vec_enrich</code>.</p>
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution12" class="accordion-collapse collapse" aria-labelledby="headingSolution12" data-bs-parent="#accordionSolution12">
+<div id="collapseSolution12" class="accordion-collapse collapse" data-bs-parent="#accordionSolution12" aria-labelledby="headingSolution12">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6728,9 +6731,9 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.10.8" class="external-link">sandpaper (0.10.8)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.1" class="external-link">sandpaper (0.11.1)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
-      and <a href="https://github.com/carpentries/varnish/tree/0.2.9" class="external-link">varnish (0.2.9)</a>.</p>
+      and <a href="https://github.com/carpentries/varnish/tree/0.2.10" class="external-link">varnish (0.2.10)</a>.</p>
 			</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -6751,9 +6754,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/aio.html",
-  "dateCreated": "2022-11-30",
-  "dateModified": "2022-11-30",
-  "datePublished": "2022-11-30"
+  "dateCreated": "2022-12-05",
+  "dateModified": "2022-12-06",
+  "datePublished": "2022-12-06"
 }
 
   </script><script>
