@@ -287,7 +287,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data wrangling</h1>
-        <p> Last updated on 2022-12-06 | 
+        <p> Last updated on 2022-12-08 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/manipulating-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -1603,16 +1603,16 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 57 × 3
    date       city   forecast
    &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;   
- 1 2022-11-01 sydney cloudy  
+ 1 2022-11-01 sydney sunny   
  2 2022-11-02 sydney cloudy  
- 3 2022-11-03 sydney cloudy  
- 4 2022-11-04 sydney cloudy  
+ 3 2022-11-03 sydney sunny   
+ 4 2022-11-04 sydney sunny   
  5 2022-11-05 sydney sunny   
- 6 2022-11-06 sydney cloudy  
+ 6 2022-11-06 sydney sunny   
  7 2022-11-07 sydney cloudy  
- 8 2022-11-08 sydney sunny   
- 9 2022-11-09 sydney cloudy  
-10 2022-11-10 sydney cloudy  
+ 8 2022-11-08 sydney cloudy  
+ 9 2022-11-09 sydney sunny   
+10 2022-11-10 sydney sunny   
 # … with 47 more rows</code></pre>
 </div>
 <p>Now we would like to join this to our data frame of observations, so we can compare the forecast to what actually happened.</p>
@@ -1630,16 +1630,16 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 57 × 4
    city   date       sunshine_hours forecast
    &lt;chr&gt;  &lt;date&gt;              &lt;dbl&gt; &lt;chr&gt;   
- 1 sydney 2022-11-01            9.5 cloudy  
+ 1 sydney 2022-11-01            9.5 sunny   
  2 sydney 2022-11-02           12.8 cloudy  
- 3 sydney 2022-11-03            8.9 cloudy  
- 4 sydney 2022-11-04            5.7 cloudy  
+ 3 sydney 2022-11-03            8.9 sunny   
+ 4 sydney 2022-11-04            5.7 sunny   
  5 sydney 2022-11-05           11.8 sunny   
- 6 sydney 2022-11-06           12.1 cloudy  
+ 6 sydney 2022-11-06           12.1 sunny   
  7 sydney 2022-11-07           12.3 cloudy  
- 8 sydney 2022-11-08           11   sunny   
- 9 sydney 2022-11-09           10.3 cloudy  
-10 sydney 2022-11-10            9.3 cloudy  
+ 8 sydney 2022-11-08           11   cloudy  
+ 9 sydney 2022-11-09           10.3 sunny   
+10 sydney 2022-11-10            9.3 sunny   
 # … with 47 more rows</code></pre>
 </div>
 <div id="challenge9" class="callout challenge">
@@ -1686,8 +1686,8 @@ Attaching package: 'lubridate'</code></pre>
 <pre class="output" tabindex="0"><code># A tibble: 2 × 2
   forecast_accurate count
   &lt;lgl&gt;             &lt;int&gt;
-1 FALSE                33
-2 TRUE                 24</code></pre>
+1 FALSE                31
+2 TRUE                 26</code></pre>
 </div>
 </div>
 </div>
@@ -1798,7 +1798,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.1" class="external-link">sandpaper (0.11.1)</a>,
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.2" class="external-link">sandpaper (0.11.2)</a>,
         <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.10" class="external-link">varnish (0.2.10)</a>.</p>
 			</div>
@@ -1820,9 +1820,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://carpentries.github.io/workbench-template-rmd/manipulating-data.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/manipulating-data.html",
-  "dateCreated": "2022-12-06",
-  "dateModified": "2022-12-06",
-  "datePublished": "2022-12-06"
+  "dateCreated": "2022-12-08",
+  "dateModified": "2022-12-08",
+  "datePublished": "2022-12-08"
 }
 
   </script><script>
