@@ -318,7 +318,7 @@ Make a table of the top 500 peptides ranked by expression enrichment, removing a
 ```{r}
 good_peptides <- expr_enrich %>% 
   filter(!peptide %in% poor_packagers$peptide) %>% 
-  slice_max(order_by=enrichemnt, n=500)
+  slice_max(order_by=enrichment, n=500)
 
 good_peptides 
 
