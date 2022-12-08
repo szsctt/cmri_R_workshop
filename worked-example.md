@@ -430,30 +430,30 @@ Make a table of the top 500 peptides ranked by expression enrichment, removing a
 ```r
 good_peptides <- expr_enrich %>% 
   filter(!peptide %in% poor_packagers$peptide) %>% 
-  slice_max(order_by=enrichemnt, n=500)
-```
+  slice_max(order_by=enrichment, n=500)
 
-```{.error}
-Error in `slice_max()`:
-! Problem while computing indices.
-Caused by error:
-! object 'enrichemnt' not found
-```
-
-```r
 good_peptides 
 ```
 
-```{.error}
-Error in eval(expr, envir, enclos): object 'good_peptides' not found
+```{.output}
+# A tibble: 541 × 5
+   peptide expression   vector enrichment  rank
+   <chr>        <dbl>    <dbl>      <dbl> <int>
+ 1 NKLAPNL    0.0228  0.000231       98.4     1
+ 2 DNPLDPY    0.0152  0.000442       34.3     2
+ 3 CGHLPGF    0.00653 0.000210       31.0     3
+ 4 HSCKITP    0.0104  0.000336       30.8     4
+ 5 VEDTTFA    0.0131  0.000442       29.6     5
+ 6 DLGQGDE    0.00742 0.000252       29.4     6
+ 7 HDIIKQH    0.00613 0.000210       29.1     7
+ 8 DLCLKKT    0.00733 0.000252       29.1     8
+ 9 RRRMETN    0.00849 0.000294       28.9     9
+10 PGTAPIT    0.00300 0.000105       28.5    10
+# … with 531 more rows
 ```
 
 ```r
 write_tsv(good_peptides, file=here::here("good_peptides.tsv"))
-```
-
-```{.error}
-Error in is.data.frame(x): object 'good_peptides' not found
 ```
 
 
