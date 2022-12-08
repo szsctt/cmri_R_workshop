@@ -34,9 +34,6 @@ Read the rest of the lesson if you don't know how to stage, commit, push or pull
 :::::::::::::::::::::::
 
 
-Some extra stuff here.
-
-
 ## Version control with `git`
 
 Have you ever needed to refer back to the edit history of a document to restore a change you'd made?  Or maybe you've sometimes worried about losing files that are only on your computer?  Do you waste lots of time deploying software manually?
