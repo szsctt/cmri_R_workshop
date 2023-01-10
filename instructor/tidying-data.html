@@ -287,7 +287,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Tidy data</h1>
-        <p> Last updated on 2023-01-03 | 
+        <p> Last updated on 2023-01-10 | 
         
         <a href="https://github.com/carpentries/workbench-template-rmd/edit/main/episodes/tidying-data.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -344,7 +344,7 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Check Challenge 1 for the solution!</p>
 </div>
@@ -361,8 +361,8 @@
 <pre class="output" tabindex="0"><code># A tibble: 2 × 7
   library    b1    b2    b3    b4    b5    b6
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-1 lib1       96   408   102   370   106   386
-2 lib2      399   811   104   802   809   803</code></pre>
+1 lib1      407   774   814   409    98    96
+2 lib2       94   111   389   378   807   799</code></pre>
 </div>
 <p>In this table, the counts for each barcode are stored in a separate column. The ‘library’ column tells us which library the counts on each row are from.</p>
 <p>Conversely, we could keep the counts for each library in a separate column, and the rows can tell us which barcode is being counted:</p>
@@ -372,23 +372,23 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         96   399
-2 b2        408   811
-3 b3        102   104
-4 b4        370   802
-5 b5        106   809
-6 b6        386   803</code></pre>
+1 b1        407    94
+2 b2        774   111
+3 b3        814   389
+4 b4        409   378
+5 b5         98   807
+6 b6         96   799</code></pre>
 </div>
 <p>We could even structure the table like this:</p>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="output" tabindex="0"><code># A tibble: 2 × 13
-  library `96`  `408` `102` `370` `106` `386` `399` `811` `104` `802` `809`
+  library `407` `774` `814` `409` `98`  `96`  `94`  `111` `389` `378` `807`
   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
 1 lib1    b1    b2    b3    b4    b5    b6    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
 2 lib2    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  b1    b2    b3    b4    b5   
-# … with 1 more variable: `803` &lt;chr&gt;</code></pre>
+# … with 1 more variable: `799` &lt;chr&gt;</code></pre>
 </div>
 <p>This is one of the least intuitive ways to structure the data - the columns are the counts (except for the library column), and the rows tell us which barcode had which count.</p>
 <p>These are all examples of messy ways to structure the data. There are usually very many ways to make the data messy, but only one <a href="https://vita.had.co.nz/papers/tidy-data.pdf" class="external-link">‘Tidy’ format</a>. Being tidy means a dataset has:</p>
@@ -409,18 +409,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1         96
- 2 lib1    b2        408
- 3 lib1    b3        102
- 4 lib1    b4        370
- 5 lib1    b5        106
- 6 lib1    b6        386
- 7 lib2    b1        399
- 8 lib2    b2        811
- 9 lib2    b3        104
-10 lib2    b4        802
-11 lib2    b5        809
-12 lib2    b6        803</code></pre>
+ 1 lib1    b1        407
+ 2 lib1    b2        774
+ 3 lib1    b3        814
+ 4 lib1    b4        409
+ 5 lib1    b5         98
+ 6 lib1    b6         96
+ 7 lib2    b1         94
+ 8 lib2    b2        111
+ 9 lib2    b3        389
+10 lib2    b4        378
+11 lib2    b5        807
+12 lib2    b6        799</code></pre>
 </div>
 <p>This is tidy because each column represents a variable (library, barcode and count), each row is an observation (count for a given library and barcode), and we have all the data from this experiment in the one table.</p>
 <div id="discussion1" class="callout discussion">
@@ -441,7 +441,7 @@
   Instructor Note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Issues with this dataset:</p>
 <ul><li>Doesn’t start in cell A1</li>
@@ -482,12 +482,12 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         96   399
-2 b2        408   811
-3 b3        102   104
-4 b4        370   802
-5 b5        106   809
-6 b6        386   803</code></pre>
+1 b1        407    94
+2 b2        774   111
+3 b3        814   389
+4 b4        409   378
+5 b5         98   807
+6 b6         96   799</code></pre>
 </div>
 <p>Another way to think about tidiness is if the names of the column can reflect the data contained in them. It’s a bit misleading to call the columns <code>lib1</code> and <code>lib2</code>, they actually store counts (and not some other property of the library, such as the barcodes it contains).</p>
 <p>We can see that if we were to restructure the lib1 and lib2 columns into two different columns, one that tell us from which library the count came, and one that contains the count value, the dataset would be tidy.</p>
@@ -510,18 +510,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    barcode library count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 b1      lib1       96
- 2 b1      lib2      399
- 3 b2      lib1      408
- 4 b2      lib2      811
- 5 b3      lib1      102
- 6 b3      lib2      104
- 7 b4      lib1      370
- 8 b4      lib2      802
- 9 b5      lib1      106
-10 b5      lib2      809
-11 b6      lib1      386
-12 b6      lib2      803</code></pre>
+ 1 b1      lib1      407
+ 2 b1      lib2       94
+ 3 b2      lib1      774
+ 4 b2      lib2      111
+ 5 b3      lib1      814
+ 6 b3      lib2      389
+ 7 b4      lib1      409
+ 8 b4      lib2      378
+ 9 b5      lib1       98
+10 b5      lib2      807
+11 b6      lib1       96
+12 b6      lib2      799</code></pre>
 </div>
 <p>We can tell that this data is tidy because the column names accurately reflect the data they contain: the count column stores counts, the library column tells us which library the counts came from, and the barcode column tells us which barcode we’re measuring.</p>
 <div id="callout1" class="callout callout">
@@ -589,18 +589,18 @@
 <pre class="output" tabindex="0"><code># A tibble: 12 × 3
    library barcode count
    &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt;
- 1 lib1    b1         96
- 2 lib1    b2        408
- 3 lib1    b3        102
- 4 lib1    b4        370
- 5 lib1    b5        106
- 6 lib1    b6        386
- 7 lib2    b1        399
- 8 lib2    b2        811
- 9 lib2    b3        104
-10 lib2    b4        802
-11 lib2    b5        809
-12 lib2    b6        803</code></pre>
+ 1 lib1    b1        407
+ 2 lib1    b2        774
+ 3 lib1    b3        814
+ 4 lib1    b4        409
+ 5 lib1    b5         98
+ 6 lib1    b6         96
+ 7 lib2    b1         94
+ 8 lib2    b2        111
+ 9 lib2    b3        389
+10 lib2    b4        378
+11 lib2    b5        807
+12 lib2    b6        799</code></pre>
 </div>
 <figure><img src="https://ab604.github.io/docs/coding-together-2019/img/pivot_wider_R.png" alt="" class="figure mx-auto d-block"><figcaption>Pivoting wider</figcaption></figure><p>We can pivot our long table to a wide one using <code>pivot_longer()</code>.</p>
 <div class="codewrapper sourceCode" id="cb15">
@@ -616,12 +616,12 @@
 <pre class="output" tabindex="0"><code># A tibble: 6 × 3
   barcode  lib1  lib2
   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;
-1 b1         96   399
-2 b2        408   811
-3 b3        102   104
-4 b4        370   802
-5 b5        106   809
-6 b6        386   803</code></pre>
+1 b1        407    94
+2 b2        774   111
+3 b3        814   389
+4 b4        409   378
+5 b5         98   807
+6 b6         96   799</code></pre>
 </div>
 </div>
 </div>
@@ -648,7 +648,7 @@
   Show me the solution
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -741,7 +741,7 @@ any links that you are not going to use.
         
         <p><a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">Template licensed under CC-BY 4.0</a> by <a href="https://carpentries.org" class="external-link">The Carpentries</a></p>
         <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.11.3" class="external-link">sandpaper (0.11.3)</a>,
-        <a href="https://github.com/carpentries/pegboard/tree/0.3.2" class="external-link">pegboard (0.3.2)</a>,
+        <a href="https://github.com/carpentries/pegboard/tree/0.4.1" class="external-link">pegboard (0.4.1)</a>,
       and <a href="https://github.com/carpentries/varnish/tree/0.2.13" class="external-link">varnish (0.2.13)</a>.</p>
 			</div>
 		</footer></div> <!-- / div.container -->
@@ -763,8 +763,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-rmd/instructor/tidying-data.html",
   "identifier": "https://carpentries.github.io/workbench-template-rmd/instructor/tidying-data.html",
   "dateCreated": "2022-12-08",
-  "dateModified": "2023-01-03",
-  "datePublished": "2023-01-03"
+  "dateModified": "2023-01-10",
+  "datePublished": "2023-01-10"
 }
 
   </script><script>
